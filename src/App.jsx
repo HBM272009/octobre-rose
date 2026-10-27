@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
 import Auth from "./Auth";
+import logo from "./assets/rosetta-logo.svg";
 import "./App.css";
-import logo from "./assets/rosetta-logo.svg"; // Adjust file extension if it's .svg, .jpg, etc.
 
 export default function App() {
+    // Hooks
+    const [dashboardMenuOpen, setDashboardMenuOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [recipientId, setRecipientId] = useState("");
@@ -154,7 +156,7 @@ export default function App() {
                 "Mises à instantanées entre les espaces patients et médecins grâce à des bases de données robustes.",
             feat2Title: "Sécurité par Rôle",
             feat2Body:
-                "L'isolation stricte des données garantit que les dossiers médicaux et échanges restent strictement confidentiels.",
+                "L'isolation stricte des données garantit que les dossiers médicaux et échanges restent strictly confidentiels.",
             feat3Title: "Accessibilité Bilingue",
             feat3Body:
                 "Entièrement localisée en français et en anglais pour s'adapter à divers environnements cliniques.",
@@ -586,20 +588,12 @@ export default function App() {
     );
 
     const LandingView = ({ isLoggedIn }) => {
-        const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+        const [isLandingMenuOpen, setIsLandingMenuOpen] = useState(false);
 
         return (
             <div className="landing-page">
                 <header className="topbar">
-                    <div
-                        className="brand-row"
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%",
-                        }}
-                    >
+                    <div className="brand-row">
                         <a
                             className="brand"
                             href="#"
@@ -611,34 +605,24 @@ export default function App() {
                                 display: "flex",
                                 alignItems: "center",
                                 gap: "8px",
-                                textDecoration: "none",
                                 fontWeight: "700",
                                 fontSize: "1.2rem",
                                 color: "var(--primary)",
+                                textDecoration: "none",
                             }}
                         >
-                            <img
-                                src={logo}
-                                alt="Rosetta Logo"
-                                style={{
-                                    height: "32px",
-                                    width: "auto",
-                                    objectFit: "contain",
-                                }}
-                            />
+                            <img src={logo} alt="Logo" style={{ height: "30px", width: "auto" }} />
                             <span>{t.appName}</span>
                         </a>
                         <button
                             className="hamburger-btn"
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            onClick={() => setIsLandingMenuOpen(!isLandingMenuOpen)}
                         >
-                            {mobileMenuOpen ? "✕" : "☰"}
+                            {isLandingMenuOpen ? "✕" : "☰"}
                         </button>
                     </div>
 
-                    <div
-                        className={`nav-links-container ${mobileMenuOpen ? "mobile-open" : ""}`}
-                    >
+                    <div className={`nav-links-container ${isLandingMenuOpen ? "mobile-open" : ""}`}>
                         <div
                             style={{
                                 display: "flex",
@@ -650,7 +634,7 @@ export default function App() {
                         >
                             <a
                                 href="#about"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={() => setIsLandingMenuOpen(false)}
                                 style={{
                                     textDecoration: "none",
                                     color: "var(--text-main)",
@@ -662,7 +646,7 @@ export default function App() {
                             </a>
                             <a
                                 href="#why-us"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={() => setIsLandingMenuOpen(false)}
                                 style={{
                                     textDecoration: "none",
                                     color: "var(--text-main)",
@@ -674,7 +658,7 @@ export default function App() {
                             </a>
                             <a
                                 href="#contact"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={() => setIsLandingMenuOpen(false)}
                                 style={{
                                     textDecoration: "none",
                                     color: "var(--text-main)",
@@ -686,14 +670,7 @@ export default function App() {
                             </a>
                         </div>
 
-                        <div
-                            className="account-area"
-                            style={{
-                                display: "flex",
-                                gap: "8px",
-                                alignItems: "center",
-                            }}
-                        >
+                        <div className="account-area">
                             <button
                                 className="lang-switch"
                                 onClick={toggleLang}
@@ -710,10 +687,7 @@ export default function App() {
                                 {lang === "en" ? "FR" : "EN"}
                             </button>
                             <button
-                                onClick={() => {
-                                    setShowDonateModal(true);
-                                    setMobileMenuOpen(false);
-                                }}
+                                onClick={() => { setShowDonateModal(true); setIsLandingMenuOpen(false); }}
                                 style={{
                                     padding: "6px 12px",
                                     borderRadius: "6px",
@@ -730,28 +704,16 @@ export default function App() {
                             {isLoggedIn ? (
                                 <button
                                     className="cta-button"
-                                    onClick={() => {
-                                        setActiveView("dashboard");
-                                        setMobileMenuOpen(false);
-                                    }}
-                                    style={{
-                                        padding: "6px 14px",
-                                        fontSize: "0.85rem",
-                                    }}
+                                    onClick={() => { setActiveView("dashboard"); setIsLandingMenuOpen(false); }}
+                                    style={{ padding: "6px 14px", fontSize: "0.85rem" }}
                                 >
                                     {t.navDashboard}
                                 </button>
                             ) : (
                                 <button
                                     className="cta-button"
-                                    onClick={() => {
-                                        setShowAuthScreen(true);
-                                        setMobileMenuOpen(false);
-                                    }}
-                                    style={{
-                                        padding: "6px 14px",
-                                        fontSize: "0.85rem",
-                                    }}
+                                    onClick={() => { setShowAuthScreen(true); setIsLandingMenuOpen(false); }}
+                                    style={{ padding: "6px 14px", fontSize: "0.85rem" }}
                                 >
                                     {t.signInReg}
                                 </button>
@@ -826,7 +788,6 @@ export default function App() {
                     </div>
                 </section>
 
-                {/* Rich Text & Image Cards Section */}
                 <section className="landing-section" id="dangers">
                     <div
                         className="section-header"
@@ -853,21 +814,10 @@ export default function App() {
                                 src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80"
                                 alt="Clinical screening"
                             />
-                            <h3
-                                style={{
-                                    fontSize: "1.1rem",
-                                    marginBottom: "0.5rem",
-                                }}
-                            >
+                            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
                                 {t.card1Title}
                             </h3>
-                            <p
-                                style={{
-                                    color: "#475569",
-                                    fontSize: "0.9rem",
-                                    lineHeight: "1.6",
-                                }}
-                            >
+                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
                                 {t.card1Body}
                             </p>
                         </article>
@@ -876,21 +826,10 @@ export default function App() {
                                 src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80"
                                 alt="Medication management"
                             />
-                            <h3
-                                style={{
-                                    fontSize: "1.1rem",
-                                    marginBottom: "0.5rem",
-                                }}
-                            >
+                            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
                                 {t.card2Title}
                             </h3>
-                            <p
-                                style={{
-                                    color: "#475569",
-                                    fontSize: "0.9rem",
-                                    lineHeight: "1.6",
-                                }}
-                            >
+                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
                                 {t.card2Body}
                             </p>
                         </article>
@@ -899,21 +838,10 @@ export default function App() {
                                 src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80"
                                 alt="Doctor patient collaboration"
                             />
-                            <h3
-                                style={{
-                                    fontSize: "1.1rem",
-                                    marginBottom: "0.5rem",
-                                }}
-                            >
+                            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
                                 {t.card3Title}
                             </h3>
-                            <p
-                                style={{
-                                    color: "#475569",
-                                    fontSize: "0.9rem",
-                                    lineHeight: "1.6",
-                                }}
-                            >
+                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
                                 {t.card3Body}
                             </p>
                         </article>
@@ -941,10 +869,7 @@ export default function App() {
                         </h2>
                     </div>
                     <div className="cards-grid">
-                        <article
-                            className="info-card"
-                            style={{ background: "#fff" }}
-                        >
+                        <article className="info-card" style={{ background: "#fff" }}>
                             <h3
                                 style={{
                                     fontSize: "1.1rem",
@@ -954,20 +879,11 @@ export default function App() {
                             >
                                 {t.feat1Title}
                             </h3>
-                            <p
-                                style={{
-                                    color: "#475569",
-                                    fontSize: "0.9rem",
-                                    lineHeight: "1.6",
-                                }}
-                            >
+                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
                                 {t.feat1Body}
                             </p>
                         </article>
-                        <article
-                            className="info-card"
-                            style={{ background: "#fff" }}
-                        >
+                        <article className="info-card" style={{ background: "#fff" }}>
                             <h3
                                 style={{
                                     fontSize: "1.1rem",
@@ -977,20 +893,11 @@ export default function App() {
                             >
                                 {t.feat2Title}
                             </h3>
-                            <p
-                                style={{
-                                    color: "#475569",
-                                    fontSize: "0.9rem",
-                                    lineHeight: "1.6",
-                                }}
-                            >
+                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
                                 {t.feat2Body}
                             </p>
                         </article>
-                        <article
-                            className="info-card"
-                            style={{ background: "#fff" }}
-                        >
+                        <article className="info-card" style={{ background: "#fff" }}>
                             <h3
                                 style={{
                                     fontSize: "1.1rem",
@@ -1000,20 +907,13 @@ export default function App() {
                             >
                                 {t.feat3Title}
                             </h3>
-                            <p
-                                style={{
-                                    color: "#475569",
-                                    fontSize: "0.9rem",
-                                    lineHeight: "1.6",
-                                }}
-                            >
+                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
                                 {t.feat3Body}
                             </p>
                         </article>
                     </div>
                 </section>
 
-                {/* Rich Text About Us Section */}
                 <section className="landing-section" id="about">
                     <div
                         className="section-header"
@@ -1052,7 +952,6 @@ export default function App() {
                     </div>
                 </section>
 
-                {/* Mobile-Optimized Contact Section */}
                 <section className="landing-section highlight-bg" id="contact">
                     <div
                         className="section-header"
@@ -1118,19 +1017,8 @@ export default function App() {
                                     gap: "14px",
                                 }}
                             >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: "6px",
-                                    }}
-                                >
-                                    <label
-                                        style={{
-                                            fontSize: "0.85rem",
-                                            fontWeight: "600",
-                                        }}
-                                    >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                    <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>
                                         {t.contactName}
                                     </label>
                                     <input
@@ -1145,19 +1033,8 @@ export default function App() {
                                         }}
                                     />
                                 </div>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: "6px",
-                                    }}
-                                >
-                                    <label
-                                        style={{
-                                            fontSize: "0.85rem",
-                                            fontWeight: "600",
-                                        }}
-                                    >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                    <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>
                                         {t.contactEmail}
                                     </label>
                                     <input
@@ -1172,19 +1049,8 @@ export default function App() {
                                         }}
                                     />
                                 </div>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: "6px",
-                                    }}
-                                >
-                                    <label
-                                        style={{
-                                            fontSize: "0.85rem",
-                                            fontWeight: "600",
-                                        }}
-                                    >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                    <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>
                                         {t.contactMsg}
                                     </label>
                                     <textarea
@@ -1215,7 +1081,6 @@ export default function App() {
                     </div>
                 </section>
 
-                {/* Mobile-Friendly Footer */}
                 <footer
                     style={{
                         background: "#fff",
@@ -1239,8 +1104,12 @@ export default function App() {
                                 style={{
                                     fontSize: "1.2rem",
                                     color: "var(--primary)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
                                 }}
                             >
+                                <img src={logo} alt="Logo" style={{ height: "24px", width: "auto" }} />
                                 {t.appName}
                             </strong>
                             <p
@@ -1273,61 +1142,14 @@ export default function App() {
                                 <strong style={{ color: "var(--text-main)" }}>
                                     Navigation
                                 </strong>
-                                <a
-                                    href="#about"
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "#64748b",
-                                    }}
-                                >
+                                <a href="#about" style={{ textDecoration: "none", color: "#64748b" }}>
                                     {t.navAbout}
                                 </a>
-                                <a
-                                    href="#why-us"
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "#64748b",
-                                    }}
-                                >
+                                <a href="#why-us" style={{ textDecoration: "none", color: "#64748b" }}>
                                     Features
                                 </a>
-                                <a
-                                    href="#contact"
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "#64748b",
-                                    }}
-                                >
+                                <a href="#contact" style={{ textDecoration: "none", color: "#64748b" }}>
                                     {t.navContact}
-                                </a>
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: "0.5rem",
-                                }}
-                            >
-                                <strong style={{ color: "var(--text-main)" }}>
-                                    Legal & Privacy
-                                </strong>
-                                <a
-                                    href="#"
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "#64748b",
-                                    }}
-                                >
-                                    Privacy Policy
-                                </a>
-                                <a
-                                    href="#"
-                                    style={{
-                                        textDecoration: "none",
-                                        color: "#64748b",
-                                    }}
-                                >
-                                    Terms of Service
                                 </a>
                             </div>
                         </div>
@@ -1342,8 +1164,7 @@ export default function App() {
                             color: "#94a3b8",
                         }}
                     >
-                        © {new Date().getFullYear()} Rosetta Healthcare. All
-                        rights reserved.
+                        © {new Date().getFullYear()} Rosetta Healthcare. All rights reserved.
                     </div>
                 </footer>
 
@@ -1424,46 +1245,29 @@ export default function App() {
 
     const isDoctor = profile.role === "doctor";
     const completedCount = medications.filter((m) => m.is_taken).length;
-    const [dashboardMenuOpen, setDashboardMenuOpen] = useState(false);
 
     return (
         <div className="app-shell">
             <header className="topbar">
-                <div
-                    className="brand-row"
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        width: "100%",
-                    }}
-                >
+                <div className="brand-row">
                     <a
                         className="brand"
                         href="#"
                         onClick={(e) => {
                             e.preventDefault();
-                            setActiveView("dashboard");
+                            setActiveView("home");
                         }}
                         style={{
                             display: "flex",
                             alignItems: "center",
                             gap: "8px",
-                            textDecoration: "none",
                             fontWeight: "700",
                             fontSize: "1.2rem",
                             color: "var(--primary)",
+                            textDecoration: "none",
                         }}
                     >
-                        <img
-                            src={logo}
-                            alt="Rosetta Logo"
-                            style={{
-                                height: "32px",
-                                width: "auto",
-                                objectFit: "contain",
-                            }}
-                        />
+                        <img src={logo} alt="Logo" style={{ height: "30px", width: "auto" }} />
                         <span>{t.appName}</span>
                     </a>
                     <button
@@ -1474,16 +1278,7 @@ export default function App() {
                     </button>
                 </div>
 
-                <div
-                    className={`nav-links-container ${dashboardMenuOpen ? "mobile-open" : ""}`}
-                    style={{
-                        display: "flex",
-                        gap: "1.2rem",
-                        alignItems: "center",
-                        flexWrap: "wrap",
-                        justifyContent: "center",
-                    }}
-                >
+                <div className={`nav-links-container ${dashboardMenuOpen ? "mobile-open" : ""}`}>
                     <div
                         className="account-area"
                         style={{
@@ -1528,52 +1323,20 @@ export default function App() {
                         </button>
                         <button
                             className="cta-button"
-                            onClick={() => {
-                                setActiveView("home");
-                                setDashboardMenuOpen(false);
-                            }}
-                            style={{
-                                background: "#e2e8f0",
-                                color: "#1e293b",
-                                padding: "6px 12px",
-                                fontSize: "0.85rem",
-                            }}
+                            onClick={() => { setActiveView("home"); setDashboardMenuOpen(false); }}
+                            style={{ background: "#e2e8f0", color: "#1e293b", padding: "6px 12px", fontSize: "0.85rem" }}
                         >
-                            {t.navDashboard === "Dashboard →"
-                                ? "Home"
-                                : "Accueil"}
+                            {lang === "en" ? "Home" : "Accueil"}
                         </button>
 
-                        <div
-                            className="account-info"
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                textAlign: "right",
-                                fontSize: "0.85rem",
-                            }}
-                        >
+                        <div className="account-info" style={{ display: "flex", flexDirection: "column", textAlign: "right", fontSize: "0.85rem" }}>
                             <strong>{profile.full_name}</strong>
                             <span style={{ color: "#64748b" }}>
-                                {isDoctor
-                                    ? lang === "en"
-                                        ? "Doctor"
-                                        : "Médecin"
-                                    : lang === "en"
-                                      ? "Patient"
-                                      : "Patient"}
+                                {isDoctor ? (lang === "en" ? "Doctor" : "Médecin") : (lang === "en" ? "Patient" : "Patient")}
                             </span>
                         </div>
 
-                        <button
-                            className="cta-button"
-                            onClick={handleLogout}
-                            style={{
-                                background: "#ef4444",
-                                padding: "6px 12px",
-                                fontSize: "0.85rem",
-                            }}
-                        >
+                        <button className="cta-button" onClick={handleLogout} style={{ background: "#ef4444", padding: "6px 12px", fontSize: "0.85rem" }}>
                             {t.logout}
                         </button>
                     </div>
@@ -1627,184 +1390,149 @@ export default function App() {
                 </section>
 
                 {isDoctor ? (
-                    <>
-                        <section
-                            className="panel"
-                            style={{
-                                background: "#fff",
-                                padding: "2rem",
-                                borderRadius: "12px",
-                                border: "1px solid var(--border-color)",
-                            }}
-                        >
-                            <div
-                                className="panel-heading"
-                                style={{ marginBottom: "1.5rem" }}
+                    <section
+                        className="panel"
+                        style={{
+                            background: "#fff",
+                            padding: "2rem",
+                            borderRadius: "12px",
+                            border: "1px solid var(--border-color)",
+                        }}
+                    >
+                        <div className="panel-heading" style={{ marginBottom: "1.5rem" }}>
+                            <p
+                                className="eyebrow"
+                                style={{
+                                    color: "var(--primary)",
+                                    fontWeight: "700",
+                                    fontSize: "0.8rem",
+                                    letterSpacing: "1px",
+                                }}
                             >
-                                <p
-                                    className="eyebrow"
-                                    style={{
-                                        color: "var(--primary)",
-                                        fontWeight: "700",
-                                        fontSize: "0.8rem",
-                                        letterSpacing: "1px",
-                                    }}
-                                >
-                                    {t.messagesEyebrow}
-                                </p>
-                                <h2 style={{ fontSize: "1.4rem" }}>
-                                    {t.messagesTitle}
-                                </h2>
-                            </div>
+                                {t.messagesEyebrow}
+                            </p>
+                            <h2 style={{ fontSize: "1.4rem" }}>
+                                {t.messagesTitle}
+                            </h2>
+                        </div>
 
-                            {availableUsers.length === 0 ? (
-                                <p
-                                    style={{
-                                        color: "#64748b",
-                                        fontSize: "0.9rem",
-                                    }}
-                                >
-                                    {t.noPatients}
-                                </p>
-                            ) : (
-                                <div>
-                                    <div style={{ marginBottom: "15px" }}>
-                                        <label
-                                            style={{
-                                                display: "block",
-                                                marginBottom: "5px",
-                                                fontSize: "0.85rem",
-                                                fontWeight: "600",
-                                            }}
-                                        >
-                                            {t.selectPatient}
-                                        </label>
-                                        <select
-                                            value={recipientId}
-                                            onChange={(e) =>
-                                                setRecipientId(e.target.value)
-                                            }
-                                            style={{
-                                                width: "100%",
-                                                padding: "10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #cbd5e1",
-                                                fontSize: "0.9rem",
-                                            }}
-                                        >
-                                            {availableUsers.map((pat) => (
-                                                <option
-                                                    key={pat.id}
-                                                    value={pat.id}
-                                                >
-                                                    {pat.full_name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-
-                                    <div
+                        {availableUsers.length === 0 ? (
+                            <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
+                                {t.noPatients}
+                            </p>
+                        ) : (
+                            <div>
+                                <div style={{ marginBottom: "15px" }}>
+                                    <label
                                         style={{
-                                            height: "260px",
-                                            overflowY: "auto",
-                                            border: "1px solid #e2e8f0",
-                                            borderRadius: "8px",
-                                            padding: "12px",
-                                            marginBottom: "12px",
-                                            background: "#f8fafc",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "8px",
+                                            display: "block",
+                                            marginBottom: "5px",
+                                            fontSize: "0.85rem",
+                                            fontWeight: "600",
                                         }}
                                     >
-                                        {messages.length === 0 ? (
-                                            <p
-                                                style={{
-                                                    color: "#94a3b8",
-                                                    textAlign: "center",
-                                                    margin: "auto",
-                                                    fontSize: "0.85rem",
-                                                }}
-                                            >
-                                                {t.noMessages}
-                                            </p>
-                                        ) : (
-                                            messages.map((msg) => {
-                                                const isMe =
-                                                    msg.sender_id ===
-                                                    profile.id;
-                                                return (
-                                                    <div
-                                                        key={msg.id}
-                                                        style={{
-                                                            alignSelf: isMe
-                                                                ? "flex-end"
-                                                                : "flex-start",
-                                                            background: isMe
-                                                                ? "var(--primary)"
-                                                                : "#e2e8f0",
-                                                            color: isMe
-                                                                ? "white"
-                                                                : "#1e293b",
-                                                            padding: "8px 12px",
-                                                            borderRadius: "8px",
-                                                            maxWidth: "75%",
-                                                            fontSize: "0.9rem",
-                                                        }}
-                                                    >
-                                                        <p
-                                                            style={{
-                                                                margin: 0,
-                                                                wordBreak:
-                                                                    "break-word",
-                                                            }}
-                                                        >
-                                                            {msg.content}
-                                                        </p>
-                                                    </div>
-                                                );
-                                            })
-                                        )}
-                                    </div>
-
-                                    <form
-                                        onSubmit={handleSendMessage}
-                                        style={{ display: "flex", gap: "8px" }}
+                                        {t.selectPatient}
+                                    </label>
+                                    <select
+                                        value={recipientId}
+                                        onChange={(e) => setRecipientId(e.target.value)}
+                                        style={{
+                                            width: "100%",
+                                            padding: "10px",
+                                            borderRadius: "6px",
+                                            border: "1px solid #cbd5e1",
+                                            fontSize: "0.9rem",
+                                        }}
                                     >
-                                        <input
-                                            type="text"
-                                            placeholder={t.typeMsg}
-                                            value={newMessage}
-                                            onChange={(e) =>
-                                                setNewMessage(e.target.value)
-                                            }
-                                            style={{
-                                                flex: 1,
-                                                padding: "10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #cbd5e1",
-                                                fontSize: "0.9rem",
-                                            }}
-                                        />
-                                        <button
-                                            type="submit"
-                                            className="cta-button"
-                                            style={{ padding: "0 18px" }}
-                                        >
-                                            {t.send}
-                                        </button>
-                                    </form>
+                                        {availableUsers.map((pat) => (
+                                            <option key={pat.id} value={pat.id}>
+                                                {pat.full_name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
-                            )}
-                        </section>
-                    </>
+
+                                <div
+                                    style={{
+                                        height: "260px",
+                                        overflowY: "auto",
+                                        border: "1px solid #e2e8f0",
+                                        borderRadius: "8px",
+                                        padding: "12px",
+                                        marginBottom: "12px",
+                                        background: "#f8fafc",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: "8px",
+                                    }}
+                                >
+                                    {messages.length === 0 ? (
+                                        <p
+                                            style={{
+                                                color: "#94a3b8",
+                                                textAlign: "center",
+                                                margin: "auto",
+                                                fontSize: "0.85rem",
+                                            }}
+                                        >
+                                            {t.noMessages}
+                                        </p>
+                                    ) : (
+                                        messages.map((msg) => {
+                                            const isMe = msg.sender_id === profile.id;
+                                            return (
+                                                <div
+                                                    key={msg.id}
+                                                    style={{
+                                                        alignSelf: isMe ? "flex-end" : "flex-start",
+                                                        background: isMe ? "var(--primary)" : "#e2e8f0",
+                                                        color: isMe ? "white" : "#1e293b",
+                                                        padding: "8px 12px",
+                                                        borderRadius: "8px",
+                                                        maxWidth: "75%",
+                                                        fontSize: "0.9rem",
+                                                    }}
+                                                >
+                                                    <p style={{ margin: 0, wordBreak: "break-word" }}>
+                                                        {msg.content}
+                                                    </p>
+                                                </div>
+                                            );
+                                        })
+                                    )}
+                                </div>
+
+                                <form onSubmit={handleSendMessage} style={{ display: "flex", gap: "8px" }}>
+                                    <input
+                                        type="text"
+                                        placeholder={t.typeMsg}
+                                        value={newMessage}
+                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        style={{
+                                            flex: 1,
+                                            padding: "10px",
+                                            borderRadius: "6px",
+                                            border: "1px solid #cbd5e1",
+                                            fontSize: "0.9rem",
+                                        }}
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="cta-button"
+                                        style={{ padding: "0 18px" }}
+                                    >
+                                        {t.send}
+                                    </button>
+                                </form>
+                            </div>
+                        )}
+                    </section>
                 ) : (
                     <>
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns:
-                                    "repeat(auto-fit, minmax(240px, 1fr))",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
                                 gap: "1rem",
                             }}
                         >
@@ -1816,13 +1544,7 @@ export default function App() {
                                     border: "1px solid var(--border-color)",
                                 }}
                             >
-                                <p
-                                    style={{
-                                        color: "#64748b",
-                                        fontSize: "0.85rem",
-                                        fontWeight: "600",
-                                    }}
-                                >
+                                <p style={{ color: "#64748b", fontSize: "0.85rem", fontWeight: "600" }}>
                                     {t.todayMed}
                                 </p>
                                 <strong
@@ -1834,12 +1556,7 @@ export default function App() {
                                 >
                                     {medications.length} {t.scheduled}
                                 </strong>
-                                <span
-                                    style={{
-                                        color: "#94a3b8",
-                                        fontSize: "0.8rem",
-                                    }}
-                                >
+                                <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>
                                     {t.dailyPlan}
                                 </span>
                             </article>
@@ -1852,13 +1569,7 @@ export default function App() {
                                     border: "1px solid var(--border-color)",
                                 }}
                             >
-                                <p
-                                    style={{
-                                        color: "#64748b",
-                                        fontSize: "0.85rem",
-                                        fontWeight: "600",
-                                    }}
-                                >
+                                <p style={{ color: "#64748b", fontSize: "0.85rem", fontWeight: "600" }}>
                                     {t.dosesDone}
                                 </p>
                                 <strong
@@ -1868,15 +1579,9 @@ export default function App() {
                                         margin: "0.2rem 0",
                                     }}
                                 >
-                                    {completedCount} {t.completedOf}{" "}
-                                    {medications.length}
+                                    {completedCount} {t.completedOf} {medications.length}
                                 </strong>
-                                <span
-                                    style={{
-                                        color: "#94a3b8",
-                                        fontSize: "0.8rem",
-                                    }}
-                                >
+                                <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>
                                     {t.progressToday}
                                 </span>
                             </article>
@@ -1953,9 +1658,7 @@ export default function App() {
                                     type="text"
                                     placeholder={t.medNamePlace}
                                     value={newMedName}
-                                    onChange={(e) =>
-                                        setNewMedName(e.target.value)
-                                    }
+                                    onChange={(e) => setNewMedName(e.target.value)}
                                     required
                                     style={{
                                         flex: 2,
@@ -1970,9 +1673,7 @@ export default function App() {
                                     type="text"
                                     placeholder={t.dosagePlace}
                                     value={newDosage}
-                                    onChange={(e) =>
-                                        setNewDosage(e.target.value)
-                                    }
+                                    onChange={(e) => setNewDosage(e.target.value)}
                                     style={{
                                         flex: 1,
                                         minWidth: "110px",
@@ -2026,38 +1727,22 @@ export default function App() {
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
                                                 padding: "12px 15px",
-                                                background: med.is_taken
-                                                    ? "#f8fafc"
-                                                    : "#fff",
+                                                background: med.is_taken ? "#f8fafc" : "#fff",
                                                 border: "1px solid #e2e8f0",
                                                 borderRadius: "8px",
-                                                textDecoration: med.is_taken
-                                                    ? "line-through"
-                                                    : "none",
-                                                color: med.is_taken
-                                                    ? "#94a3b8"
-                                                    : "#1e293b",
+                                                textDecoration: med.is_taken ? "line-through" : "none",
+                                                color: med.is_taken ? "#94a3b8" : "#1e293b",
                                                 fontSize: "0.9rem",
                                             }}
                                         >
                                             <div>
-                                                <strong>
-                                                    {med.medication_name}
-                                                </strong>{" "}
-                                                ({med.dosage})
+                                                <strong>{med.medication_name}</strong> ({med.dosage})
                                             </div>
                                             <button
-                                                onClick={() =>
-                                                    toggleMedication(
-                                                        med.id,
-                                                        med.is_taken,
-                                                    )
-                                                }
+                                                onClick={() => toggleMedication(med.id, med.is_taken)}
                                                 style={{
                                                     padding: "6px 12px",
-                                                    background: med.is_taken
-                                                        ? "#64748b"
-                                                        : "#16a34a",
+                                                    background: med.is_taken ? "#64748b" : "#16a34a",
                                                     color: "white",
                                                     border: "none",
                                                     borderRadius: "6px",
@@ -2066,9 +1751,7 @@ export default function App() {
                                                     fontWeight: "600",
                                                 }}
                                             >
-                                                {med.is_taken
-                                                    ? t.undo
-                                                    : t.markTaken}
+                                                {med.is_taken ? t.undo : t.markTaken}
                                             </button>
                                         </div>
                                     ))}
@@ -2085,10 +1768,7 @@ export default function App() {
                                 border: "1px solid var(--border-color)",
                             }}
                         >
-                            <div
-                                className="panel-heading"
-                                style={{ marginBottom: "1.5rem" }}
-                            >
+                            <div className="panel-heading" style={{ marginBottom: "1.5rem" }}>
                                 <p
                                     className="eyebrow"
                                     style={{
@@ -2106,12 +1786,7 @@ export default function App() {
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p
-                                    style={{
-                                        color: "#64748b",
-                                        fontSize: "0.9rem",
-                                    }}
-                                >
+                                <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
                                     {t.noDoctors}
                                 </p>
                             ) : (
@@ -2129,9 +1804,7 @@ export default function App() {
                                         </label>
                                         <select
                                             value={recipientId}
-                                            onChange={(e) =>
-                                                setRecipientId(e.target.value)
-                                            }
+                                            onChange={(e) => setRecipientId(e.target.value)}
                                             style={{
                                                 width: "100%",
                                                 padding: "10px",
@@ -2141,10 +1814,7 @@ export default function App() {
                                             }}
                                         >
                                             {availableUsers.map((doc) => (
-                                                <option
-                                                    key={doc.id}
-                                                    value={doc.id}
-                                                >
+                                                <option key={doc.id} value={doc.id}>
                                                     Dr. {doc.full_name}
                                                 </option>
                                             ))}
@@ -2178,35 +1848,21 @@ export default function App() {
                                             </p>
                                         ) : (
                                             messages.map((msg) => {
-                                                const isMe =
-                                                    msg.sender_id ===
-                                                    profile.id;
+                                                const isMe = msg.sender_id === profile.id;
                                                 return (
                                                     <div
                                                         key={msg.id}
                                                         style={{
-                                                            alignSelf: isMe
-                                                                ? "flex-end"
-                                                                : "flex-start",
-                                                            background: isMe
-                                                                ? "var(--primary)"
-                                                                : "#e2e8f0",
-                                                            color: isMe
-                                                                ? "white"
-                                                                : "#1e293b",
+                                                            alignSelf: isMe ? "flex-end" : "flex-start",
+                                                            background: isMe ? "var(--primary)" : "#e2e8f0",
+                                                            color: isMe ? "white" : "#1e293b",
                                                             padding: "8px 12px",
                                                             borderRadius: "8px",
                                                             maxWidth: "75%",
                                                             fontSize: "0.9rem",
                                                         }}
                                                     >
-                                                        <p
-                                                            style={{
-                                                                margin: 0,
-                                                                wordBreak:
-                                                                    "break-word",
-                                                            }}
-                                                        >
+                                                        <p style={{ margin: 0, wordBreak: "break-word" }}>
                                                             {msg.content}
                                                         </p>
                                                     </div>
@@ -2215,17 +1871,12 @@ export default function App() {
                                         )}
                                     </div>
 
-                                    <form
-                                        onSubmit={handleSendMessage}
-                                        style={{ display: "flex", gap: "8px" }}
-                                    >
+                                    <form onSubmit={handleSendMessage} style={{ display: "flex", gap: "8px" }}>
                                         <input
                                             type="text"
                                             placeholder={t.typeMsg}
                                             value={newMessage}
-                                            onChange={(e) =>
-                                                setNewMessage(e.target.value)
-                                            }
+                                            onChange={(e) => setNewMessage(e.target.value)}
                                             style={{
                                                 flex: 1,
                                                 padding: "10px",

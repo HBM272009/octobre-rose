@@ -106,7 +106,6 @@ body {
     background: var(--primary-hover);
 }
 
-/* Mobile Adjustments for inputs and navigation */
 input,
 select,
 textarea,
@@ -114,25 +113,6 @@ button {
     max-width: 100%;
 }
 
-@media (max-width: 768px) {
-    .topbar {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
-    }
-
-    .account-area {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-
-    .landing-hero {
-        padding: 2rem 1rem;
-    }
-}
-/* Hamburger Menu Styles */
 .hamburger-btn {
     display: none;
     background: none;
@@ -149,6 +129,18 @@ button {
 }
 
 @media (max-width: 768px) {
+    .topbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .brand-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
     .hamburger-btn {
         display: block;
     }
@@ -161,129 +153,21 @@ button {
         padding-top: 1rem;
         border-top: 1px solid var(--border-color);
         margin-top: 0.5rem;
+        gap: 1rem;
     }
 
     .nav-links-container.mobile-open {
         display: flex;
     }
 
-    .topbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .brand-row {
+    .account-area {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
-}
-/* Hamburger Menu Styles */
-.hamburger-btn {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-main);
-}
-
-@media (max-width: 768px) {
-    .hamburger-btn {
-        display: block !important;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
-    .nav-links-container {
-        display: none !important;
-        width: 100% !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        padding-top: 1rem !important;
-        border-top: 1px solid var(--border-color) !important;
-        margin-top: 0.5rem !important;
-        gap: 1rem !important;
-    }
-
-    .nav-links-container.mobile-open {
-        display: flex !important;
-    }
-
-    .topbar {
-        flex-direction: column !important;
-        align-items: stretch !important;
-    }
-
-    .brand-row {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        width: 100% !important;
-    }
-}@media (max-width: 768px) {
-    .hamburger-btn {
-        display: block !important;
-    }
-
-    .nav-links-container {
-        display: none !important;
-        width: 100%;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        padding-top: 1rem;
-        border-top: 1px solid var(--border-color);
-        margin-top: 0.5rem;
-        gap: 1rem !important;
-    }
-
-    .nav-links-container.mobile-open {
-        display: flex !important;
-    }
-
-    .topbar {
-        flex-direction: column !important;
-        align-items: stretch !important;
-    }
-}
-/* Hamburger Menu Styles */
-.hamburger-btn {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-main);
-}
-
-@media (max-width: 768px) {
-    .hamburger-btn {
-        display: block !important;
-    }
-
-    .nav-links-container {
-        display: none !important;
-        width: 100% !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        padding-top: 1rem !important;
-        border-top: 1px solid var(--border-color) !important;
-        margin-top: 0.5rem !important;
-        gap: 1rem !important;
-    }
-
-    .nav-links-container.mobile-open {
-        display: flex !important;
-    }
-
-    .topbar {
-        flex-direction: column !important;
-        align-items: stretch !important;
-    }
-
-    .brand-row {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        width: 100% !important;
+    .landing-hero {
+        padding: 2rem 1rem;
     }
 }

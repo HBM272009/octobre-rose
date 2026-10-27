@@ -85,44 +85,44 @@ export default function Auth({ lang = "en" }) {
     }
 
     return (
-        <div className="status-screen">
-            <div className="panel auth-card" style={{ width: "100%", maxWidth: "400px", padding: "1.75rem" }}>
-                <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
-                    <h2 style={{ fontSize: "1.35rem", color: "#2b2d42" }}>
+        <div className="status-screen" style={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "1.5rem" }}>
+            <div className="panel auth-card" style={{ width: "100%", maxWidth: "420px", padding: "2rem", background: "#fff", borderRadius: "12px", border: "1px solid var(--border-color)", boxShadow: "0 4px 6px -1px rgba(225, 29, 72, 0.05)" }}>
+                <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+                    <h2 style={{ fontSize: "1.5rem", color: "#881337", marginBottom: "0.3rem" }}>
                         {isSignUp ? txt.titleUp : txt.titleIn}
                     </h2>
-                    <p style={{ color: "#6c757d", fontSize: "0.85rem", marginTop: "0.25rem" }}>
+                    <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
                         {isSignUp ? txt.subUp : txt.subIn}
                     </p>
                 </div>
 
                 {message && (
-                    <div style={{ padding: "10px", background: "#f8f9fa", border: "1px solid #f1d6e2", color: "#d63384", borderRadius: "6px", marginBottom: "15px", fontSize: "0.85rem", textAlign: "center" }}>
+                    <div style={{ padding: "12px", background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534", borderRadius: "8px", marginBottom: "16px", fontSize: "0.85rem", textAlign: "center", fontWeight: "600" }}>
                         {message}
                     </div>
                 )}
 
-                <form onSubmit={handleAuth} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <form onSubmit={handleAuth} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                     {isSignUp && (
                         <>
-                            <div>
-                                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "600", marginBottom: "4px" }}>{txt.name}</label>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                <label style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-main)" }}>{txt.name}</label>
                                 <input
                                     type="text"
                                     placeholder={txt.namePlaceholder}
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
                                     required
-                                    style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                    style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                 />
                             </div>
 
-                            <div>
-                                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "600", marginBottom: "4px" }}>{txt.roleLabel}</label>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                <label style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-main)" }}>{txt.roleLabel}</label>
                                 <select
                                     value={role}
                                     onChange={(e) => setRole(e.target.value)}
-                                    style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", background: "#fff", fontSize: "0.9rem" }}
+                                    style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", background: "#fff", fontSize: "0.9rem" }}
                                 >
                                     <option value="patient">{txt.patient}</option>
                                     <option value="doctor">{txt.doctor}</option>
@@ -131,27 +131,27 @@ export default function Auth({ lang = "en" }) {
                         </>
                     )}
 
-                    <div>
-                        <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "600", marginBottom: "4px" }}>{txt.email}</label>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                        <label style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-main)" }}>{txt.email}</label>
                         <input
                             type="email"
                             placeholder="email@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                         />
                     </div>
 
-                    <div>
-                        <label style={{ display: "block", fontSize: "0.8rem", fontWeight: "600", marginBottom: "4px" }}>{txt.password}</label>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                        <label style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-main)" }}>{txt.password}</label>
                         <input
                             type="password"
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                         />
                     </div>
 
@@ -159,16 +159,16 @@ export default function Auth({ lang = "en" }) {
                         type="submit"
                         disabled={loading}
                         className="cta-button"
-                        style={{ marginTop: "8px", width: "100%" }}
+                        style={{ marginTop: "8px", width: "100%", padding: "10px" }}
                     >
                         {loading ? txt.processing : isSignUp ? txt.signUpBtn : txt.signInBtn}
                     </button>
                 </form>
 
-                <div style={{ textAlign: "center", marginTop: "1.25rem" }}>
+                <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
                     <button
                         onClick={() => setIsSignUp(!isSignUp)}
-                        style={{ background: "none", border: "none", color: "#d63384", cursor: "pointer", fontSize: "0.85rem", fontWeight: "500" }}
+                        style={{ background: "none", border: "none", color: "var(--primary)", cursor: "pointer", fontSize: "0.85rem", fontWeight: "600" }}
                     >
                         {isSignUp ? txt.toggleToIn : txt.toggleToUp}
                     </button>

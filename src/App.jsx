@@ -18,7 +18,162 @@ export default function App() {
     const [profileLoading, setProfileLoading] = useState(false);
     const [profileError, setProfileError] = useState("");
 
-    // Fetch medications when profile loads and is a patient
+    // Toggles
+    const [showAuthScreen, setShowAuthScreen] = useState(false);
+    const [activeView, setActiveView] = useState("dashboard");
+    const [lang, setLang] = useState("en"); // English / French switcher
+
+    const t = {
+        en: {
+            appName: "Rosetta",
+            tagline: "Breast Health Companion",
+            heroTitle: "Rosetta, your companion through treatment",
+            heroSub:
+                "Connecting patients and healthcare teams with structured daily care plans, medication tracking, and direct secure messaging.",
+            getStarted: "Get Started",
+            learnMore: "Learn More ↓",
+            navHome: "← Home",
+            navDashboard: "Go to Dashboard →",
+            signInReg: "Sign In / Register",
+            logout: "Log out",
+            awarenessEyebrow: "AWARENESS & PREVENTION",
+            awarenessTitle: "Understanding Early Detection",
+            card1Title: "Early Screening",
+            card1Body:
+                "Regular medical checkups and screenings increase treatment efficacy significantly. Awareness remains key.",
+            card2Title: "Structured Care",
+            card2Body:
+                "Managing daily medications, appointments, and symptoms requires an intuitive, clear care dashboard.",
+            card3Title: "Continuous Support",
+            card3Body:
+                "Direct communication channels between patients and care teams improve outcomes and comfort.",
+            whyEyebrow: "PLATFORM FEATURES",
+            whyTitle: "Designed for Patients & Care Teams",
+            feat1Title: "Medication Reminders",
+            feat1Body:
+                "Track daily schedules, dosages, and completed treatments easily.",
+            feat2Title: "Direct Messaging",
+            feat2Body:
+                "Real-time communication with your doctor for remote support and reassurance.",
+            feat3Title: "Secure Platform",
+            feat3Body:
+                "Built with standard Row-Level Security ensuring user privacy and role isolation.",
+            aboutEyebrow: "ABOUT ROSETTA",
+            aboutTitle: "Our Focus",
+            aboutBody:
+                "Rosetta bridges the gap between healthcare providers and patients. We provide tools to make daily care management simple and accurate.",
+            footer: "Rosetta Healthcare Companion",
+            patientSpace: "PATIENT DASHBOARD",
+            doctorSpace: "DOCTOR WORKSPACE",
+            welcomePatient: "Hello, ",
+            welcomeDoctor: "Welcome, Dr. ",
+            patientSub:
+                "Track your treatment plan and stay connected with your healthcare provider.",
+            doctorSub:
+                "Monitor patient updates and respond to direct consultations.",
+            selectPatient: "Select Patient:",
+            selectDoctor: "Select Doctor:",
+            noPatients: "No patients registered in the workspace yet.",
+            noDoctors: "No doctors available in the workspace right now.",
+            noMessages: "No messages yet.",
+            typeMsg: "Type a message...",
+            send: "Send",
+            todayMed: "Today's Medication",
+            scheduled: "scheduled",
+            dailyPlan: "Daily treatment list",
+            dosesDone: "Completed Doses",
+            completedOf: "completed of",
+            progressToday: "Today's progress",
+            carePlan: "CARE PLAN",
+            medSchedule: "Medication Schedule",
+            medNamePlace: "Medication name",
+            dosagePlace: "Dosage (e.g. 20mg)",
+            addReminder: "Add Reminder",
+            noMeds: "No medications scheduled yet.",
+            undo: "Undo",
+            markTaken: "Mark as Taken",
+            messagesTitle: "Messages",
+            messagesEyebrow: "COMMUNICATION",
+            backHome: "← Back to Home",
+        },
+        fr: {
+            appName: "Rosetta",
+            tagline: "Accompagnement Santé",
+            heroTitle: "Rosetta, votre plateforme d'accompagnement",
+            heroSub:
+                "Faciliter le suivi quotidien des traitements et la communication directe entre les patients et l'équipe médicale.",
+            getStarted: "Commencer",
+            learnMore: "En savoir plus ↓",
+            navHome: "← Accueil",
+            navDashboard: "Accéder à l'espace →",
+            signInReg: "Connexion / Inscription",
+            logout: "Déconnexion",
+            awarenessEyebrow: "SENSABILISATION & PRÉVENTION",
+            awarenessTitle: "L'importance du dépistage précoce",
+            card1Title: "Dépistage Précoce",
+            card1Body:
+                "Des examens réguliers permettent d'améliorer considérablement l'efficacité des traitements.",
+            card2Title: "Suivi Structuré",
+            card2Body:
+                "Organiser les prises de médicaments et rendez-vous grâce à un tableau de bord clair.",
+            card3Title: "Support Continu",
+            card3Body:
+                "La communication directe avec l'équipe soignante apporte sécurité et tranquillité d'esprit.",
+            whyEyebrow: "FONCTIONNALITÉS",
+            whyTitle: "Conçu pour les patients et soignants",
+            feat1Title: "Rappels de traitements",
+            feat1Body:
+                "Suivez les horaires quotidiens, dosages et validez les prises en un clic.",
+            feat2Title: "Messagerie directe",
+            feat2Body:
+                "Échanges en temps réel avec votre médecin pour un accompagnement à distance.",
+            feat3Title: "Espace Sécurisé",
+            feat3Body:
+                "Plateforme sécurisée garantissant la confidentialité stricte des données médicales.",
+            aboutEyebrow: "À PROPOS DE ROSETTA",
+            aboutTitle: "Notre Mission",
+            aboutBody:
+                "Rosetta vise à simplifier la prise en charge quotidienne des traitements tout en maintenant un lien direct avec l'équipe médicale.",
+            footer: "Rosetta · Plateforme d'accompagnement médical",
+            patientSpace: "ESPACE PATIENT",
+            doctorSpace: "ESPACE MÉDECIN",
+            welcomePatient: "Bonjour, ",
+            welcomeDoctor: "Bienvenue, Dr. ",
+            patientSub:
+                "Suivez votre traitement quotidien et restez en contact avec votre médecin.",
+            doctorSub:
+                "Suivez le parcours de vos patients et répondez aux messages.",
+            selectPatient: "Sélectionner un patient :",
+            selectDoctor: "Sélectionner un médecin :",
+            noPatients: "Aucun patient inscrit pour le moment.",
+            noDoctors: "Aucun médecin disponible pour le moment.",
+            noMessages: "Aucun message pour l'instant.",
+            typeMsg: "Écrire un message...",
+            send: "Envoyer",
+            todayMed: "Médicaments du jour",
+            scheduled: "programmé(s)",
+            dailyPlan: "Programme quotidien",
+            dosesDone: "Doses prises",
+            completedOf: "sur",
+            progressToday: "Progression aujourd'hui",
+            carePlan: "PLAN DE SOINS",
+            medSchedule: "Programme des traitements",
+            medNamePlace: "Nom du médicament",
+            dosagePlace: "Dosage (ex. 20mg)",
+            addReminder: "Ajouter",
+            noMeds: "Aucun médicament programmé.",
+            undo: "Annuler",
+            markTaken: "Marquer comme pris",
+            messagesTitle: "Messagerie",
+            messagesEyebrow: "COMMUNICATION",
+            backHome: "← Retour",
+        },
+    }[lang];
+
+    // Toggle language handler
+    const toggleLang = () => setLang((l) => (l === "en" ? "fr" : "en"));
+
+    // Fetch medications
     useEffect(() => {
         if (!profile || profile.role !== "patient") return;
 
@@ -76,8 +231,8 @@ export default function App() {
         if (!error) {
             setMedications(
                 medications.map((med) =>
-                    med.id === id ? { ...med, is_taken: !currentStatus } : med
-                )
+                    med.id === id ? { ...med, is_taken: !currentStatus } : med,
+                ),
             );
         }
     }
@@ -89,10 +244,7 @@ export default function App() {
             const { data, error } = await supabase.auth.getSession();
 
             if (!mounted) return;
-
-            if (error) {
-                setProfileError(error.message);
-            }
+            if (error) setProfileError(error.message);
 
             setSession(data?.session ?? null);
             setLoading(false);
@@ -139,22 +291,16 @@ export default function App() {
                 if (error) {
                     setProfileError(error.message);
                 } else if (!data) {
-                    setProfileError(
-                        "No profile was returned. Check your profiles table permissions."
-                    );
+                    setProfileError("Profile not found.");
                 } else {
                     setProfile(data);
                 }
             } catch (error) {
                 if (!cancelled) {
-                    setProfileError(
-                        error.message || "Unable to load your profile."
-                    );
+                    setProfileError(error.message || "Unable to load profile.");
                 }
             } finally {
-                if (!cancelled) {
-                    setProfileLoading(false);
-                }
+                if (!cancelled) setProfileLoading(false);
             }
         }
 
@@ -167,18 +313,16 @@ export default function App() {
 
     async function handleLogout() {
         const { error } = await supabase.auth.signOut();
-
-        if (error) {
-            setProfileError(error.message);
-        }
+        setActiveView("dashboard");
+        if (error) setProfileError(error.message);
     }
 
-    // Fetch users to chat with (Doctors see Patients, Patients see Doctors)
     useEffect(() => {
         if (!profile) return;
 
         async function fetchUsers() {
-            const targetRole = profile.role === "patient" ? "doctor" : "patient";
+            const targetRole =
+                profile.role === "patient" ? "doctor" : "patient";
             const { data, error } = await supabase
                 .from("profiles")
                 .select("id, full_name, role")
@@ -193,7 +337,6 @@ export default function App() {
         fetchUsers();
     }, [profile]);
 
-    // Fetch messages and subscribe to real-time updates safely
     useEffect(() => {
         if (!profile || !recipientId) return;
 
@@ -202,13 +345,11 @@ export default function App() {
                 .from("messages")
                 .select("*")
                 .or(
-                    `and(sender_id.eq.${profile.id},receiver_id.eq.${recipientId}),and(sender_id.eq.${recipientId},receiver_id.eq.${profile.id})`
+                    `and(sender_id.eq.${profile.id},receiver_id.eq.${recipientId}),and(sender_id.eq.${recipientId},receiver_id.eq.${profile.id})`,
                 )
                 .order("created_at", { ascending: true });
 
-            if (!error && data) {
-                setMessages(data);
-            }
+            if (!error && data) setMessages(data);
         }
 
         fetchMessages();
@@ -225,12 +366,14 @@ export default function App() {
                 (payload) => {
                     const newMsg = payload.new;
                     if (
-                        (newMsg.sender_id === profile.id && newMsg.receiver_id === recipientId) ||
-                        (newMsg.sender_id === recipientId && newMsg.receiver_id === profile.id)
+                        (newMsg.sender_id === profile.id &&
+                            newMsg.receiver_id === recipientId) ||
+                        (newMsg.sender_id === recipientId &&
+                            newMsg.receiver_id === profile.id)
                     ) {
                         setMessages((prev) => [...prev, newMsg]);
                     }
-                }
+                },
             )
             .subscribe();
 
@@ -259,25 +402,181 @@ export default function App() {
     }
 
     if (loading) {
-        return <main className="status-screen">Loading Octobre Rose...</main>;
+        return <main className="status-screen">Loading...</main>;
     }
 
+    const LandingView = ({ isLoggedIn }) => (
+        <div className="landing-page">
+            <header className="topbar">
+                <a
+                    className="brand"
+                    href="#"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setActiveView("dashboard");
+                    }}
+                >
+                    {t.appName}
+                </a>
+                <div className="account-area">
+                    <button className="lang-switch" onClick={toggleLang}>
+                        {lang === "en" ? "FR" : "EN"}
+                    </button>
+                    {isLoggedIn ? (
+                        <button
+                            className="nav-btn primary-btn"
+                            onClick={() => setActiveView("dashboard")}
+                        >
+                            {t.navDashboard}
+                        </button>
+                    ) : (
+                        <button
+                            className="nav-btn primary-btn"
+                            onClick={() => setShowAuthScreen(true)}
+                        >
+                            {t.signInReg}
+                        </button>
+                    )}
+                </div>
+            </header>
+
+            <section className="landing-hero">
+                <div className="hero-content">
+                    <p className="eyebrow">{t.tagline}</p>
+                    <h1>{t.heroTitle}</h1>
+                    <p className="hero-subtitle">{t.heroSub}</p>
+                    <div className="hero-actions">
+                        <button
+                            className="cta-button"
+                            onClick={() =>
+                                isLoggedIn
+                                    ? setActiveView("dashboard")
+                                    : setShowAuthScreen(true)
+                            }
+                        >
+                            {isLoggedIn ? t.navDashboard : t.getStarted}
+                        </button>
+                        <a href="#about" className="secondary-button">
+                            {t.learnMore}
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section className="landing-section" id="dangers">
+                <div className="section-header">
+                    <p className="eyebrow">{t.awarenessEyebrow}</p>
+                    <h2>{t.awarenessTitle}</h2>
+                </div>
+                <div className="cards-grid">
+                    <article className="info-card">
+                        <h3>{t.card1Title}</h3>
+                        <p>{t.card1Body}</p>
+                    </article>
+                    <article className="info-card">
+                        <h3>{t.card2Title}</h3>
+                        <p>{t.card2Body}</p>
+                    </article>
+                    <article className="info-card">
+                        <h3>{t.card3Title}</h3>
+                        <p>{t.card3Body}</p>
+                    </article>
+                </div>
+            </section>
+
+            <section className="landing-section highlight-bg" id="why-us">
+                <div className="section-header">
+                    <p className="eyebrow">{t.whyEyebrow}</p>
+                    <h2>{t.whyTitle}</h2>
+                </div>
+                <div className="cards-grid">
+                    <article className="info-card">
+                        <h3>{t.feat1Title}</h3>
+                        <p>{t.feat1Body}</p>
+                    </article>
+                    <article className="info-card">
+                        <h3>{t.feat2Title}</h3>
+                        <p>{t.feat2Body}</p>
+                    </article>
+                    <article className="info-card">
+                        <h3>{t.feat3Title}</h3>
+                        <p>{t.feat3Body}</p>
+                    </article>
+                </div>
+            </section>
+
+            <section className="landing-section" id="about">
+                <div className="section-header">
+                    <p className="eyebrow">{t.aboutEyebrow}</p>
+                    <h2>{t.aboutTitle}</h2>
+                </div>
+                <div
+                    style={{
+                        maxWidth: "750px",
+                        margin: "0 auto",
+                        textAlign: "center",
+                        color: "#6c757d",
+                        lineHeight: "1.7",
+                        fontSize: "0.95rem",
+                    }}
+                >
+                    <p>{t.aboutBody}</p>
+                </div>
+            </section>
+
+            <footer className="dashboard-footer">{t.footer}</footer>
+        </div>
+    );
+
     if (!session) {
-        return <Auth />;
+        if (showAuthScreen) {
+            return (
+                <div style={{ position: "relative" }}>
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: "15px",
+                            left: "15px",
+                            zIndex: 10,
+                            display: "flex",
+                            gap: "10px",
+                        }}
+                    >
+                        <button
+                            className="nav-btn"
+                            onClick={() => setShowAuthScreen(false)}
+                        >
+                            {t.backHome}
+                        </button>
+                        <button className="lang-switch" onClick={toggleLang}>
+                            {lang === "en" ? "FR" : "EN"}
+                        </button>
+                    </div>
+                    <Auth lang={lang} />
+                </div>
+            );
+        }
+
+        return <LandingView isLoggedIn={false} />;
     }
 
     if (profileError) {
         return (
             <main className="status-screen">
-                <h1>We couldn't load your profile</h1>
-                <p>{profileError}</p>
-                <button onClick={handleLogout}>Log out</button>
+                <h2>{profileError}</h2>
+                <button className="nav-btn" onClick={handleLogout}>
+                    {t.logout}
+                </button>
             </main>
         );
     }
 
     if (profileLoading || !profile) {
-        return <main className="status-screen">Loading your profile...</main>;
+        return <main className="status-screen">Loading...</main>;
+    }
+
+    if (activeView === "home") {
+        return <LandingView isLoggedIn={true} />;
     }
 
     const isDoctor = profile.role === "doctor";
@@ -286,19 +585,44 @@ export default function App() {
     return (
         <div className="app-shell">
             <header className="topbar">
-                <a className="brand" href="#">
-                    <span className="brand-mark">✿</span>
-                    <span>Octobre Rose</span>
+                <a
+                    className="brand"
+                    href="#"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setActiveView("home");
+                    }}
+                >
+                    {t.appName}
                 </a>
 
                 <div className="account-area">
+                    <button className="lang-switch" onClick={toggleLang}>
+                        {lang === "en" ? "FR" : "EN"}
+                    </button>
+
+                    <button
+                        className="nav-btn"
+                        onClick={() => setActiveView("home")}
+                    >
+                        {t.navHome}
+                    </button>
+
                     <div className="account-info">
                         <strong>{profile.full_name}</strong>
-                        <span>{isDoctor ? "Doctor" : "Patient"}</span>
+                        <span>
+                            {isDoctor
+                                ? lang === "en"
+                                    ? "Doctor"
+                                    : "Médecin"
+                                : lang === "en"
+                                  ? "Patient"
+                                  : "Patient"}
+                        </span>
                     </div>
 
                     <button className="logout-button" onClick={handleLogout}>
-                        Log out
+                        {t.logout}
                     </button>
                 </div>
             </header>
@@ -307,24 +631,18 @@ export default function App() {
                 <section className="welcome-section">
                     <div>
                         <p className="eyebrow">
-                            {isDoctor ? "DOCTOR SPACE" : "YOUR PERSONAL SPACE"}
+                            {isDoctor ? t.doctorSpace : t.patientSpace}
                         </p>
 
                         <h1>
                             {isDoctor
-                                ? `Welcome, Dr. ${profile.full_name}`
-                                : `Hello, ${profile.full_name} 💗`}
+                                ? `${t.welcomeDoctor}${profile.full_name}`
+                                : `${t.welcomePatient}${profile.full_name}`}
                         </h1>
 
                         <p className="welcome-description">
-                            {isDoctor
-                                ? "Your workspace for supporting patients throughout their care."
-                                : "One step at a time. We're here to help you stay on track with your care."}
+                            {isDoctor ? t.doctorSub : t.patientSub}
                         </p>
-                    </div>
-
-                    <div className="welcome-decoration" aria-hidden="true">
-                        ♡
                     </div>
                 </section>
 
@@ -333,27 +651,21 @@ export default function App() {
                         <section className="panel">
                             <div className="panel-heading">
                                 <div>
-                                    <p className="eyebrow">DOCTOR WORKSPACE</p>
-                                    <h2>Patient Care Management</h2>
-                                </div>
-                            </div>
-                            <p style={{ color: "#666" }}>
-                                Use the chat section below to communicate directly with your registered patients.
-                            </p>
-                        </section>
-
-                        {/* Doctor's Chat Section */}
-                        <section className="panel">
-                            <div className="panel-heading">
-                                <div>
-                                    <p className="eyebrow">REAL-TIME COMMUNICATION</p>
-                                    <h2>Patient Messages</h2>
+                                    <p className="eyebrow">
+                                        {t.messagesEyebrow}
+                                    </p>
+                                    <h2>{t.messagesTitle}</h2>
                                 </div>
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p style={{ color: "#666" }}>
-                                    No patients registered in the app yet.
+                                <p
+                                    style={{
+                                        color: "#6c757d",
+                                        fontSize: "0.9rem",
+                                    }}
+                                >
+                                    {t.noPatients}
                                 </p>
                             ) : (
                                 <div>
@@ -362,10 +674,11 @@ export default function App() {
                                             style={{
                                                 display: "block",
                                                 marginBottom: "5px",
-                                                fontWeight: "bold",
+                                                fontSize: "0.85rem",
+                                                fontWeight: "600",
                                             }}
                                         >
-                                            Select Patient:
+                                            {t.selectPatient}
                                         </label>
                                         <select
                                             value={recipientId}
@@ -377,6 +690,7 @@ export default function App() {
                                                 padding: "10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #ccc",
+                                                fontSize: "0.9rem",
                                             }}
                                         >
                                             {availableUsers.map((pat) => (
@@ -384,25 +698,24 @@ export default function App() {
                                                     key={pat.id}
                                                     value={pat.id}
                                                 >
-                                                    {pat.full_name} (Patient)
+                                                    {pat.full_name}
                                                 </option>
                                             ))}
                                         </select>
                                     </div>
 
-                                    {/* Messages Display Box */}
                                     <div
                                         style={{
-                                            height: "250px",
+                                            height: "240px",
                                             overflowY: "auto",
                                             border: "1px solid #eee",
                                             borderRadius: "8px",
-                                            padding: "15px",
-                                            marginBottom: "15px",
+                                            padding: "12px",
+                                            marginBottom: "12px",
                                             background: "#fafafa",
                                             display: "flex",
                                             flexDirection: "column",
-                                            gap: "10px",
+                                            gap: "8px",
                                         }}
                                     >
                                         {messages.length === 0 ? (
@@ -411,14 +724,16 @@ export default function App() {
                                                     color: "#888",
                                                     textAlign: "center",
                                                     margin: "auto",
+                                                    fontSize: "0.85rem",
                                                 }}
                                             >
-                                                No messages yet with this patient.
+                                                {t.noMessages}
                                             </p>
                                         ) : (
                                             messages.map((msg) => {
                                                 const isMe =
-                                                    msg.sender_id === profile.id;
+                                                    msg.sender_id ===
+                                                    profile.id;
                                                 return (
                                                     <div
                                                         key={msg.id}
@@ -427,14 +742,15 @@ export default function App() {
                                                                 ? "flex-end"
                                                                 : "flex-start",
                                                             background: isMe
-                                                                ? "#e83e8c"
-                                                                : "#e2e8f0",
+                                                                ? "var(--primary)"
+                                                                : "#e9ecef",
                                                             color: isMe
                                                                 ? "white"
-                                                                : "#333",
-                                                            padding: "10px 15px",
-                                                            borderRadius: "12px",
-                                                            maxWidth: "70%",
+                                                                : "#2b2d42",
+                                                            padding: "8px 12px",
+                                                            borderRadius: "8px",
+                                                            maxWidth: "75%",
+                                                            fontSize: "0.9rem",
                                                         }}
                                                     >
                                                         <p
@@ -452,17 +768,13 @@ export default function App() {
                                         )}
                                     </div>
 
-                                    {/* Message Input Form */}
                                     <form
                                         onSubmit={handleSendMessage}
-                                        style={{
-                                            display: "flex",
-                                            gap: "10px",
-                                        }}
+                                        style={{ display: "flex", gap: "8px" }}
                                     >
                                         <input
                                             type="text"
-                                            placeholder="Type your message..."
+                                            placeholder={t.typeMsg}
                                             value={newMessage}
                                             onChange={(e) =>
                                                 setNewMessage(e.target.value)
@@ -472,20 +784,15 @@ export default function App() {
                                                 padding: "10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #ccc",
+                                                fontSize: "0.9rem",
                                             }}
                                         />
                                         <button
                                             type="submit"
-                                            style={{
-                                                padding: "10px 20px",
-                                                background: "#e83e8c",
-                                                color: "white",
-                                                border: "none",
-                                                borderRadius: "6px",
-                                                cursor: "pointer",
-                                            }}
+                                            className="cta-button"
+                                            style={{ padding: "0 18px" }}
                                         >
-                                            Send
+                                            {t.send}
                                         </button>
                                     </form>
                                 </div>
@@ -496,55 +803,55 @@ export default function App() {
                     <>
                         <section className="summary-grid">
                             <article className="summary-card">
-                                <span className="summary-icon">♡</span>
-                                <p>Today's medication</p>
-                                <strong>{medications.length} scheduled</strong>
-                                <span className="muted">
-                                    Your daily treatment plan
-                                </span>
+                                <p>{t.todayMed}</p>
+                                <strong>
+                                    {medications.length} {t.scheduled}
+                                </strong>
+                                <span className="muted">{t.dailyPlan}</span>
                             </article>
 
                             <article className="summary-card">
-                                <span className="summary-icon">✓</span>
-                                <p>Doses completed</p>
+                                <p>{t.dosesDone}</p>
                                 <strong>
-                                    {completedCount} of {medications.length}{" "}
-                                    completed
+                                    {completedCount} {t.completedOf}{" "}
+                                    {medications.length}
                                 </strong>
-                                <span className="muted">
-                                    Your progress today
-                                </span>
+                                <span className="muted">{t.progressToday}</span>
                             </article>
                         </section>
 
                         <section className="panel">
                             <div className="panel-heading">
                                 <div>
-                                    <p className="eyebrow">YOUR CARE PLAN</p>
-                                    <h2>Medication schedule</h2>
+                                    <p className="eyebrow">{t.carePlan}</p>
+                                    <h2>{t.medSchedule}</h2>
                                 </div>
 
                                 <span className="date-label">
-                                    {new Date().toLocaleDateString(undefined, {
-                                        weekday: "short",
-                                        month: "short",
-                                        day: "numeric",
-                                    })}
+                                    {new Date().toLocaleDateString(
+                                        lang === "fr" ? "fr-FR" : "en-US",
+                                        {
+                                            weekday: "short",
+                                            month: "short",
+                                            day: "numeric",
+                                        },
+                                    )}
                                 </span>
                             </div>
 
                             <form
                                 onSubmit={handleAddMedication}
+                                className="med-form"
                                 style={{
                                     display: "flex",
-                                    gap: "10px",
-                                    marginBottom: "20px",
+                                    gap: "8px",
+                                    marginBottom: "15px",
                                     flexWrap: "wrap",
                                 }}
                             >
                                 <input
                                     type="text"
-                                    placeholder="Medication name (e.g. Tamoxifen)"
+                                    placeholder={t.medNamePlace}
                                     value={newMedName}
                                     onChange={(e) =>
                                         setNewMedName(e.target.value)
@@ -555,11 +862,12 @@ export default function App() {
                                         padding: "10px",
                                         borderRadius: "6px",
                                         border: "1px solid #ccc",
+                                        fontSize: "0.9rem",
                                     }}
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Dosage (e.g. 20mg)"
+                                    placeholder={t.dosagePlace}
                                     value={newDosage}
                                     onChange={(e) =>
                                         setNewDosage(e.target.value)
@@ -569,51 +877,36 @@ export default function App() {
                                         padding: "10px",
                                         borderRadius: "6px",
                                         border: "1px solid #ccc",
+                                        fontSize: "0.9rem",
                                     }}
                                 />
                                 <input
                                     type="time"
                                     value={newTime}
-                                    onChange={(e) =>
-                                        setNewTime(e.target.value)
-                                    }
+                                    onChange={(e) => setNewTime(e.target.value)}
                                     required
                                     style={{
                                         padding: "10px",
                                         borderRadius: "6px",
                                         border: "1px solid #ccc",
+                                        fontSize: "0.9rem",
                                     }}
                                 />
-                                <button
-                                    type="submit"
-                                    style={{
-                                        padding: "10px 20px",
-                                        background: "#e83e8c",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "6px",
-                                        cursor: "pointer",
-                                    }}
-                                >
-                                    Add Reminder
+                                <button type="submit" className="cta-button">
+                                    {t.addReminder}
                                 </button>
                             </form>
 
                             {medications.length === 0 ? (
                                 <div className="empty-state">
-                                    <div className="empty-icon">♡</div>
-                                    <h3>No medications scheduled yet</h3>
-                                    <p>
-                                        Add your reminders above to keep track of
-                                        your daily care plan.
-                                    </p>
+                                    <h3>{t.noMeds}</h3>
                                 </div>
                             ) : (
                                 <div
                                     style={{
                                         display: "flex",
                                         flexDirection: "column",
-                                        gap: "10px",
+                                        gap: "8px",
                                     }}
                                 >
                                     {medications.map((med) => (
@@ -623,18 +916,19 @@ export default function App() {
                                                 display: "flex",
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
-                                                padding: "15px",
+                                                padding: "12px 15px",
                                                 background: med.is_taken
                                                     ? "#f8f9fa"
                                                     : "#fff",
                                                 border: "1px solid #eee",
-                                                borderRadius: "8px",
+                                                borderRadius: "6px",
                                                 textDecoration: med.is_taken
                                                     ? "line-through"
                                                     : "none",
                                                 color: med.is_taken
                                                     ? "#888"
-                                                    : "#000",
+                                                    : "#2b2d42",
+                                                fontSize: "0.9rem",
                                             }}
                                         >
                                             <div>
@@ -647,23 +941,24 @@ export default function App() {
                                                 onClick={() =>
                                                     toggleMedication(
                                                         med.id,
-                                                        med.is_taken
+                                                        med.is_taken,
                                                     )
                                                 }
                                                 style={{
-                                                    padding: "8px 14px",
+                                                    padding: "6px 12px",
                                                     background: med.is_taken
                                                         ? "#6c757d"
-                                                        : "#28a745",
+                                                        : "#198754",
                                                     color: "white",
                                                     border: "none",
-                                                    borderRadius: "6px",
+                                                    borderRadius: "4px",
                                                     cursor: "pointer",
+                                                    fontSize: "0.8rem",
                                                 }}
                                             >
                                                 {med.is_taken
-                                                    ? "Undo"
-                                                    : "Mark as Taken"}
+                                                    ? t.undo
+                                                    : t.markTaken}
                                             </button>
                                         </div>
                                     ))}
@@ -671,18 +966,24 @@ export default function App() {
                             )}
                         </section>
 
-                        {/* Real-Time Chat Section */}
                         <section className="panel">
                             <div className="panel-heading">
                                 <div>
-                                    <p className="eyebrow">REAL-TIME SUPPORT</p>
-                                    <h2>Chat with your care team</h2>
+                                    <p className="eyebrow">
+                                        {t.messagesEyebrow}
+                                    </p>
+                                    <h2>{t.messagesTitle}</h2>
                                 </div>
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p style={{ color: "#666" }}>
-                                    No doctors available to chat with right now.
+                                <p
+                                    style={{
+                                        color: "#6c757d",
+                                        fontSize: "0.9rem",
+                                    }}
+                                >
+                                    {t.noDoctors}
                                 </p>
                             ) : (
                                 <div>
@@ -691,10 +992,11 @@ export default function App() {
                                             style={{
                                                 display: "block",
                                                 marginBottom: "5px",
-                                                fontWeight: "bold",
+                                                fontSize: "0.85rem",
+                                                fontWeight: "600",
                                             }}
                                         >
-                                            Select Doctor:
+                                            {t.selectDoctor}
                                         </label>
                                         <select
                                             value={recipientId}
@@ -706,6 +1008,7 @@ export default function App() {
                                                 padding: "10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #ccc",
+                                                fontSize: "0.9rem",
                                             }}
                                         >
                                             {availableUsers.map((doc) => (
@@ -719,19 +1022,18 @@ export default function App() {
                                         </select>
                                     </div>
 
-                                    {/* Messages Display Box */}
                                     <div
                                         style={{
-                                            height: "250px",
+                                            height: "240px",
                                             overflowY: "auto",
                                             border: "1px solid #eee",
                                             borderRadius: "8px",
-                                            padding: "15px",
-                                            marginBottom: "15px",
+                                            padding: "12px",
+                                            marginBottom: "12px",
                                             background: "#fafafa",
                                             display: "flex",
                                             flexDirection: "column",
-                                            gap: "10px",
+                                            gap: "8px",
                                         }}
                                     >
                                         {messages.length === 0 ? (
@@ -740,15 +1042,16 @@ export default function App() {
                                                     color: "#888",
                                                     textAlign: "center",
                                                     margin: "auto",
+                                                    fontSize: "0.85rem",
                                                 }}
                                             >
-                                                No messages yet. Send a message
-                                                to start the conversation!
+                                                {t.noMessages}
                                             </p>
                                         ) : (
                                             messages.map((msg) => {
                                                 const isMe =
-                                                    msg.sender_id === profile.id;
+                                                    msg.sender_id ===
+                                                    profile.id;
                                                 return (
                                                     <div
                                                         key={msg.id}
@@ -757,14 +1060,15 @@ export default function App() {
                                                                 ? "flex-end"
                                                                 : "flex-start",
                                                             background: isMe
-                                                                ? "#e83e8c"
-                                                                : "#e2e8f0",
+                                                                ? "var(--primary)"
+                                                                : "#e9ecef",
                                                             color: isMe
                                                                 ? "white"
-                                                                : "#333",
-                                                            padding: "10px 15px",
-                                                            borderRadius: "12px",
-                                                            maxWidth: "70%",
+                                                                : "#2b2d42",
+                                                            padding: "8px 12px",
+                                                            borderRadius: "8px",
+                                                            maxWidth: "75%",
+                                                            fontSize: "0.9rem",
                                                         }}
                                                     >
                                                         <p
@@ -782,17 +1086,13 @@ export default function App() {
                                         )}
                                     </div>
 
-                                    {/* Message Input Form */}
                                     <form
                                         onSubmit={handleSendMessage}
-                                        style={{
-                                            display: "flex",
-                                            gap: "10px",
-                                        }}
+                                        style={{ display: "flex", gap: "8px" }}
                                     >
                                         <input
                                             type="text"
-                                            placeholder="Type your message..."
+                                            placeholder={t.typeMsg}
                                             value={newMessage}
                                             onChange={(e) =>
                                                 setNewMessage(e.target.value)
@@ -802,20 +1102,15 @@ export default function App() {
                                                 padding: "10px",
                                                 borderRadius: "6px",
                                                 border: "1px solid #ccc",
+                                                fontSize: "0.9rem",
                                             }}
                                         />
                                         <button
                                             type="submit"
-                                            style={{
-                                                padding: "10px 20px",
-                                                background: "#e83e8c",
-                                                color: "white",
-                                                border: "none",
-                                                borderRadius: "6px",
-                                                cursor: "pointer",
-                                            }}
+                                            className="cta-button"
+                                            style={{ padding: "0 18px" }}
                                         >
-                                            Send
+                                            {t.send}
                                         </button>
                                     </form>
                                 </div>
@@ -824,9 +1119,7 @@ export default function App() {
                     </>
                 )}
 
-                <footer className="dashboard-footer">
-                    Octobre Rose · Care, support, and hope 💗
-                </footer>
+                <footer className="dashboard-footer">{t.footer}</footer>
             </main>
         </div>
     );

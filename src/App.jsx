@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
 import Auth from "./Auth";
 import "./App.css";
+import logo from "./assets/rosetta-logo.svg"; // Adjust file extension if it's .svg, .jpg, etc.
 
 export default function App() {
     const [messages, setMessages] = useState([]);
@@ -607,13 +608,25 @@ export default function App() {
                                 setActiveView("dashboard");
                             }}
                             style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                textDecoration: "none",
                                 fontWeight: "700",
                                 fontSize: "1.2rem",
                                 color: "var(--primary)",
-                                textDecoration: "none",
                             }}
                         >
-                            {t.appName}
+                            <img
+                                src={logo}
+                                alt="Rosetta Logo"
+                                style={{
+                                    height: "32px",
+                                    width: "auto",
+                                    objectFit: "contain",
+                                }}
+                            />
+                            <span>{t.appName}</span>
                         </a>
                         <button
                             className="hamburger-btn"
@@ -623,7 +636,9 @@ export default function App() {
                         </button>
                     </div>
 
-                    <div className={`nav-links-container ${mobileMenuOpen ? "mobile-open" : ""}`}>
+                    <div
+                        className={`nav-links-container ${mobileMenuOpen ? "mobile-open" : ""}`}
+                    >
                         <div
                             style={{
                                 display: "flex",
@@ -695,7 +710,10 @@ export default function App() {
                                 {lang === "en" ? "FR" : "EN"}
                             </button>
                             <button
-                                onClick={() => { setShowDonateModal(true); setMobileMenuOpen(false); }}
+                                onClick={() => {
+                                    setShowDonateModal(true);
+                                    setMobileMenuOpen(false);
+                                }}
                                 style={{
                                     padding: "6px 12px",
                                     borderRadius: "6px",
@@ -712,16 +730,28 @@ export default function App() {
                             {isLoggedIn ? (
                                 <button
                                     className="cta-button"
-                                    onClick={() => { setActiveView("dashboard"); setMobileMenuOpen(false); }}
-                                    style={{ padding: "6px 14px", fontSize: "0.85rem" }}
+                                    onClick={() => {
+                                        setActiveView("dashboard");
+                                        setMobileMenuOpen(false);
+                                    }}
+                                    style={{
+                                        padding: "6px 14px",
+                                        fontSize: "0.85rem",
+                                    }}
                                 >
                                     {t.navDashboard}
                                 </button>
                             ) : (
                                 <button
                                     className="cta-button"
-                                    onClick={() => { setShowAuthScreen(true); setMobileMenuOpen(false); }}
-                                    style={{ padding: "6px 14px", fontSize: "0.85rem" }}
+                                    onClick={() => {
+                                        setShowAuthScreen(true);
+                                        setMobileMenuOpen(false);
+                                    }}
+                                    style={{
+                                        padding: "6px 14px",
+                                        fontSize: "0.85rem",
+                                    }}
                                 >
                                     {t.signInReg}
                                 </button>
@@ -1312,8 +1342,8 @@ export default function App() {
                             color: "#94a3b8",
                         }}
                     >
-                        © {new Date().getFullYear()} Rosetta Healthcare. All rights
-                        reserved.
+                        © {new Date().getFullYear()} Rosetta Healthcare. All
+                        rights reserved.
                     </div>
                 </footer>
 
@@ -1413,16 +1443,28 @@ export default function App() {
                         href="#"
                         onClick={(e) => {
                             e.preventDefault();
-                            setActiveView("home");
+                            setActiveView("dashboard");
                         }}
                         style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            textDecoration: "none",
                             fontWeight: "700",
                             fontSize: "1.2rem",
                             color: "var(--primary)",
-                            textDecoration: "none",
                         }}
                     >
-                        {t.appName}
+                        <img
+                            src={logo}
+                            alt="Rosetta Logo"
+                            style={{
+                                height: "32px",
+                                width: "auto",
+                                objectFit: "contain",
+                            }}
+                        />
+                        <span>{t.appName}</span>
                     </a>
                     <button
                         className="hamburger-btn"
@@ -1486,18 +1528,52 @@ export default function App() {
                         </button>
                         <button
                             className="cta-button"
-                            onClick={() => { setActiveView("home"); setDashboardMenuOpen(false); }}
-                            style={{ background: "#e2e8f0", color: "#1e293b", padding: "6px 12px", fontSize: "0.85rem" }}
+                            onClick={() => {
+                                setActiveView("home");
+                                setDashboardMenuOpen(false);
+                            }}
+                            style={{
+                                background: "#e2e8f0",
+                                color: "#1e293b",
+                                padding: "6px 12px",
+                                fontSize: "0.85rem",
+                            }}
                         >
-                            {t.navDashboard === "Dashboard →" ? "Home" : "Accueil"}
+                            {t.navDashboard === "Dashboard →"
+                                ? "Home"
+                                : "Accueil"}
                         </button>
 
-                        <div className="account-info" style={{ display: "flex", flexDirection: "column", textAlign: "right", fontSize: "0.85rem" }}>
+                        <div
+                            className="account-info"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                textAlign: "right",
+                                fontSize: "0.85rem",
+                            }}
+                        >
                             <strong>{profile.full_name}</strong>
-                            <span style={{ color: "#64748b" }}>{isDoctor ? (lang === "en" ? "Doctor" : "Médecin") : (lang === "en" ? "Patient" : "Patient")}</span>
+                            <span style={{ color: "#64748b" }}>
+                                {isDoctor
+                                    ? lang === "en"
+                                        ? "Doctor"
+                                        : "Médecin"
+                                    : lang === "en"
+                                      ? "Patient"
+                                      : "Patient"}
+                            </span>
                         </div>
 
-                        <button className="cta-button" onClick={handleLogout} style={{ background: "#ef4444", padding: "6px 12px", fontSize: "0.85rem" }}>
+                        <button
+                            className="cta-button"
+                            onClick={handleLogout}
+                            style={{
+                                background: "#ef4444",
+                                padding: "6px 12px",
+                                fontSize: "0.85rem",
+                            }}
+                        >
                             {t.logout}
                         </button>
                     </div>

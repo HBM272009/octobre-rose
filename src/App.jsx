@@ -17,11 +17,17 @@ export default function App() {
     const [loading, setLoading] = useState(true);
     const [profileLoading, setProfileLoading] = useState(false);
     const [profileError, setProfileError] = useState("");
-    
-    // Toggles
+
+    // Navigation & UI States
     const [showAuthScreen, setShowAuthScreen] = useState(false);
     const [activeView, setActiveView] = useState("dashboard");
-    const [lang, setLang] = useState("en"); // English / French switcher
+    const [lang, setLang] = useState("en");
+
+    // Modal & Form States
+    const [showDonateModal, setShowDonateModal] = useState(false);
+    const [donationAmount, setDonationAmount] = useState("25");
+    const [donationSuccess, setDonationSuccess] = useState(false);
+    const [contactSubmitted, setContactSubmitted] = useState(false);
 
     const t = {
         en: {
@@ -35,6 +41,9 @@ export default function App() {
             navDashboard: "Go to Dashboard →",
             signInReg: "Sign In / Register",
             logout: "Log out",
+            donateBtn: "Donate",
+            navAbout: "About Us",
+            navContact: "Contact",
             awarenessEyebrow: "AWARENESS & PREVENTION",
             awarenessTitle: "Understanding Early Detection",
             card1Title: "Early Screening",
@@ -52,9 +61,23 @@ export default function App() {
             feat3Title: "Secure Platform",
             feat3Body: "Built with standard Row-Level Security ensuring user privacy and role isolation.",
             aboutEyebrow: "ABOUT ROSETTA",
-            aboutTitle: "Our Focus",
-            aboutBody: "Rosetta bridges the gap between healthcare providers and patients. We provide tools to make daily care management simple and accurate.",
-            footer: "Rosetta Healthcare Companion",
+            aboutTitle: "Our Focus & Mission",
+            aboutBody: "Rosetta bridges the gap between healthcare providers and patients. We provide tools to make daily care management simple, accessible, and accurate.",
+            contactEyebrow: "GET IN TOUCH",
+            contactTitle: "Contact Our Care Team",
+            contactSub: "Have questions or need assistance? Send us a message.",
+            contactName: "Your Name",
+            contactEmail: "Email Address",
+            contactMsg: "Message",
+            contactSend: "Send Message",
+            contactSuccess: "Thank you! Your message has been received.",
+            donateTitle: "Support Patient Care",
+            donateSub: "Your mock donation helps provide care kits and support tools for patients.",
+            donateSuccess: "Thank you for your generous donation!",
+            donateClose: "Close",
+            footerDesc: "Rosetta Healthcare Companion · Empowering patient journeys worldwide.",
+            footerPrivacy: "Privacy Policy",
+            footerTerms: "Terms of Service",
             patientSpace: "PATIENT DASHBOARD",
             doctorSpace: "DOCTOR WORKSPACE",
             welcomePatient: "Hello, ",
@@ -97,7 +120,10 @@ export default function App() {
             navDashboard: "Accéder à l'espace →",
             signInReg: "Connexion / Inscription",
             logout: "Déconnexion",
-            awarenessEyebrow: "SENSABILISATION & PRÉVENTION",
+            donateBtn: "Faire un don",
+            navAbout: "À propos",
+            navContact: "Contact",
+            awarenessEyebrow: "SENSIBILISATION & PRÉVENTION",
             awarenessTitle: "L'importance du dépistage précoce",
             card1Title: "Dépistage Précoce",
             card1Body: "Des examens réguliers permettent d'améliorer considérablement l'efficacité des traitements.",
@@ -116,7 +142,21 @@ export default function App() {
             aboutEyebrow: "À PROPOS DE ROSETTA",
             aboutTitle: "Notre Mission",
             aboutBody: "Rosetta vise à simplifier la prise en charge quotidienne des traitements tout en maintenant un lien direct avec l'équipe médicale.",
-            footer: "Rosetta · Plateforme d'accompagnement médical",
+            contactEyebrow: "CONTACT",
+            contactTitle: "Contacter l'équipe soignante",
+            contactSub: "Une question ou besoin d'assistance ? Envoyez-nous un message.",
+            contactName: "Votre nom",
+            contactEmail: "Adresse e-mail",
+            contactMsg: "Message",
+            contactSend: "Envoyer le message",
+            contactSuccess: "Merci ! Votre message a bien été envoyé.",
+            donateTitle: "Soutenir les soins aux patients",
+            donateSub: "Votre don simulé aide à financer le matériel d'accompagnement.",
+            donateSuccess: "Merci infiniment pour votre don !",
+            donateClose: "Fermer",
+            footerDesc: "Rosetta · Plateforme d'accompagnement médical et suivi personnalisé.",
+            footerPrivacy: "Politique de confidentialité",
+            footerTerms: "Conditions d'utilisation",
             patientSpace: "ESPACE PATIENT",
             doctorSpace: "ESPACE MÉDECIN",
             welcomePatient: "Bonjour, ",
@@ -150,7 +190,6 @@ export default function App() {
         }
     }[lang];
 
-    // Toggle language handler
     const toggleLang = () => setLang(l => l === "en" ? "fr" : "en");
 
     // Fetch medications
@@ -222,10 +261,8 @@ export default function App() {
 
         async function initializeSession() {
             const { data, error } = await supabase.auth.getSession();
-
             if (!mounted) return;
             if (error) setProfileError(error.message);
-
             setSession(data?.session ?? null);
             setLoading(false);
         }
@@ -378,9 +415,80 @@ export default function App() {
         }
     }
 
+    function handleDonateSubmit(e) {
+        e.preventDefault();
+        setDonationSuccess(true);
+        setTimeout(() => {
+            setDonationSuccess(false);
+            setShowDonateModal(false);
+        }, 2000);
+    }
+
+    function handleContactSubmit(e) {
+        e.preventDefault();
+        setContactSubmitted(true);
+        setTimeout(() => setContactSubmitted(false), 3000);
+    }
+
     if (loading) {
         return <main className="status-screen">Loading...</main>;
     }
+
+    // Modal Component for Mock Donations
+    const DonationModal = () => (
+        <div style={{
+            position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+            background: "rgba(0,0,0,0.4)", display: "flex", justifyContent: "center",
+            alignItems: "center", zIndex: 100, padding: "1rem"
+        }}>
+            <div className="panel" style={{ maxWidth: "420px", width: "100%", background: "#fff", position: "relative" }}>
+                <button
+                    onClick={() => setShowDonateModal(false)}
+                    style={{ position: "absolute", top: "15px", right: "15px", border: "none", background: "none", fontSize: "1.2rem", cursor: "pointer" }}
+                >
+                    ✕
+                </button>
+                <h2 style={{ fontSize: "1.3rem", marginBottom: "0.4rem" }}>{t.donateTitle}</h2>
+                <p style={{ color: "#6c757d", fontSize: "0.85rem", marginBottom: "1.25rem" }}>{t.donateSub}</p>
+
+                {donationSuccess ? (
+                    <div style={{ padding: "1.5rem", background: "#e6f4ea", color: "#137333", borderRadius: "8px", textAlign: "center", fontWeight: "600" }}>
+                        {t.donateSuccess}
+                    </div>
+                ) : (
+                    <form onSubmit={handleDonateSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                        <div style={{ display: "flex", gap: "8px" }}>
+                            {["10", "25", "50", "100"].map((amt) => (
+                                <button
+                                    type="button"
+                                    key={amt}
+                                    onClick={() => setDonationAmount(amt)}
+                                    style={{
+                                        flex: 1, padding: "8px", borderRadius: "6px",
+                                        border: donationAmount === amt ? "2px solid var(--primary)" : "1px solid #ccc",
+                                        background: donationAmount === amt ? "var(--bg-color)" : "#fff",
+                                        fontWeight: "600", cursor: "pointer", fontSize: "0.9rem"
+                                    }}
+                                >
+                                    ${amt}
+                                </button>
+                            ))}
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Card Number (Mock)"
+                            defaultValue="4242 •••• •••• 4242"
+                            required
+                            style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                        />
+                        <button type="submit" className="cta-button" style={{ marginTop: "6px" }}>
+                            Complete Donation (${donationAmount})
+                        </button>
+                    </form>
+                )}
+            </div>
+        </div>
+    );
 
     const LandingView = ({ isLoggedIn }) => (
         <div className="landing-page">
@@ -388,22 +496,29 @@ export default function App() {
                 <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("dashboard"); }}>
                     {t.appName}
                 </a>
+                
+                <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                    <a href="#about" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.85rem", fontWeight: "500" }}>{t.navAbout}</a>
+                    <a href="#contact" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.85rem", fontWeight: "500" }}>{t.navContact}</a>
+                </div>
+
                 <div className="account-area">
                     <button className="lang-switch" onClick={toggleLang}>
                         {lang === "en" ? "FR" : "EN"}
                     </button>
+                    <button 
+                        className="logout-button"
+                        onClick={() => setShowDonateModal(true)}
+                        style={{ borderColor: "var(--primary)", color: "var(--primary)", fontWeight: "600" }}
+                    >
+                        {t.donateBtn}
+                    </button>
                     {isLoggedIn ? (
-                        <button 
-                            className="nav-btn primary-btn"
-                            onClick={() => setActiveView("dashboard")}
-                        >
+                        <button className="nav-btn primary-btn" onClick={() => setActiveView("dashboard")}>
                             {t.navDashboard}
                         </button>
                     ) : (
-                        <button 
-                            className="nav-btn primary-btn"
-                            onClick={() => setShowAuthScreen(true)}
-                        >
+                        <button className="nav-btn primary-btn" onClick={() => setShowAuthScreen(true)}>
                             {t.signInReg}
                         </button>
                     )}
@@ -416,10 +531,7 @@ export default function App() {
                     <h1>{t.heroTitle}</h1>
                     <p className="hero-subtitle">{t.heroSub}</p>
                     <div className="hero-actions">
-                        <button 
-                            className="cta-button"
-                            onClick={() => isLoggedIn ? setActiveView("dashboard") : setShowAuthScreen(true)}
-                        >
+                        <button className="cta-button" onClick={() => isLoggedIn ? setActiveView("dashboard") : setShowAuthScreen(true)}>
                             {isLoggedIn ? t.navDashboard : t.getStarted}
                         </button>
                         <a href="#about" className="secondary-button">
@@ -481,9 +593,56 @@ export default function App() {
                 </div>
             </section>
 
-            <footer className="dashboard-footer">
-                {t.footer}
+            {/* Contact Us Section */}
+            <section className="landing-section highlight-bg" id="contact">
+                <div className="section-header">
+                    <p className="eyebrow">{t.contactEyebrow}</p>
+                    <h2>{t.contactTitle}</h2>
+                    <p style={{ color: "#6c757d", fontSize: "0.9rem", marginTop: "0.3rem" }}>{t.contactSub}</p>
+                </div>
+                <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+                    {contactSubmitted ? (
+                        <div style={{ padding: "1rem", background: "#e6f4ea", color: "#137333", borderRadius: "6px", textAlign: "center", fontSize: "0.9rem" }}>
+                            {t.contactSuccess}
+                        </div>
+                    ) : (
+                        <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                            <input type="text" placeholder={t.contactName} required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }} />
+                            <input type="email" placeholder={t.contactEmail} required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }} />
+                            <textarea placeholder={t.contactMsg} rows="4" required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}></textarea>
+                            <button type="submit" className="cta-button">{t.contactSend}</button>
+                        </form>
+                    )}
+                </div>
+            </section>
+
+            {/* Complete Professional Footer */}
+            <footer className="dashboard-footer" style={{ background: "#fff", borderTop: "1px solid var(--border-color)", padding: "2.5rem 1.5rem" }}>
+                <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", textAlign: "left" }}>
+                    <div>
+                        <strong style={{ fontSize: "1.1rem", color: "var(--primary)" }}>{t.appName}</strong>
+                        <p style={{ color: "#6c757d", fontSize: "0.85rem", marginTop: "0.4rem", maxWidth: "300px" }}>{t.footerDesc}</p>
+                    </div>
+                    <div style={{ display: "flex", gap: "2rem", fontSize: "0.85rem" }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                            <strong style={{ color: "var(--text-main)" }}>Navigation</strong>
+                            <a href="#about" style={{ textDecoration: "none", color: "#6c757d" }}>{t.navAbout}</a>
+                            <a href="#why-us" style={{ textDecoration: "none", color: "#6c757d" }}>Features</a>
+                            <a href="#contact" style={{ textDecoration: "none", color: "#6c757d" }}>{t.navContact}</a>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                            <strong style={{ color: "var(--text-main)" }}>Legal</strong>
+                            <a href="#" style={{ textDecoration: "none", color: "#6c757d" }}>{t.footerPrivacy}</a>
+                            <a href="#" style={{ textDecoration: "none", color: "#6c757d" }}>{t.footerTerms}</a>
+                        </div>
+                    </div>
+                </div>
+                <div style={{ borderTop: "1px solid #eee", marginTop: "2rem", paddingTop: "1rem", textAlign: "center", fontSize: "0.8rem", color: "#999" }}>
+                    © {new Date().getFullYear()} Rosetta. All rights reserved.
+                </div>
             </footer>
+
+            {showDonateModal && <DonationModal />}
         </div>
     );
 
@@ -492,10 +651,7 @@ export default function App() {
             return (
                 <div style={{ position: "relative" }}>
                     <div style={{ position: "absolute", top: "15px", left: "15px", zIndex: 10, display: "flex", gap: "10px" }}>
-                        <button 
-                            className="nav-btn"
-                            onClick={() => setShowAuthScreen(false)}
-                        >
+                        <button className="nav-btn" onClick={() => setShowAuthScreen(false)}>
                             {t.backHome}
                         </button>
                         <button className="lang-switch" onClick={toggleLang}>
@@ -533,11 +689,7 @@ export default function App() {
     return (
         <div className="app-shell">
             <header className="topbar">
-                <a 
-                    className="brand" 
-                    href="#" 
-                    onClick={(e) => { e.preventDefault(); setActiveView("home"); }}
-                >
+                <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("home"); }}>
                     {t.appName}
                 </a>
 
@@ -547,9 +699,14 @@ export default function App() {
                     </button>
 
                     <button 
-                        className="nav-btn" 
-                        onClick={() => setActiveView("home")}
+                        className="logout-button"
+                        onClick={() => setShowDonateModal(true)}
+                        style={{ borderColor: "var(--primary)", color: "var(--primary)", fontWeight: "600" }}
                     >
+                        {t.donateBtn}
+                    </button>
+
+                    <button className="nav-btn" onClick={() => setActiveView("home")}>
                         {t.navHome}
                     </button>
 
@@ -842,6 +999,8 @@ export default function App() {
                     {t.footer}
                 </footer>
             </main>
+
+            {showDonateModal && <DonationModal />}
         </div>
     );
 }

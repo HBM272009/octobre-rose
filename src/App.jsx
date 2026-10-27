@@ -15,7 +15,6 @@ export default function App() {
     const [session, setSession] = useState(null);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [profileLoading, setProfileLoading] = useState(false);
     const [profileError, setProfileError] = useState("");
 
     // Navigation & UI States
@@ -32,161 +31,155 @@ export default function App() {
     const t = {
         en: {
             appName: "Rosetta",
-            tagline: "Breast Health Companion",
-            heroTitle: "Rosetta, your companion through treatment",
-            heroSub: "Connecting patients and healthcare teams with structured daily care plans, medication tracking, and direct secure messaging.",
+            tagline: "Advanced Healthcare Companion",
+            heroTitle: "Empowering Patients Through Structured Care",
+            heroSub: "Connecting patients and healthcare professionals with seamless treatment tracking, remote consultation, and comprehensive medical guidance.",
             getStarted: "Get Started",
-            learnMore: "Learn More ↓",
-            navHome: "← Home",
-            navDashboard: "Go to Dashboard →",
+            learnMore: "Explore Platform ↓",
+            navDashboard: "Dashboard →",
             signInReg: "Sign In / Register",
             logout: "Log out",
-            donateBtn: "Donate",
-            navAbout: "About Us",
+            donateBtn: "Donate Support",
+            navAbout: "About",
             navContact: "Contact",
-            awarenessEyebrow: "AWARENESS & PREVENTION",
-            awarenessTitle: "Understanding Early Detection",
-            card1Title: "Early Screening",
-            card1Body: "Regular medical checkups and screenings increase treatment efficacy significantly. Awareness remains key.",
-            card2Title: "Structured Care",
-            card2Body: "Managing daily medications, appointments, and symptoms requires an intuitive, clear care dashboard.",
-            card3Title: "Continuous Support",
-            card3Body: "Direct communication channels between patients and care teams improve outcomes and comfort.",
-            whyEyebrow: "PLATFORM FEATURES",
-            whyTitle: "Designed for Patients & Care Teams",
-            feat1Title: "Medication Reminders",
-            feat1Body: "Track daily schedules, dosages, and completed treatments easily.",
-            feat2Title: "Direct Messaging",
-            feat2Body: "Real-time communication with your doctor for remote support and reassurance.",
-            feat3Title: "Secure Platform",
-            feat3Body: "Built with standard Row-Level Security ensuring user privacy and role isolation.",
-            aboutEyebrow: "ABOUT ROSETTA",
-            aboutTitle: "Our Focus & Mission",
-            aboutBody: "Rosetta bridges the gap between healthcare providers and patients. We provide tools to make daily care management simple, accessible, and accurate.",
+            awarenessEyebrow: "CLINICAL INSIGHTS & EDUCATION",
+            awarenessTitle: "Proactive Health & Treatment Adherence",
+            card1Title: "Early Screening Protocols",
+            card1Body: "Regular clinical screenings and self-assessments significantly improve therapeutic outcomes. Early intervention remains the cornerstone of modern preventive healthcare.",
+            card2Title: "Structured Medication Management",
+            card2Body: "Navigating complex pharmaceutical schedules can be challenging. Rosetta provides clear, day-by-day reminders and verification tools to ensure accurate dosing.",
+            card3Title: "Secure Patient-Doctor Communication",
+            card3Body: "Bridging the gap between clinic visits with real-time encrypted messaging ensures clinicians can offer timely guidance and peace of mind.",
+            whyEyebrow: "PLATFORM ARCHITECTURE",
+            whyTitle: "Engineered for Reliability and Privacy",
+            feat1Title: "Real-Time Care Sync",
+            feat1Body: "Instant updates across patient and doctor portals powered by robust PostgreSQL database triggers.",
+            feat2Title: "Role-Based Security",
+            feat2Body: "Strict data isolation ensures that patient records and communications remain strictly confidential and secure.",
+            feat3Title: "Bilingual Accessibility",
+            feat3Body: "Fully localized in English and French to accommodate diverse clinical environments and user preferences.",
+            aboutEyebrow: "ABOUT ROSETTA HEALTH",
+            aboutTitle: "Our Mission in Digital Health",
+            aboutP1: "Rosetta was built to solve a critical challenge in modern medicine: maintaining continuous, empathetic, and organized communication between patients undergoing intensive treatment and their medical care teams.",
+            aboutP2: "By combining intuitive daily care tracking with secure messaging, our platform reduces administrative friction, minimizes missed medication doses, and fosters a collaborative healing environment.",
             contactEyebrow: "GET IN TOUCH",
-            contactTitle: "Contact Our Care Team",
-            contactSub: "Have questions or need assistance? Send us a message.",
-            contactName: "Your Name",
-            contactEmail: "Email Address",
-            contactMsg: "Message",
+            contactTitle: "Connect With Our Team",
+            contactSub: "Have questions about our platform, clinical partnerships, or deployment? Send us a message below.",
+            contactName: "Full Name",
+            contactEmail: "Professional Email",
+            contactMsg: "Your Message or Inquiry",
             contactSend: "Send Message",
-            contactSuccess: "Thank you! Your message has been received.",
-            donateTitle: "Support Patient Care",
-            donateSub: "Your mock donation helps provide care kits and support tools for patients.",
-            donateSuccess: "Thank you for your generous donation!",
-            donateClose: "Close",
-            footerDesc: "Rosetta Healthcare Companion · Empowering patient journeys worldwide.",
-            footerPrivacy: "Privacy Policy",
-            footerTerms: "Terms of Service",
+            contactSuccess: "Thank you! Your message has been successfully transmitted.",
+            donateTitle: "Contribute to Patient Care Kits",
+            donateSub: "Your mock contribution helps fund patient educational brochures and comfort support tools.",
+            donateSuccess: "Thank you for your generous support!",
+            footerDesc: "Rosetta Healthcare Companion · Advancing patient-centric care through secure technology.",
             patientSpace: "PATIENT DASHBOARD",
-            doctorSpace: "DOCTOR WORKSPACE",
-            welcomePatient: "Hello, ",
-            welcomeDoctor: "Welcome, Dr. ",
-            patientSub: "Track your treatment plan and stay connected with your healthcare provider.",
-            doctorSub: "Monitor patient updates and respond to direct consultations.",
-            selectPatient: "Select Patient:",
-            selectDoctor: "Select Doctor:",
-            noPatients: "No patients registered in the workspace yet.",
-            noDoctors: "No doctors available in the workspace right now.",
-            noMessages: "No messages yet.",
-            typeMsg: "Type a message...",
+            doctorSpace: "DOCTOR CLINICAL WORKSPACE",
+            welcomePatient: "Welcome back, ",
+            welcomeDoctor: "Clinical Portal, Dr. ",
+            patientSub: "Manage your daily treatment schedule and communicate securely with your care provider.",
+            doctorSub: "Review patient adherence metrics and respond to active consultations.",
+            selectPatient: "Select Patient Profile:",
+            selectDoctor: "Select Attending Physician:",
+            noPatients: "No patients currently registered in your clinical roster.",
+            noDoctors: "No physicians currently available.",
+            noMessages: "No messages exchanged in this thread yet.",
+            typeMsg: "Type a secure message...",
             send: "Send",
-            todayMed: "Today's Medication",
-            scheduled: "scheduled",
-            dailyPlan: "Daily treatment list",
+            todayMed: "Today's Prescriptions",
+            scheduled: "scheduled doses",
+            dailyPlan: "Active treatment regimen",
             dosesDone: "Completed Doses",
-            completedOf: "completed of",
-            progressToday: "Today's progress",
-            carePlan: "CARE PLAN",
-            medSchedule: "Medication Schedule",
-            medNamePlace: "Medication name",
+            completedOf: "completed out of",
+            progressToday: "Daily adherence progress",
+            carePlan: "TREATMENT TIMELINE",
+            medSchedule: "Medication Reminders",
+            medNamePlace: "Medication name (e.g. Tamoxifen)",
             dosagePlace: "Dosage (e.g. 20mg)",
-            addReminder: "Add Reminder",
-            noMeds: "No medications scheduled yet.",
+            addReminder: "Add Prescription",
+            noMeds: "No medications scheduled for today.",
             undo: "Undo",
             markTaken: "Mark as Taken",
-            messagesTitle: "Messages",
-            messagesEyebrow: "COMMUNICATION",
-            backHome: "← Back to Home"
+            messagesTitle: "Secure Consultations",
+            messagesEyebrow: "ENCRYPTED CHAT",
+            backHome: "← Return to Home"
         },
         fr: {
             appName: "Rosetta",
-            tagline: "Accompagnement Santé",
-            heroTitle: "Rosetta, votre plateforme d'accompagnement",
-            heroSub: "Faciliter le suivi quotidien des traitements et la communication directe entre les patients et l'équipe médicale.",
+            tagline: "Plateforme de Santé Avancée",
+            heroTitle: "Accompagner les patients grâce à des soins structurés",
+            heroSub: "Connecter les patients et les professionnels de santé avec un suivi rigoureux des traitements, des consultations à distance et un accompagnement sur mesure.",
             getStarted: "Commencer",
-            learnMore: "En savoir plus ↓",
-            navHome: "← Accueil",
-            navDashboard: "Accéder à l'espace →",
+            learnMore: "Explorer la plateforme ↓",
+            navDashboard: "Espace Patient →",
             signInReg: "Connexion / Inscription",
             logout: "Déconnexion",
-            donateBtn: "Faire un don",
+            donateBtn: "Soutenir le projet",
             navAbout: "À propos",
             navContact: "Contact",
-            awarenessEyebrow: "SENSIBILISATION & PRÉVENTION",
-            awarenessTitle: "L'importance du dépistage précoce",
-            card1Title: "Dépistage Précoce",
-            card1Body: "Des examens réguliers permettent d'améliorer considérablement l'efficacité des traitements.",
-            card2Title: "Suivi Structuré",
-            card2Body: "Organiser les prises de médicaments et rendez-vous grâce à un tableau de bord clair.",
-            card3Title: "Support Continu",
-            card3Body: "La communication directe avec l'équipe soignante apporte sécurité et tranquillité d'esprit.",
-            whyEyebrow: "FONCTIONNALITÉS",
-            whyTitle: "Conçu pour les patients et soignants",
-            feat1Title: "Rappels de traitements",
-            feat1Body: "Suivez les horaires quotidiens, dosages et validez les prises en un clic.",
-            feat2Title: "Messagerie directe",
-            feat2Body: "Échanges en temps réel avec votre médecin pour un accompagnement à distance.",
-            feat3Title: "Espace Sécurisé",
-            feat3Body: "Plateforme sécurisée garantissant la confidentialité stricte des données médicales.",
+            awarenessEyebrow: "ÉDUCATION & PRÉVENTION CLINIQUE",
+            awarenessTitle: "Santé proactive et observance des traitements",
+            card1Title: "Protocoles de Dépistage Précoce",
+            card1Body: "Les examens cliniques réguliers et l'auto-surveillance améliorent considérablement les résultats thérapeutiques. L'intervention précoce reste la pierre angulaire de la santé préventive.",
+            card2Title: "Gestion Structurée des Traitements",
+            card2Body: "Le suivi de protocoles pharmaceutiques complexes nécessite de la rigueur. Rosetta propose des rappels clairs et des outils de validation quotidiens.",
+            card3Title: "Communication Sécurisée Patient-Médecin",
+            card3Body: "Maintenir un lien direct entre les consultations cliniques grâce à une messagerie chiffrée garantit un accompagnement rassurant et réactif.",
+            whyEyebrow: "ARCHITECTURE DE LA PLATEFORME",
+            whyTitle: "Conçue pour la fiablité et la confidentialité",
+            feat1Title: "Synchronisation en Temps Réel",
+            feat1Body: "Mises à instantanées entre les espaces patients et médecins grâce à des bases de données robustes.",
+            feat2Title: "Sécurité par Rôle",
+            feat2Body: "L'isolation stricte des données garantit que les dossiers médicaux et échanges restent strictement confidentiels.",
+            feat3Title: "Accessibilité Bilingue",
+            feat3Body: "Entièrement localisée en français et en anglais pour s'adapter à divers environnements cliniques.",
             aboutEyebrow: "À PROPOS DE ROSETTA",
-            aboutTitle: "Notre Mission",
-            aboutBody: "Rosetta vise à simplifier la prise en charge quotidienne des traitements tout en maintenant un lien direct avec l'équipe médicale.",
-            contactEyebrow: "CONTACT",
-            contactTitle: "Contacter l'équipe soignante",
-            contactSub: "Une question ou besoin d'assistance ? Envoyez-nous un message.",
-            contactName: "Votre nom",
-            contactEmail: "Adresse e-mail",
-            contactMsg: "Message",
+            aboutTitle: "Notre mission en santé numérique",
+            aboutP1: "Rosetta a été conçue pour répondre à un défi majeur de la médecine moderne : maintenir un lien continu, empathique et structuré entre les patients en cours de traitement lourd et leurs équipes médicales.",
+            aboutP2: "En associant un suivi quotidien intuitif et une messagerie sécurisée, notre plateforme réduit la charge mentale des patients, prévient les oublis de médicaments et favorise un environnement de guérison collaboratif.",
+            contactEyebrow: "NOUS CONTACTER",
+            contactTitle: "Entrez en contact avec notre équipe",
+            contactSub: "Vous avez des questions sur notre plateforme, nos partenariats ou notre déploiement ? Envoyez-nous un message.",
+            contactName: "Nom complet",
+            contactEmail: "E-mail professionnel",
+            contactMsg: "Votre message ou question",
             contactSend: "Envoyer le message",
-            contactSuccess: "Merci ! Votre message a bien été envoyé.",
-            donateTitle: "Soutenir les soins aux patients",
-            donateSub: "Votre don simulé aide à financer le matériel d'accompagnement.",
-            donateSuccess: "Merci infiniment pour votre don !",
-            donateClose: "Fermer",
-            footerDesc: "Rosetta · Plateforme d'accompagnement médical et suivi personnalisé.",
-            footerPrivacy: "Politique de confidentialité",
-            footerTerms: "Conditions d'utilisation",
+            contactSuccess: "Merci ! Votre message a bien été transmis.",
+            donateTitle: "Contribuer aux kits de soutien",
+            donateSub: "Votre contribution simulée aide à financer des outils d'accompagnement pour les patients.",
+            donateSuccess: "Merci infiniment pour votre généreux soutien !",
+            footerDesc: "Rosetta · Améliorer la prise en charge des patients grâce à une technologie sécurisée.",
             patientSpace: "ESPACE PATIENT",
-            doctorSpace: "ESPACE MÉDECIN",
+            doctorSpace: "ESPACE CLINIQUE MÉDECIN",
             welcomePatient: "Bonjour, ",
-            welcomeDoctor: "Bienvenue, Dr. ",
-            patientSub: "Suivez votre traitement quotidien et restez en contact avec votre médecin.",
-            doctorSub: "Suivez le parcours de vos patients et répondez aux messages.",
-            selectPatient: "Sélectionner un patient :",
-            selectDoctor: "Sélectionner un médecin :",
-            noPatients: "Aucun patient inscrit pour le moment.",
-            noDoctors: "Aucun médecin disponible pour le moment.",
-            noMessages: "Aucun message pour l'instant.",
-            typeMsg: "Écrire un message...",
+            welcomeDoctor: "Portail Clinique, Dr. ",
+            patientSub: "Gérez votre planning thérapeutique quotidien et communiquez en toute sécurité avec votre équipe soignante.",
+            doctorSub: "Suivez l'observance de vos patients et répondez aux consultations en cours.",
+            selectPatient: "Sélectionner le profil patient :",
+            selectDoctor: "Sélectionner le médecin référent :",
+            noPatients: "Aucun patient enregistré dans votre liste pour le moment.",
+            noDoctors: "Aucun médecin disponible.",
+            noMessages: "Aucun message dans cette conversation.",
+            typeMsg: "Écrire un message sécurisé...",
             send: "Envoyer",
-            todayMed: "Médicaments du jour",
-            scheduled: "programmé(s)",
-            dailyPlan: "Programme quotidien",
-            dosesDone: "Doses prises",
-            completedOf: "sur",
-            progressToday: "Progression aujourd'hui",
-            carePlan: "PLAN DE SOINS",
-            medSchedule: "Programme des traitements",
-            medNamePlace: "Nom du médicament",
+            todayMed: "Traitements du jour",
+            scheduled: "doses prévues",
+            dailyPlan: "Programme thérapeutique",
+            dosesDone: "Doses Validées",
+            completedOf: "réalisées sur",
+            progressToday: "Progression journalière",
+            carePlan: "CALENDRIER THÉRAPEUTIQUE",
+            medSchedule: "Rappels de Médicaments",
+            medNamePlace: "Nom du médicament (ex. Tamoxifène)",
             dosagePlace: "Dosage (ex. 20mg)",
-            addReminder: "Ajouter",
-            noMeds: "Aucun médicament programmé.",
+            addReminder: "Ajouter une prescription",
+            noMeds: "Aucun médicament planifié pour aujourd'hui.",
             undo: "Annuler",
             markTaken: "Marquer comme pris",
-            messagesTitle: "Messagerie",
-            messagesEyebrow: "COMMUNICATION",
-            backHome: "← Retour"
+            messagesTitle: "Consultations Sécurisées",
+            messagesEyebrow: "MESSAGERIE CHIFFRÉE",
+            backHome: "← Retour à l'accueil"
         }
     }[lang];
 
@@ -290,11 +283,8 @@ export default function App() {
             setProfileError("");
 
             if (!session?.user) {
-                setProfileLoading(false);
                 return;
             }
-
-            setProfileLoading(true);
 
             try {
                 const { data, error } = await supabase
@@ -316,8 +306,6 @@ export default function App() {
                 if (!cancelled) {
                     setProfileError(error.message || "Unable to load profile.");
                 }
-            } finally {
-                if (!cancelled) setProfileLoading(false);
             }
         }
 
@@ -329,9 +317,8 @@ export default function App() {
     }, [session?.user?.id]);
 
     async function handleLogout() {
-        const { error } = await supabase.auth.signOut();
+        await supabase.auth.signOut();
         setActiveView("dashboard");
-        if (error) setProfileError(error.message);
     }
 
     useEffect(() => {
@@ -438,10 +425,10 @@ export default function App() {
     const DonationModal = () => (
         <div style={{
             position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-            background: "rgba(0,0,0,0.4)", display: "flex", justifyContent: "center",
+            background: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center",
             alignItems: "center", zIndex: 100, padding: "1rem"
         }}>
-            <div className="panel" style={{ maxWidth: "420px", width: "100%", background: "#fff", position: "relative" }}>
+            <div className="panel" style={{ maxWidth: "400px", width: "100%", background: "#fff", position: "relative", borderRadius: "12px", padding: "2rem" }}>
                 <button
                     onClick={() => setShowDonateModal(false)}
                     style={{ position: "absolute", top: "15px", right: "15px", border: "none", background: "none", fontSize: "1.2rem", cursor: "pointer" }}
@@ -449,10 +436,10 @@ export default function App() {
                     ✕
                 </button>
                 <h2 style={{ fontSize: "1.3rem", marginBottom: "0.4rem" }}>{t.donateTitle}</h2>
-                <p style={{ color: "#6c757d", fontSize: "0.85rem", marginBottom: "1.25rem" }}>{t.donateSub}</p>
+                <p style={{ color: "#64748b", fontSize: "0.85rem", marginBottom: "1.25rem" }}>{t.donateSub}</p>
 
                 {donationSuccess ? (
-                    <div style={{ padding: "1.5rem", background: "#e6f4ea", color: "#137333", borderRadius: "8px", textAlign: "center", fontWeight: "600" }}>
+                    <div style={{ padding: "1.5rem", background: "#f0fdf4", color: "#166534", borderRadius: "8px", textAlign: "center", fontWeight: "600" }}>
                         {t.donateSuccess}
                     </div>
                 ) : (
@@ -465,8 +452,8 @@ export default function App() {
                                     onClick={() => setDonationAmount(amt)}
                                     style={{
                                         flex: 1, padding: "8px", borderRadius: "6px",
-                                        border: donationAmount === amt ? "2px solid var(--primary)" : "1px solid #ccc",
-                                        background: donationAmount === amt ? "var(--bg-color)" : "#fff",
+                                        border: donationAmount === amt ? "2px solid var(--primary)" : "1px solid #cbd5e1",
+                                        background: donationAmount === amt ? "#f0fdf4" : "#fff",
                                         fontWeight: "600", cursor: "pointer", fontSize: "0.9rem"
                                     }}
                                 >
@@ -479,10 +466,10 @@ export default function App() {
                             placeholder="Card Number (Mock)"
                             defaultValue="4242 •••• •••• 4242"
                             required
-                            style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                            style={{ padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                         />
                         <button type="submit" className="cta-button" style={{ marginTop: "6px" }}>
-                            Complete Donation (${donationAmount})
+                            Complete Contribution (${donationAmount})
                         </button>
                     </form>
                 )}
@@ -493,32 +480,32 @@ export default function App() {
     const LandingView = ({ isLoggedIn }) => (
         <div className="landing-page">
             <header className="topbar">
-                <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("dashboard"); }}>
+                <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("dashboard"); }} style={{ fontWeight: "700", fontSize: "1.2rem", color: "var(--primary)", textDecoration: "none" }}>
                     {t.appName}
                 </a>
                 
-                <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-                    <a href="#about" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.85rem", fontWeight: "500" }}>{t.navAbout}</a>
-                    <a href="#contact" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.85rem", fontWeight: "500" }}>{t.navContact}</a>
+                <div style={{ display: "flex", gap: "1.2rem", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+                    <a href="#about" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.9rem", fontWeight: "500" }}>{t.navAbout}</a>
+                    <a href="#why-us" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.9rem", fontWeight: "500" }}>Features</a>
+                    <a href="#contact" style={{ textDecoration: "none", color: "var(--text-main)", fontSize: "0.9rem", fontWeight: "500" }}>{t.navContact}</a>
                 </div>
 
-                <div className="account-area">
-                    <button className="lang-switch" onClick={toggleLang}>
+                <div className="account-area" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                    <button className="lang-switch" onClick={toggleLang} style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid #cbd5e1", background: "#fff", cursor: "pointer", fontWeight: "600", fontSize: "0.85rem" }}>
                         {lang === "en" ? "FR" : "EN"}
                     </button>
                     <button 
-                        className="logout-button"
                         onClick={() => setShowDonateModal(true)}
-                        style={{ borderColor: "var(--primary)", color: "var(--primary)", fontWeight: "600" }}
+                        style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid var(--primary)", background: "transparent", color: "var(--primary)", fontWeight: "600", cursor: "pointer", fontSize: "0.85rem" }}
                     >
                         {t.donateBtn}
                     </button>
                     {isLoggedIn ? (
-                        <button className="nav-btn primary-btn" onClick={() => setActiveView("dashboard")}>
+                        <button className="cta-button" onClick={() => setActiveView("dashboard")} style={{ padding: "6px 14px", fontSize: "0.85rem" }}>
                             {t.navDashboard}
                         </button>
                     ) : (
-                        <button className="nav-btn primary-btn" onClick={() => setShowAuthScreen(true)}>
+                        <button className="cta-button" onClick={() => setShowAuthScreen(true)} style={{ padding: "6px 14px", fontSize: "0.85rem" }}>
                             {t.signInReg}
                         </button>
                     )}
@@ -526,119 +513,134 @@ export default function App() {
             </header>
 
             <section className="landing-hero">
-                <div className="hero-content">
-                    <p className="eyebrow">{t.tagline}</p>
+                <div className="hero-content" style={{ maxWidth: "750px", margin: "0 auto" }}>
+                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.tagline}</p>
                     <h1>{t.heroTitle}</h1>
-                    <p className="hero-subtitle">{t.heroSub}</p>
-                    <div className="hero-actions">
+                    <p className="hero-subtitle" style={{ color: "#475569", fontSize: "1.05rem", lineHeight: "1.7", marginBottom: "2rem" }}>{t.heroSub}</p>
+                    <div className="hero-actions" style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
                         <button className="cta-button" onClick={() => isLoggedIn ? setActiveView("dashboard") : setShowAuthScreen(true)}>
                             {isLoggedIn ? t.navDashboard : t.getStarted}
                         </button>
-                        <a href="#about" className="secondary-button">
+                        <a href="#about" style={{ padding: "0.75rem 1.5rem", borderRadius: "8px", border: "1px solid #cbd5e1", background: "#fff", color: "var(--text-main)", textDecoration: "none", fontWeight: "600" }}>
                             {t.learnMore}
                         </a>
                     </div>
                 </div>
             </section>
 
+            {/* Rich Text & Image Cards Section */}
             <section className="landing-section" id="dangers">
-                <div className="section-header">
-                    <p className="eyebrow">{t.awarenessEyebrow}</p>
-                    <h2>{t.awarenessTitle}</h2>
+                <div className="section-header" style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.awarenessEyebrow}</p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>{t.awarenessTitle}</h2>
                 </div>
                 <div className="cards-grid">
                     <article className="info-card">
-                        <h3>{t.card1Title}</h3>
-                        <p>{t.card1Body}</p>
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Clinical screening" />
+                        <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>{t.card1Title}</h3>
+                        <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>{t.card1Body}</p>
                     </article>
                     <article className="info-card">
-                        <h3>{t.card2Title}</h3>
-                        <p>{t.card2Body}</p>
+                        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80" alt="Medication management" />
+                        <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>{t.card2Title}</h3>
+                        <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>{t.card2Body}</p>
                     </article>
                     <article className="info-card">
-                        <h3>{t.card3Title}</h3>
-                        <p>{t.card3Body}</p>
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80" alt="Doctor patient collaboration" />
+                        <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>{t.card3Title}</h3>
+                        <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>{t.card3Body}</p>
                     </article>
                 </div>
             </section>
 
             <section className="landing-section highlight-bg" id="why-us">
-                <div className="section-header">
-                    <p className="eyebrow">{t.whyEyebrow}</p>
-                    <h2>{t.whyTitle}</h2>
+                <div className="section-header" style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.whyEyebrow}</p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>{t.whyTitle}</h2>
                 </div>
                 <div className="cards-grid">
-                    <article className="info-card">
-                        <h3>{t.feat1Title}</h3>
-                        <p>{t.feat1Body}</p>
+                    <article className="info-card" style={{ background: "#fff" }}>
+                        <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "var(--primary)" }}>{t.feat1Title}</h3>
+                        <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>{t.feat1Body}</p>
                     </article>
-                    <article className="info-card">
-                        <h3>{t.feat2Title}</h3>
-                        <p>{t.feat2Body}</p>
+                    <article className="info-card" style={{ background: "#fff" }}>
+                        <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "var(--primary)" }}>{t.feat2Title}</h3>
+                        <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>{t.feat2Body}</p>
                     </article>
-                    <article className="info-card">
-                        <h3>{t.feat3Title}</h3>
-                        <p>{t.feat3Body}</p>
+                    <article className="info-card" style={{ background: "#fff" }}>
+                        <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "var(--primary)" }}>{t.feat3Title}</h3>
+                        <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>{t.feat3Body}</p>
                     </article>
                 </div>
             </section>
 
+            {/* Rich Text About Us Section */}
             <section className="landing-section" id="about">
-                <div className="section-header">
-                    <p className="eyebrow">{t.aboutEyebrow}</p>
-                    <h2>{t.aboutTitle}</h2>
+                <div className="section-header" style={{ textAlign: "center", marginBottom: "2rem" }}>
+                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.aboutEyebrow}</p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>{t.aboutTitle}</h2>
                 </div>
-                <div style={{ maxWidth: "750px", margin: "0 auto", textAlign: "center", color: "#6c757d", lineHeight: "1.7", fontSize: "0.95rem" }}>
-                    <p>{t.aboutBody}</p>
+                <div style={{ maxWidth: "750px", margin: "0 auto", color: "#475569", lineHeight: "1.8", fontSize: "1rem", display: "flex", flexDirection: "column", gap: "1.2rem", textAlign: "left" }}>
+                    <p>{t.aboutP1}</p>
+                    <p>{t.aboutP2}</p>
                 </div>
             </section>
 
-            {/* Contact Us Section */}
+            {/* Mobile-Optimized Contact Section */}
             <section className="landing-section highlight-bg" id="contact">
-                <div className="section-header">
-                    <p className="eyebrow">{t.contactEyebrow}</p>
-                    <h2>{t.contactTitle}</h2>
-                    <p style={{ color: "#6c757d", fontSize: "0.9rem", marginTop: "0.3rem" }}>{t.contactSub}</p>
+                <div className="section-header" style={{ textAlign: "center", marginBottom: "2rem" }}>
+                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.contactEyebrow}</p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>{t.contactTitle}</h2>
+                    <p style={{ color: "#64748b", fontSize: "0.9rem", marginTop: "0.4rem", maxWidth: "500px", marginInline: "auto" }}>{t.contactSub}</p>
                 </div>
-                <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+                <div style={{ maxWidth: "500px", margin: "0 auto", background: "#fff", padding: "2rem", borderRadius: "12px", border: "1px solid var(--border-color)", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.02)" }}>
                     {contactSubmitted ? (
-                        <div style={{ padding: "1rem", background: "#e6f4ea", color: "#137333", borderRadius: "6px", textAlign: "center", fontSize: "0.9rem" }}>
+                        <div style={{ padding: "1.5rem", background: "#f0fdf4", color: "#166534", borderRadius: "8px", textAlign: "center", fontSize: "0.95rem", fontWeight: "600" }}>
                             {t.contactSuccess}
                         </div>
                     ) : (
-                        <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                            <input type="text" placeholder={t.contactName} required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }} />
-                            <input type="email" placeholder={t.contactEmail} required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }} />
-                            <textarea placeholder={t.contactMsg} rows="4" required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}></textarea>
-                            <button type="submit" className="cta-button">{t.contactSend}</button>
+                        <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>{t.contactName}</label>
+                                <input type="text" placeholder="Jane Doe" required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }} />
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>{t.contactEmail}</label>
+                                <input type="email" placeholder="jane@example.com" required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }} />
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                                <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>{t.contactMsg}</label>
+                                <textarea placeholder="How can we help you?" rows="4" required style={{ padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}></textarea>
+                            </div>
+                            <button type="submit" className="cta-button" style={{ marginTop: "6px", width: "100%", padding: "10px" }}>{t.contactSend}</button>
                         </form>
                     )}
                 </div>
             </section>
 
-            {/* Complete Professional Footer */}
-            <footer className="dashboard-footer" style={{ background: "#fff", borderTop: "1px solid var(--border-color)", padding: "2.5rem 1.5rem" }}>
-                <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", textAlign: "left" }}>
+            {/* Mobile-Friendly Footer */}
+            <footer style={{ background: "#fff", borderTop: "1px solid var(--border-color)", padding: "3rem 1.5rem" }}>
+                <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem", textAlign: "left" }}>
                     <div>
-                        <strong style={{ fontSize: "1.1rem", color: "var(--primary)" }}>{t.appName}</strong>
-                        <p style={{ color: "#6c757d", fontSize: "0.85rem", marginTop: "0.4rem", maxWidth: "300px" }}>{t.footerDesc}</p>
+                        <strong style={{ fontSize: "1.2rem", color: "var(--primary)" }}>{t.appName}</strong>
+                        <p style={{ color: "#64748b", fontSize: "0.85rem", marginTop: "0.5rem", maxWidth: "280px", lineHeight: "1.6" }}>{t.footerDesc}</p>
                     </div>
-                    <div style={{ display: "flex", gap: "2rem", fontSize: "0.85rem" }}>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                    <div style={{ display: "flex", gap: "3rem", fontSize: "0.85rem", flexWrap: "wrap" }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                             <strong style={{ color: "var(--text-main)" }}>Navigation</strong>
-                            <a href="#about" style={{ textDecoration: "none", color: "#6c757d" }}>{t.navAbout}</a>
-                            <a href="#why-us" style={{ textDecoration: "none", color: "#6c757d" }}>Features</a>
-                            <a href="#contact" style={{ textDecoration: "none", color: "#6c757d" }}>{t.navContact}</a>
+                            <a href="#about" style={{ textDecoration: "none", color: "#64748b" }}>{t.navAbout}</a>
+                            <a href="#why-us" style={{ textDecoration: "none", color: "#64748b" }}>Features</a>
+                            <a href="#contact" style={{ textDecoration: "none", color: "#64748b" }}>{t.navContact}</a>
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                            <strong style={{ color: "var(--text-main)" }}>Legal</strong>
-                            <a href="#" style={{ textDecoration: "none", color: "#6c757d" }}>{t.footerPrivacy}</a>
-                            <a href="#" style={{ textDecoration: "none", color: "#6c757d" }}>{t.footerTerms}</a>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                            <strong style={{ color: "var(--text-main)" }}>Legal & Privacy</strong>
+                            <a href="#" style={{ textDecoration: "none", color: "#64748b" }}>Privacy Policy</a>
+                            <a href="#" style={{ textDecoration: "none", color: "#64748b" }}>Terms of Service</a>
                         </div>
                     </div>
                 </div>
-                <div style={{ borderTop: "1px solid #eee", marginTop: "2rem", paddingTop: "1rem", textAlign: "center", fontSize: "0.8rem", color: "#999" }}>
-                    © {new Date().getFullYear()} Rosetta. All rights reserved.
+                <div style={{ borderTop: "1px solid #e2e8f0", marginTop: "2.5rem", paddingTop: "1.5rem", textAlign: "center", fontSize: "0.8rem", color: "#94a3b8" }}>
+                    © {new Date().getFullYear()} Rosetta Healthcare. All rights reserved.
                 </div>
             </footer>
 
@@ -651,10 +653,10 @@ export default function App() {
             return (
                 <div style={{ position: "relative" }}>
                     <div style={{ position: "absolute", top: "15px", left: "15px", zIndex: 10, display: "flex", gap: "10px" }}>
-                        <button className="nav-btn" onClick={() => setShowAuthScreen(false)}>
+                        <button className="cta-button" onClick={() => setShowAuthScreen(false)} style={{ background: "#e2e8f0", color: "#1e293b" }}>
                             {t.backHome}
                         </button>
-                        <button className="lang-switch" onClick={toggleLang}>
+                        <button className="lang-switch" onClick={toggleLang} style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid #cbd5e1", background: "#fff", cursor: "pointer", fontWeight: "600" }}>
                             {lang === "en" ? "FR" : "EN"}
                         </button>
                     </div>
@@ -668,14 +670,14 @@ export default function App() {
 
     if (profileError) {
         return (
-            <main className="status-screen">
+            <main className="status-screen" style={{ textAlign: "center", padding: "4rem" }}>
                 <h2>{profileError}</h2>
-                <button className="nav-btn" onClick={handleLogout}>{t.logout}</button>
+                <button className="cta-button" onClick={handleLogout} style={{ marginTop: "1rem" }}>{t.logout}</button>
             </main>
         );
     }
 
-    if (profileLoading || !profile) {
+    if (!profile) {
         return <main className="status-screen">Loading...</main>;
     }
 
@@ -689,69 +691,64 @@ export default function App() {
     return (
         <div className="app-shell">
             <header className="topbar">
-                <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("home"); }}>
+                <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("home"); }} style={{ fontWeight: "700", fontSize: "1.2rem", color: "var(--primary)", textDecoration: "none" }}>
                     {t.appName}
                 </a>
 
-                <div className="account-area">
-                    <button className="lang-switch" onClick={toggleLang}>
+                <div className="account-area" style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+                    <button className="lang-switch" onClick={toggleLang} style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid #cbd5e1", background: "#fff", cursor: "pointer", fontWeight: "600", fontSize: "0.85rem" }}>
                         {lang === "en" ? "FR" : "EN"}
                     </button>
 
                     <button 
-                        className="logout-button"
                         onClick={() => setShowDonateModal(true)}
-                        style={{ borderColor: "var(--primary)", color: "var(--primary)", fontWeight: "600" }}
+                        style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid var(--primary)", background: "transparent", color: "var(--primary)", fontWeight: "600", cursor: "pointer", fontSize: "0.85rem" }}
                     >
                         {t.donateBtn}
                     </button>
 
-                    <button className="nav-btn" onClick={() => setActiveView("home")}>
-                        {t.navHome}
+                    <button className="cta-button" onClick={() => setActiveView("home")} style={{ background: "#e2e8f0", color: "#1e293b", padding: "6px 12px", fontSize: "0.85rem" }}>
+                        {t.navDashboard === "Dashboard →" ? "Home" : "Accueil"}
                     </button>
 
-                    <div className="account-info">
+                    <div className="account-info" style={{ display: "flex", flexDirection: "column", textAlign: "right", fontSize: "0.85rem" }}>
                         <strong>{profile.full_name}</strong>
-                        <span>{isDoctor ? (lang === "en" ? "Doctor" : "Médecin") : (lang === "en" ? "Patient" : "Patient")}</span>
+                        <span style={{ color: "#64748b" }}>{isDoctor ? (lang === "en" ? "Doctor" : "Médecin") : (lang === "en" ? "Patient" : "Patient")}</span>
                     </div>
 
-                    <button className="logout-button" onClick={handleLogout}>
+                    <button className="cta-button" onClick={handleLogout} style={{ background: "#ef4444", padding: "6px 12px", fontSize: "0.85rem" }}>
                         {t.logout}
                     </button>
                 </div>
             </header>
 
-            <main className="dashboard">
-                <section className="welcome-section">
-                    <div>
-                        <p className="eyebrow">
-                            {isDoctor ? t.doctorSpace : t.patientSpace}
-                        </p>
+            <main className="dashboard" style={{ maxWidth: "900px", margin: "2rem auto", padding: "0 1rem", display: "flex", flexDirection: "column", gap: "2rem" }}>
+                <section className="welcome-section" style={{ background: "#fff", padding: "2rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>
+                        {isDoctor ? t.doctorSpace : t.patientSpace}
+                    </p>
 
-                        <h1>
-                            {isDoctor
-                                ? `${t.welcomeDoctor}${profile.full_name}`
-                                : `${t.welcomePatient}${profile.full_name}`}
-                        </h1>
+                    <h1 style={{ fontSize: "1.8rem", margin: "0.4rem 0" }}>
+                        {isDoctor
+                            ? `${t.welcomeDoctor}${profile.full_name}`
+                            : `${t.welcomePatient}${profile.full_name}`}
+                    </h1>
 
-                        <p className="welcome-description">
-                            {isDoctor ? t.doctorSub : t.patientSub}
-                        </p>
-                    </div>
+                    <p className="welcome-description" style={{ color: "#64748b", fontSize: "0.95rem" }}>
+                        {isDoctor ? t.doctorSub : t.patientSub}
+                    </p>
                 </section>
 
                 {isDoctor ? (
                     <>
-                        <section className="panel">
-                            <div className="panel-heading">
-                                <div>
-                                    <p className="eyebrow">{t.messagesEyebrow}</p>
-                                    <h2>{t.messagesTitle}</h2>
-                                </div>
+                        <section className="panel" style={{ background: "#fff", padding: "2rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                            <div className="panel-heading" style={{ marginBottom: "1.5rem" }}>
+                                <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.messagesEyebrow}</p>
+                                <h2 style={{ fontSize: "1.4rem" }}>{t.messagesTitle}</h2>
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p style={{ color: "#6c757d", fontSize: "0.9rem" }}>{t.noPatients}</p>
+                                <p style={{ color: "#64748b", fontSize: "0.9rem" }}>{t.noPatients}</p>
                             ) : (
                                 <div>
                                     <div style={{ marginBottom: "15px" }}>
@@ -761,7 +758,7 @@ export default function App() {
                                         <select
                                             value={recipientId}
                                             onChange={(e) => setRecipientId(e.target.value)}
-                                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                         >
                                             {availableUsers.map((pat) => (
                                                 <option key={pat.id} value={pat.id}>
@@ -771,9 +768,9 @@ export default function App() {
                                         </select>
                                     </div>
 
-                                    <div style={{ height: "240px", overflowY: "auto", border: "1px solid #eee", borderRadius: "8px", padding: "12px", marginBottom: "12px", background: "#fafafa", display: "flex", flexDirection: "column", gap: "8px" }}>
+                                    <div style={{ height: "260px", overflowY: "auto", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "12px", marginBottom: "12px", background: "#f8fafc", display: "flex", flexDirection: "column", gap: "8px" }}>
                                         {messages.length === 0 ? (
-                                            <p style={{ color: "#888", textAlign: "center", margin: "auto", fontSize: "0.85rem" }}>
+                                            <p style={{ color: "#94a3b8", textAlign: "center", margin: "auto", fontSize: "0.85rem" }}>
                                                 {t.noMessages}
                                             </p>
                                         ) : (
@@ -784,8 +781,8 @@ export default function App() {
                                                         key={msg.id}
                                                         style={{
                                                             alignSelf: isMe ? "flex-end" : "flex-start",
-                                                            background: isMe ? "var(--primary)" : "#e9ecef",
-                                                            color: isMe ? "white" : "#2b2d42",
+                                                            background: isMe ? "var(--primary)" : "#e2e8f0",
+                                                            color: isMe ? "white" : "#1e293b",
                                                             padding: "8px 12px",
                                                             borderRadius: "8px",
                                                             maxWidth: "75%",
@@ -805,7 +802,7 @@ export default function App() {
                                             placeholder={t.typeMsg}
                                             value={newMessage}
                                             onChange={(e) => setNewMessage(e.target.value)}
-                                            style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                            style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                         />
                                         <button type="submit" className="cta-button" style={{ padding: "0 18px" }}>
                                             {t.send}
@@ -817,28 +814,28 @@ export default function App() {
                     </>
                 ) : (
                     <>
-                        <section className="summary-grid">
-                            <article className="summary-card">
-                                <p>{t.todayMed}</p>
-                                <strong>{medications.length} {t.scheduled}</strong>
-                                <span className="muted">{t.dailyPlan}</span>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1rem" }}>
+                            <article style={{ background: "#fff", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                                <p style={{ color: "#64748b", fontSize: "0.85rem", fontWeight: "600" }}>{t.todayMed}</p>
+                                <strong style={{ fontSize: "1.6rem", display: "block", margin: "0.2rem 0" }}>{medications.length} {t.scheduled}</strong>
+                                <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>{t.dailyPlan}</span>
                             </article>
 
-                            <article className="summary-card">
-                                <p>{t.dosesDone}</p>
-                                <strong>{completedCount} {t.completedOf} {medications.length}</strong>
-                                <span className="muted">{t.progressToday}</span>
+                            <article style={{ background: "#fff", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                                <p style={{ color: "#64748b", fontSize: "0.85rem", fontWeight: "600" }}>{t.dosesDone}</p>
+                                <strong style={{ fontSize: "1.6rem", display: "block", margin: "0.2rem 0" }}>{completedCount} {t.completedOf} {medications.length}</strong>
+                                <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>{t.progressToday}</span>
                             </article>
-                        </section>
+                        </div>
 
-                        <section className="panel">
-                            <div className="panel-heading">
+                        <section className="panel" style={{ background: "#fff", padding: "2rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                            <div className="panel-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
                                 <div>
-                                    <p className="eyebrow">{t.carePlan}</p>
-                                    <h2>{t.medSchedule}</h2>
+                                    <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.carePlan}</p>
+                                    <h2 style={{ fontSize: "1.4rem" }}>{t.medSchedule}</h2>
                                 </div>
 
-                                <span className="date-label">
+                                <span style={{ background: "#f1f5f9", padding: "6px 12px", borderRadius: "6px", fontSize: "0.85rem", fontWeight: "600", color: "#475569" }}>
                                     {new Date().toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
                                         weekday: "short",
                                         month: "short",
@@ -847,28 +844,28 @@ export default function App() {
                                 </span>
                             </div>
 
-                            <form onSubmit={handleAddMedication} className="med-form" style={{ display: "flex", gap: "8px", marginBottom: "15px", flexWrap: "wrap" }}>
+                            <form onSubmit={handleAddMedication} style={{ display: "flex", gap: "8px", marginBottom: "1.5rem", flexWrap: "wrap" }}>
                                 <input
                                     type="text"
                                     placeholder={t.medNamePlace}
                                     value={newMedName}
                                     onChange={(e) => setNewMedName(e.target.value)}
                                     required
-                                    style={{ flex: 2, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                    style={{ flex: 2, minWidth: "180px", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                 />
                                 <input
                                     type="text"
                                     placeholder={t.dosagePlace}
                                     value={newDosage}
                                     onChange={(e) => setNewDosage(e.target.value)}
-                                    style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                    style={{ flex: 1, minWidth: "110px", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                 />
                                 <input
                                     type="time"
                                     value={newTime}
                                     onChange={(e) => setNewTime(e.target.value)}
                                     required
-                                    style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                    style={{ padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                 />
                                 <button type="submit" className="cta-button">
                                     {t.addReminder}
@@ -876,8 +873,8 @@ export default function App() {
                             </form>
 
                             {medications.length === 0 ? (
-                                <div className="empty-state">
-                                    <h3>{t.noMeds}</h3>
+                                <div style={{ textAlign: "center", padding: "2rem", color: "#94a3b8", fontSize: "0.95rem" }}>
+                                    {t.noMeds}
                                 </div>
                             ) : (
                                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -889,11 +886,11 @@ export default function App() {
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
                                                 padding: "12px 15px",
-                                                background: med.is_taken ? "#f8f9fa" : "#fff",
-                                                border: "1px solid #eee",
-                                                borderRadius: "6px",
+                                                background: med.is_taken ? "#f8fafc" : "#fff",
+                                                border: "1px solid #e2e8f0",
+                                                borderRadius: "8px",
                                                 textDecoration: med.is_taken ? "line-through" : "none",
-                                                color: med.is_taken ? "#888" : "#2b2d42",
+                                                color: med.is_taken ? "#94a3b8" : "#1e293b",
                                                 fontSize: "0.9rem"
                                             }}
                                         >
@@ -904,12 +901,13 @@ export default function App() {
                                                 onClick={() => toggleMedication(med.id, med.is_taken)}
                                                 style={{
                                                     padding: "6px 12px",
-                                                    background: med.is_taken ? "#6c757d" : "#198754",
+                                                    background: med.is_taken ? "#64748b" : "#16a34a",
                                                     color: "white",
                                                     border: "none",
-                                                    borderRadius: "4px",
+                                                    borderRadius: "6px",
                                                     cursor: "pointer",
-                                                    fontSize: "0.8rem"
+                                                    fontSize: "0.8rem",
+                                                    fontWeight: "600"
                                                 }}
                                             >
                                                 {med.is_taken ? t.undo : t.markTaken}
@@ -920,16 +918,14 @@ export default function App() {
                             )}
                         </section>
 
-                        <section className="panel">
-                            <div className="panel-heading">
-                                <div>
-                                    <p className="eyebrow">{t.messagesEyebrow}</p>
-                                    <h2>{t.messagesTitle}</h2>
-                                </div>
+                        <section className="panel" style={{ background: "#fff", padding: "2rem", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                            <div className="panel-heading" style={{ marginBottom: "1.5rem" }}>
+                                <p className="eyebrow" style={{ color: "var(--primary)", fontWeight: "700", fontSize: "0.8rem", letterSpacing: "1px" }}>{t.messagesEyebrow}</p>
+                                <h2 style={{ fontSize: "1.4rem" }}>{t.messagesTitle}</h2>
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p style={{ color: "#6c757d", fontSize: "0.9rem" }}>{t.noDoctors}</p>
+                                <p style={{ color: "#64748b", fontSize: "0.9rem" }}>{t.noDoctors}</p>
                             ) : (
                                 <div>
                                     <div style={{ marginBottom: "15px" }}>
@@ -939,7 +935,7 @@ export default function App() {
                                         <select
                                             value={recipientId}
                                             onChange={(e) => setRecipientId(e.target.value)}
-                                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                         >
                                             {availableUsers.map((doc) => (
                                                 <option key={doc.id} value={doc.id}>
@@ -949,9 +945,9 @@ export default function App() {
                                         </select>
                                     </div>
 
-                                    <div style={{ height: "240px", overflowY: "auto", border: "1px solid #eee", borderRadius: "8px", padding: "12px", marginBottom: "12px", background: "#fafafa", display: "flex", flexDirection: "column", gap: "8px" }}>
+                                    <div style={{ height: "260px", overflowY: "auto", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "12px", marginBottom: "12px", background: "#f8fafc", display: "flex", flexDirection: "column", gap: "8px" }}>
                                         {messages.length === 0 ? (
-                                            <p style={{ color: "#888", textAlign: "center", margin: "auto", fontSize: "0.85rem" }}>
+                                            <p style={{ color: "#94a3b8", textAlign: "center", margin: "auto", fontSize: "0.85rem" }}>
                                                 {t.noMessages}
                                             </p>
                                         ) : (
@@ -962,8 +958,8 @@ export default function App() {
                                                         key={msg.id}
                                                         style={{
                                                             alignSelf: isMe ? "flex-end" : "flex-start",
-                                                            background: isMe ? "var(--primary)" : "#e9ecef",
-                                                            color: isMe ? "white" : "#2b2d42",
+                                                            background: isMe ? "var(--primary)" : "#e2e8f0",
+                                                            color: isMe ? "white" : "#1e293b",
                                                             padding: "8px 12px",
                                                             borderRadius: "8px",
                                                             maxWidth: "75%",
@@ -983,7 +979,7 @@ export default function App() {
                                             placeholder={t.typeMsg}
                                             value={newMessage}
                                             onChange={(e) => setNewMessage(e.target.value)}
-                                            style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
+                                            style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
                                         />
                                         <button type="submit" className="cta-button" style={{ padding: "0 18px" }}>
                                             {t.send}
@@ -994,10 +990,6 @@ export default function App() {
                         </section>
                     </>
                 )}
-
-                <footer className="dashboard-footer">
-                    {t.footer}
-                </footer>
             </main>
 
             {showDonateModal && <DonationModal />}

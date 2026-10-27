@@ -17,7 +17,7 @@ export default function App() {
     const [loading, setLoading] = useState(true);
     const [profileLoading, setProfileLoading] = useState(false);
     const [profileError, setProfileError] = useState("");
-
+    
     // Toggles
     const [showAuthScreen, setShowAuthScreen] = useState(false);
     const [activeView, setActiveView] = useState("dashboard");
@@ -28,8 +28,7 @@ export default function App() {
             appName: "Rosetta",
             tagline: "Breast Health Companion",
             heroTitle: "Rosetta, your companion through treatment",
-            heroSub:
-                "Connecting patients and healthcare teams with structured daily care plans, medication tracking, and direct secure messaging.",
+            heroSub: "Connecting patients and healthcare teams with structured daily care plans, medication tracking, and direct secure messaging.",
             getStarted: "Get Started",
             learnMore: "Learn More ↓",
             navHome: "← Home",
@@ -39,38 +38,29 @@ export default function App() {
             awarenessEyebrow: "AWARENESS & PREVENTION",
             awarenessTitle: "Understanding Early Detection",
             card1Title: "Early Screening",
-            card1Body:
-                "Regular medical checkups and screenings increase treatment efficacy significantly. Awareness remains key.",
+            card1Body: "Regular medical checkups and screenings increase treatment efficacy significantly. Awareness remains key.",
             card2Title: "Structured Care",
-            card2Body:
-                "Managing daily medications, appointments, and symptoms requires an intuitive, clear care dashboard.",
+            card2Body: "Managing daily medications, appointments, and symptoms requires an intuitive, clear care dashboard.",
             card3Title: "Continuous Support",
-            card3Body:
-                "Direct communication channels between patients and care teams improve outcomes and comfort.",
+            card3Body: "Direct communication channels between patients and care teams improve outcomes and comfort.",
             whyEyebrow: "PLATFORM FEATURES",
             whyTitle: "Designed for Patients & Care Teams",
             feat1Title: "Medication Reminders",
-            feat1Body:
-                "Track daily schedules, dosages, and completed treatments easily.",
+            feat1Body: "Track daily schedules, dosages, and completed treatments easily.",
             feat2Title: "Direct Messaging",
-            feat2Body:
-                "Real-time communication with your doctor for remote support and reassurance.",
+            feat2Body: "Real-time communication with your doctor for remote support and reassurance.",
             feat3Title: "Secure Platform",
-            feat3Body:
-                "Built with standard Row-Level Security ensuring user privacy and role isolation.",
+            feat3Body: "Built with standard Row-Level Security ensuring user privacy and role isolation.",
             aboutEyebrow: "ABOUT ROSETTA",
             aboutTitle: "Our Focus",
-            aboutBody:
-                "Rosetta bridges the gap between healthcare providers and patients. We provide tools to make daily care management simple and accurate.",
+            aboutBody: "Rosetta bridges the gap between healthcare providers and patients. We provide tools to make daily care management simple and accurate.",
             footer: "Rosetta Healthcare Companion",
             patientSpace: "PATIENT DASHBOARD",
             doctorSpace: "DOCTOR WORKSPACE",
             welcomePatient: "Hello, ",
             welcomeDoctor: "Welcome, Dr. ",
-            patientSub:
-                "Track your treatment plan and stay connected with your healthcare provider.",
-            doctorSub:
-                "Monitor patient updates and respond to direct consultations.",
+            patientSub: "Track your treatment plan and stay connected with your healthcare provider.",
+            doctorSub: "Monitor patient updates and respond to direct consultations.",
             selectPatient: "Select Patient:",
             selectDoctor: "Select Doctor:",
             noPatients: "No patients registered in the workspace yet.",
@@ -94,14 +84,13 @@ export default function App() {
             markTaken: "Mark as Taken",
             messagesTitle: "Messages",
             messagesEyebrow: "COMMUNICATION",
-            backHome: "← Back to Home",
+            backHome: "← Back to Home"
         },
         fr: {
             appName: "Rosetta",
             tagline: "Accompagnement Santé",
             heroTitle: "Rosetta, votre plateforme d'accompagnement",
-            heroSub:
-                "Faciliter le suivi quotidien des traitements et la communication directe entre les patients et l'équipe médicale.",
+            heroSub: "Faciliter le suivi quotidien des traitements et la communication directe entre les patients et l'équipe médicale.",
             getStarted: "Commencer",
             learnMore: "En savoir plus ↓",
             navHome: "← Accueil",
@@ -111,38 +100,29 @@ export default function App() {
             awarenessEyebrow: "SENSABILISATION & PRÉVENTION",
             awarenessTitle: "L'importance du dépistage précoce",
             card1Title: "Dépistage Précoce",
-            card1Body:
-                "Des examens réguliers permettent d'améliorer considérablement l'efficacité des traitements.",
+            card1Body: "Des examens réguliers permettent d'améliorer considérablement l'efficacité des traitements.",
             card2Title: "Suivi Structuré",
-            card2Body:
-                "Organiser les prises de médicaments et rendez-vous grâce à un tableau de bord clair.",
+            card2Body: "Organiser les prises de médicaments et rendez-vous grâce à un tableau de bord clair.",
             card3Title: "Support Continu",
-            card3Body:
-                "La communication directe avec l'équipe soignante apporte sécurité et tranquillité d'esprit.",
+            card3Body: "La communication directe avec l'équipe soignante apporte sécurité et tranquillité d'esprit.",
             whyEyebrow: "FONCTIONNALITÉS",
             whyTitle: "Conçu pour les patients et soignants",
             feat1Title: "Rappels de traitements",
-            feat1Body:
-                "Suivez les horaires quotidiens, dosages et validez les prises en un clic.",
+            feat1Body: "Suivez les horaires quotidiens, dosages et validez les prises en un clic.",
             feat2Title: "Messagerie directe",
-            feat2Body:
-                "Échanges en temps réel avec votre médecin pour un accompagnement à distance.",
+            feat2Body: "Échanges en temps réel avec votre médecin pour un accompagnement à distance.",
             feat3Title: "Espace Sécurisé",
-            feat3Body:
-                "Plateforme sécurisée garantissant la confidentialité stricte des données médicales.",
+            feat3Body: "Plateforme sécurisée garantissant la confidentialité stricte des données médicales.",
             aboutEyebrow: "À PROPOS DE ROSETTA",
             aboutTitle: "Notre Mission",
-            aboutBody:
-                "Rosetta vise à simplifier la prise en charge quotidienne des traitements tout en maintenant un lien direct avec l'équipe médicale.",
+            aboutBody: "Rosetta vise à simplifier la prise en charge quotidienne des traitements tout en maintenant un lien direct avec l'équipe médicale.",
             footer: "Rosetta · Plateforme d'accompagnement médical",
             patientSpace: "ESPACE PATIENT",
             doctorSpace: "ESPACE MÉDECIN",
             welcomePatient: "Bonjour, ",
             welcomeDoctor: "Bienvenue, Dr. ",
-            patientSub:
-                "Suivez votre traitement quotidien et restez en contact avec votre médecin.",
-            doctorSub:
-                "Suivez le parcours de vos patients et répondez aux messages.",
+            patientSub: "Suivez votre traitement quotidien et restez en contact avec votre médecin.",
+            doctorSub: "Suivez le parcours de vos patients et répondez aux messages.",
             selectPatient: "Sélectionner un patient :",
             selectDoctor: "Sélectionner un médecin :",
             noPatients: "Aucun patient inscrit pour le moment.",
@@ -166,12 +146,12 @@ export default function App() {
             markTaken: "Marquer comme pris",
             messagesTitle: "Messagerie",
             messagesEyebrow: "COMMUNICATION",
-            backHome: "← Retour",
-        },
+            backHome: "← Retour"
+        }
     }[lang];
 
     // Toggle language handler
-    const toggleLang = () => setLang((l) => (l === "en" ? "fr" : "en"));
+    const toggleLang = () => setLang(l => l === "en" ? "fr" : "en");
 
     // Fetch medications
     useEffect(() => {
@@ -231,8 +211,8 @@ export default function App() {
         if (!error) {
             setMedications(
                 medications.map((med) =>
-                    med.id === id ? { ...med, is_taken: !currentStatus } : med,
-                ),
+                    med.id === id ? { ...med, is_taken: !currentStatus } : med
+                )
             );
         }
     }
@@ -321,8 +301,7 @@ export default function App() {
         if (!profile) return;
 
         async function fetchUsers() {
-            const targetRole =
-                profile.role === "patient" ? "doctor" : "patient";
+            const targetRole = profile.role === "patient" ? "doctor" : "patient";
             const { data, error } = await supabase
                 .from("profiles")
                 .select("id, full_name, role")
@@ -345,7 +324,7 @@ export default function App() {
                 .from("messages")
                 .select("*")
                 .or(
-                    `and(sender_id.eq.${profile.id},receiver_id.eq.${recipientId}),and(sender_id.eq.${recipientId},receiver_id.eq.${profile.id})`,
+                    `and(sender_id.eq.${profile.id},receiver_id.eq.${recipientId}),and(sender_id.eq.${recipientId},receiver_id.eq.${profile.id})`
                 )
                 .order("created_at", { ascending: true });
 
@@ -366,14 +345,12 @@ export default function App() {
                 (payload) => {
                     const newMsg = payload.new;
                     if (
-                        (newMsg.sender_id === profile.id &&
-                            newMsg.receiver_id === recipientId) ||
-                        (newMsg.sender_id === recipientId &&
-                            newMsg.receiver_id === profile.id)
+                        (newMsg.sender_id === profile.id && newMsg.receiver_id === recipientId) ||
+                        (newMsg.sender_id === recipientId && newMsg.receiver_id === profile.id)
                     ) {
                         setMessages((prev) => [...prev, newMsg]);
                     }
-                },
+                }
             )
             .subscribe();
 
@@ -408,14 +385,7 @@ export default function App() {
     const LandingView = ({ isLoggedIn }) => (
         <div className="landing-page">
             <header className="topbar">
-                <a
-                    className="brand"
-                    href="#"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setActiveView("dashboard");
-                    }}
-                >
+                <a className="brand" href="#" onClick={(e) => { e.preventDefault(); setActiveView("dashboard"); }}>
                     {t.appName}
                 </a>
                 <div className="account-area">
@@ -423,14 +393,14 @@ export default function App() {
                         {lang === "en" ? "FR" : "EN"}
                     </button>
                     {isLoggedIn ? (
-                        <button
+                        <button 
                             className="nav-btn primary-btn"
                             onClick={() => setActiveView("dashboard")}
                         >
                             {t.navDashboard}
                         </button>
                     ) : (
-                        <button
+                        <button 
                             className="nav-btn primary-btn"
                             onClick={() => setShowAuthScreen(true)}
                         >
@@ -446,13 +416,9 @@ export default function App() {
                     <h1>{t.heroTitle}</h1>
                     <p className="hero-subtitle">{t.heroSub}</p>
                     <div className="hero-actions">
-                        <button
+                        <button 
                             className="cta-button"
-                            onClick={() =>
-                                isLoggedIn
-                                    ? setActiveView("dashboard")
-                                    : setShowAuthScreen(true)
-                            }
+                            onClick={() => isLoggedIn ? setActiveView("dashboard") : setShowAuthScreen(true)}
                         >
                             {isLoggedIn ? t.navDashboard : t.getStarted}
                         </button>
@@ -510,21 +476,14 @@ export default function App() {
                     <p className="eyebrow">{t.aboutEyebrow}</p>
                     <h2>{t.aboutTitle}</h2>
                 </div>
-                <div
-                    style={{
-                        maxWidth: "750px",
-                        margin: "0 auto",
-                        textAlign: "center",
-                        color: "#6c757d",
-                        lineHeight: "1.7",
-                        fontSize: "0.95rem",
-                    }}
-                >
+                <div style={{ maxWidth: "750px", margin: "0 auto", textAlign: "center", color: "#6c757d", lineHeight: "1.7", fontSize: "0.95rem" }}>
                     <p>{t.aboutBody}</p>
                 </div>
             </section>
 
-            <footer className="dashboard-footer">{t.footer}</footer>
+            <footer className="dashboard-footer">
+                {t.footer}
+            </footer>
         </div>
     );
 
@@ -532,17 +491,8 @@ export default function App() {
         if (showAuthScreen) {
             return (
                 <div style={{ position: "relative" }}>
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: "15px",
-                            left: "15px",
-                            zIndex: 10,
-                            display: "flex",
-                            gap: "10px",
-                        }}
-                    >
-                        <button
+                    <div style={{ position: "absolute", top: "15px", left: "15px", zIndex: 10, display: "flex", gap: "10px" }}>
+                        <button 
                             className="nav-btn"
                             onClick={() => setShowAuthScreen(false)}
                         >
@@ -564,9 +514,7 @@ export default function App() {
         return (
             <main className="status-screen">
                 <h2>{profileError}</h2>
-                <button className="nav-btn" onClick={handleLogout}>
-                    {t.logout}
-                </button>
+                <button className="nav-btn" onClick={handleLogout}>{t.logout}</button>
             </main>
         );
     }
@@ -585,13 +533,10 @@ export default function App() {
     return (
         <div className="app-shell">
             <header className="topbar">
-                <a
-                    className="brand"
-                    href="#"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setActiveView("home");
-                    }}
+                <a 
+                    className="brand" 
+                    href="#" 
+                    onClick={(e) => { e.preventDefault(); setActiveView("home"); }}
                 >
                     {t.appName}
                 </a>
@@ -601,8 +546,8 @@ export default function App() {
                         {lang === "en" ? "FR" : "EN"}
                     </button>
 
-                    <button
-                        className="nav-btn"
+                    <button 
+                        className="nav-btn" 
                         onClick={() => setActiveView("home")}
                     >
                         {t.navHome}
@@ -610,15 +555,7 @@ export default function App() {
 
                     <div className="account-info">
                         <strong>{profile.full_name}</strong>
-                        <span>
-                            {isDoctor
-                                ? lang === "en"
-                                    ? "Doctor"
-                                    : "Médecin"
-                                : lang === "en"
-                                  ? "Patient"
-                                  : "Patient"}
-                        </span>
+                        <span>{isDoctor ? (lang === "en" ? "Doctor" : "Médecin") : (lang === "en" ? "Patient" : "Patient")}</span>
                     </div>
 
                     <button className="logout-button" onClick={handleLogout}>
@@ -651,147 +588,69 @@ export default function App() {
                         <section className="panel">
                             <div className="panel-heading">
                                 <div>
-                                    <p className="eyebrow">
-                                        {t.messagesEyebrow}
-                                    </p>
+                                    <p className="eyebrow">{t.messagesEyebrow}</p>
                                     <h2>{t.messagesTitle}</h2>
                                 </div>
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p
-                                    style={{
-                                        color: "#6c757d",
-                                        fontSize: "0.9rem",
-                                    }}
-                                >
-                                    {t.noPatients}
-                                </p>
+                                <p style={{ color: "#6c757d", fontSize: "0.9rem" }}>{t.noPatients}</p>
                             ) : (
                                 <div>
                                     <div style={{ marginBottom: "15px" }}>
-                                        <label
-                                            style={{
-                                                display: "block",
-                                                marginBottom: "5px",
-                                                fontSize: "0.85rem",
-                                                fontWeight: "600",
-                                            }}
-                                        >
+                                        <label style={{ display: "block", marginBottom: "5px", fontSize: "0.85rem", fontWeight: "600" }}>
                                             {t.selectPatient}
                                         </label>
                                         <select
                                             value={recipientId}
-                                            onChange={(e) =>
-                                                setRecipientId(e.target.value)
-                                            }
-                                            style={{
-                                                width: "100%",
-                                                padding: "10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #ccc",
-                                                fontSize: "0.9rem",
-                                            }}
+                                            onChange={(e) => setRecipientId(e.target.value)}
+                                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                         >
                                             {availableUsers.map((pat) => (
-                                                <option
-                                                    key={pat.id}
-                                                    value={pat.id}
-                                                >
+                                                <option key={pat.id} value={pat.id}>
                                                     {pat.full_name}
                                                 </option>
                                             ))}
                                         </select>
                                     </div>
 
-                                    <div
-                                        style={{
-                                            height: "240px",
-                                            overflowY: "auto",
-                                            border: "1px solid #eee",
-                                            borderRadius: "8px",
-                                            padding: "12px",
-                                            marginBottom: "12px",
-                                            background: "#fafafa",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "8px",
-                                        }}
-                                    >
+                                    <div style={{ height: "240px", overflowY: "auto", border: "1px solid #eee", borderRadius: "8px", padding: "12px", marginBottom: "12px", background: "#fafafa", display: "flex", flexDirection: "column", gap: "8px" }}>
                                         {messages.length === 0 ? (
-                                            <p
-                                                style={{
-                                                    color: "#888",
-                                                    textAlign: "center",
-                                                    margin: "auto",
-                                                    fontSize: "0.85rem",
-                                                }}
-                                            >
+                                            <p style={{ color: "#888", textAlign: "center", margin: "auto", fontSize: "0.85rem" }}>
                                                 {t.noMessages}
                                             </p>
                                         ) : (
                                             messages.map((msg) => {
-                                                const isMe =
-                                                    msg.sender_id ===
-                                                    profile.id;
+                                                const isMe = msg.sender_id === profile.id;
                                                 return (
                                                     <div
                                                         key={msg.id}
                                                         style={{
-                                                            alignSelf: isMe
-                                                                ? "flex-end"
-                                                                : "flex-start",
-                                                            background: isMe
-                                                                ? "var(--primary)"
-                                                                : "#e9ecef",
-                                                            color: isMe
-                                                                ? "white"
-                                                                : "#2b2d42",
+                                                            alignSelf: isMe ? "flex-end" : "flex-start",
+                                                            background: isMe ? "var(--primary)" : "#e9ecef",
+                                                            color: isMe ? "white" : "#2b2d42",
                                                             padding: "8px 12px",
                                                             borderRadius: "8px",
                                                             maxWidth: "75%",
-                                                            fontSize: "0.9rem",
+                                                            fontSize: "0.9rem"
                                                         }}
                                                     >
-                                                        <p
-                                                            style={{
-                                                                margin: 0,
-                                                                wordBreak:
-                                                                    "break-word",
-                                                            }}
-                                                        >
-                                                            {msg.content}
-                                                        </p>
+                                                        <p style={{ margin: 0, wordBreak: "break-word" }}>{msg.content}</p>
                                                     </div>
                                                 );
                                             })
                                         )}
                                     </div>
 
-                                    <form
-                                        onSubmit={handleSendMessage}
-                                        style={{ display: "flex", gap: "8px" }}
-                                    >
+                                    <form onSubmit={handleSendMessage} style={{ display: "flex", gap: "8px" }}>
                                         <input
                                             type="text"
                                             placeholder={t.typeMsg}
                                             value={newMessage}
-                                            onChange={(e) =>
-                                                setNewMessage(e.target.value)
-                                            }
-                                            style={{
-                                                flex: 1,
-                                                padding: "10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #ccc",
-                                                fontSize: "0.9rem",
-                                            }}
+                                            onChange={(e) => setNewMessage(e.target.value)}
+                                            style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                         />
-                                        <button
-                                            type="submit"
-                                            className="cta-button"
-                                            style={{ padding: "0 18px" }}
-                                        >
+                                        <button type="submit" className="cta-button" style={{ padding: "0 18px" }}>
                                             {t.send}
                                         </button>
                                     </form>
@@ -804,18 +663,13 @@ export default function App() {
                         <section className="summary-grid">
                             <article className="summary-card">
                                 <p>{t.todayMed}</p>
-                                <strong>
-                                    {medications.length} {t.scheduled}
-                                </strong>
+                                <strong>{medications.length} {t.scheduled}</strong>
                                 <span className="muted">{t.dailyPlan}</span>
                             </article>
 
                             <article className="summary-card">
                                 <p>{t.dosesDone}</p>
-                                <strong>
-                                    {completedCount} {t.completedOf}{" "}
-                                    {medications.length}
-                                </strong>
+                                <strong>{completedCount} {t.completedOf} {medications.length}</strong>
                                 <span className="muted">{t.progressToday}</span>
                             </article>
                         </section>
@@ -828,69 +682,36 @@ export default function App() {
                                 </div>
 
                                 <span className="date-label">
-                                    {new Date().toLocaleDateString(
-                                        lang === "fr" ? "fr-FR" : "en-US",
-                                        {
-                                            weekday: "short",
-                                            month: "short",
-                                            day: "numeric",
-                                        },
-                                    )}
+                                    {new Date().toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
+                                        weekday: "short",
+                                        month: "short",
+                                        day: "numeric",
+                                    })}
                                 </span>
                             </div>
 
-                            <form
-                                onSubmit={handleAddMedication}
-                                className="med-form"
-                                style={{
-                                    display: "flex",
-                                    gap: "8px",
-                                    marginBottom: "15px",
-                                    flexWrap: "wrap",
-                                }}
-                            >
+                            <form onSubmit={handleAddMedication} className="med-form" style={{ display: "flex", gap: "8px", marginBottom: "15px", flexWrap: "wrap" }}>
                                 <input
                                     type="text"
                                     placeholder={t.medNamePlace}
                                     value={newMedName}
-                                    onChange={(e) =>
-                                        setNewMedName(e.target.value)
-                                    }
+                                    onChange={(e) => setNewMedName(e.target.value)}
                                     required
-                                    style={{
-                                        flex: 2,
-                                        padding: "10px",
-                                        borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        fontSize: "0.9rem",
-                                    }}
+                                    style={{ flex: 2, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                 />
                                 <input
                                     type="text"
                                     placeholder={t.dosagePlace}
                                     value={newDosage}
-                                    onChange={(e) =>
-                                        setNewDosage(e.target.value)
-                                    }
-                                    style={{
-                                        flex: 1,
-                                        padding: "10px",
-                                        borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        fontSize: "0.9rem",
-                                    }}
+                                    onChange={(e) => setNewDosage(e.target.value)}
+                                    style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                 />
                                 <input
                                     type="time"
                                     value={newTime}
                                     onChange={(e) => setNewTime(e.target.value)}
                                     required
-                                    style={{
-                                        padding: "10px",
-                                        borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        fontSize: "0.9rem",
-                                    }}
+                                    style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                 />
                                 <button type="submit" className="cta-button">
                                     {t.addReminder}
@@ -902,13 +723,7 @@ export default function App() {
                                     <h3>{t.noMeds}</h3>
                                 </div>
                             ) : (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: "8px",
-                                    }}
-                                >
+                                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                                     {medications.map((med) => (
                                         <div
                                             key={med.id}
@@ -917,48 +732,30 @@ export default function App() {
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
                                                 padding: "12px 15px",
-                                                background: med.is_taken
-                                                    ? "#f8f9fa"
-                                                    : "#fff",
+                                                background: med.is_taken ? "#f8f9fa" : "#fff",
                                                 border: "1px solid #eee",
                                                 borderRadius: "6px",
-                                                textDecoration: med.is_taken
-                                                    ? "line-through"
-                                                    : "none",
-                                                color: med.is_taken
-                                                    ? "#888"
-                                                    : "#2b2d42",
-                                                fontSize: "0.9rem",
+                                                textDecoration: med.is_taken ? "line-through" : "none",
+                                                color: med.is_taken ? "#888" : "#2b2d42",
+                                                fontSize: "0.9rem"
                                             }}
                                         >
                                             <div>
-                                                <strong>
-                                                    {med.medication_name}
-                                                </strong>{" "}
-                                                ({med.dosage})
+                                                <strong>{med.medication_name}</strong> ({med.dosage})
                                             </div>
                                             <button
-                                                onClick={() =>
-                                                    toggleMedication(
-                                                        med.id,
-                                                        med.is_taken,
-                                                    )
-                                                }
+                                                onClick={() => toggleMedication(med.id, med.is_taken)}
                                                 style={{
                                                     padding: "6px 12px",
-                                                    background: med.is_taken
-                                                        ? "#6c757d"
-                                                        : "#198754",
+                                                    background: med.is_taken ? "#6c757d" : "#198754",
                                                     color: "white",
                                                     border: "none",
                                                     borderRadius: "4px",
                                                     cursor: "pointer",
-                                                    fontSize: "0.8rem",
+                                                    fontSize: "0.8rem"
                                                 }}
                                             >
-                                                {med.is_taken
-                                                    ? t.undo
-                                                    : t.markTaken}
+                                                {med.is_taken ? t.undo : t.markTaken}
                                             </button>
                                         </div>
                                     ))}
@@ -969,147 +766,69 @@ export default function App() {
                         <section className="panel">
                             <div className="panel-heading">
                                 <div>
-                                    <p className="eyebrow">
-                                        {t.messagesEyebrow}
-                                    </p>
+                                    <p className="eyebrow">{t.messagesEyebrow}</p>
                                     <h2>{t.messagesTitle}</h2>
                                 </div>
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p
-                                    style={{
-                                        color: "#6c757d",
-                                        fontSize: "0.9rem",
-                                    }}
-                                >
-                                    {t.noDoctors}
-                                </p>
+                                <p style={{ color: "#6c757d", fontSize: "0.9rem" }}>{t.noDoctors}</p>
                             ) : (
                                 <div>
                                     <div style={{ marginBottom: "15px" }}>
-                                        <label
-                                            style={{
-                                                display: "block",
-                                                marginBottom: "5px",
-                                                fontSize: "0.85rem",
-                                                fontWeight: "600",
-                                            }}
-                                        >
+                                        <label style={{ display: "block", marginBottom: "5px", fontSize: "0.85rem", fontWeight: "600" }}>
                                             {t.selectDoctor}
                                         </label>
                                         <select
                                             value={recipientId}
-                                            onChange={(e) =>
-                                                setRecipientId(e.target.value)
-                                            }
-                                            style={{
-                                                width: "100%",
-                                                padding: "10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #ccc",
-                                                fontSize: "0.9rem",
-                                            }}
+                                            onChange={(e) => setRecipientId(e.target.value)}
+                                            style={{ width: "100%", padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                         >
                                             {availableUsers.map((doc) => (
-                                                <option
-                                                    key={doc.id}
-                                                    value={doc.id}
-                                                >
+                                                <option key={doc.id} value={doc.id}>
                                                     Dr. {doc.full_name}
                                                 </option>
                                             ))}
                                         </select>
                                     </div>
 
-                                    <div
-                                        style={{
-                                            height: "240px",
-                                            overflowY: "auto",
-                                            border: "1px solid #eee",
-                                            borderRadius: "8px",
-                                            padding: "12px",
-                                            marginBottom: "12px",
-                                            background: "#fafafa",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "8px",
-                                        }}
-                                    >
+                                    <div style={{ height: "240px", overflowY: "auto", border: "1px solid #eee", borderRadius: "8px", padding: "12px", marginBottom: "12px", background: "#fafafa", display: "flex", flexDirection: "column", gap: "8px" }}>
                                         {messages.length === 0 ? (
-                                            <p
-                                                style={{
-                                                    color: "#888",
-                                                    textAlign: "center",
-                                                    margin: "auto",
-                                                    fontSize: "0.85rem",
-                                                }}
-                                            >
+                                            <p style={{ color: "#888", textAlign: "center", margin: "auto", fontSize: "0.85rem" }}>
                                                 {t.noMessages}
                                             </p>
                                         ) : (
                                             messages.map((msg) => {
-                                                const isMe =
-                                                    msg.sender_id ===
-                                                    profile.id;
+                                                const isMe = msg.sender_id === profile.id;
                                                 return (
                                                     <div
                                                         key={msg.id}
                                                         style={{
-                                                            alignSelf: isMe
-                                                                ? "flex-end"
-                                                                : "flex-start",
-                                                            background: isMe
-                                                                ? "var(--primary)"
-                                                                : "#e9ecef",
-                                                            color: isMe
-                                                                ? "white"
-                                                                : "#2b2d42",
+                                                            alignSelf: isMe ? "flex-end" : "flex-start",
+                                                            background: isMe ? "var(--primary)" : "#e9ecef",
+                                                            color: isMe ? "white" : "#2b2d42",
                                                             padding: "8px 12px",
                                                             borderRadius: "8px",
                                                             maxWidth: "75%",
-                                                            fontSize: "0.9rem",
+                                                            fontSize: "0.9rem"
                                                         }}
                                                     >
-                                                        <p
-                                                            style={{
-                                                                margin: 0,
-                                                                wordBreak:
-                                                                    "break-word",
-                                                            }}
-                                                        >
-                                                            {msg.content}
-                                                        </p>
+                                                        <p style={{ margin: 0, wordBreak: "break-word" }}>{msg.content}</p>
                                                     </div>
                                                 );
                                             })
                                         )}
                                     </div>
 
-                                    <form
-                                        onSubmit={handleSendMessage}
-                                        style={{ display: "flex", gap: "8px" }}
-                                    >
+                                    <form onSubmit={handleSendMessage} style={{ display: "flex", gap: "8px" }}>
                                         <input
                                             type="text"
                                             placeholder={t.typeMsg}
                                             value={newMessage}
-                                            onChange={(e) =>
-                                                setNewMessage(e.target.value)
-                                            }
-                                            style={{
-                                                flex: 1,
-                                                padding: "10px",
-                                                borderRadius: "6px",
-                                                border: "1px solid #ccc",
-                                                fontSize: "0.9rem",
-                                            }}
+                                            onChange={(e) => setNewMessage(e.target.value)}
+                                            style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "0.9rem" }}
                                         />
-                                        <button
-                                            type="submit"
-                                            className="cta-button"
-                                            style={{ padding: "0 18px" }}
-                                        >
+                                        <button type="submit" className="cta-button" style={{ padding: "0 18px" }}>
                                             {t.send}
                                         </button>
                                     </form>
@@ -1119,7 +838,9 @@ export default function App() {
                     </>
                 )}
 
-                <footer className="dashboard-footer">{t.footer}</footer>
+                <footer className="dashboard-footer">
+                    {t.footer}
+                </footer>
             </main>
         </div>
     );

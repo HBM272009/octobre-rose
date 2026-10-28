@@ -19,6 +19,7 @@ export default function App() {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [profileError, setProfileError] = useState("");
+    const [isPC, setIsPC] = useState(window.innerWidth > 1024);
 
     // Navigation & UI States
     const [showAuthScreen, setShowAuthScreen] = useState(false);
@@ -33,6 +34,7 @@ export default function App() {
 
     const t = {
         en: {
+            downloadProto: "Download Prototype App ↗",
             appName: "Rosetta",
             tagline: "Advanced Healthcare Companion",
             heroTitle: "Empowering Patients Through Structured Care",
@@ -125,6 +127,7 @@ export default function App() {
             backHome: "← Return to Home",
         },
         fr: {
+            downloadProto: "Télécharger le prototype ↗",
             appName: "Rosetta",
             tagline: "Plateforme de Santé Avancée",
             heroTitle: "Accompagner les patients grâce à des soins structurés",
@@ -349,7 +352,13 @@ export default function App() {
             cancelled = true;
         };
     }, [session?.user?.id]);
-
+    useEffect(() => {
+        const handleResize = () => {
+            setIsPC(window.innerWidth > 1024);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
     async function handleLogout() {
         await supabase.auth.signOut();
         setActiveView("dashboard");
@@ -587,591 +596,752 @@ export default function App() {
         </div>
     );
 
-    const LandingView = ({ isLoggedIn }) => {
-        const [isLandingMenuOpen, setIsLandingMenuOpen] = useState(false);
+    const LandingView = ({ isLoggedIn, userRole }) => {
+    const [isLandingMenuOpen, setIsLandingMenuOpen] = useState(false);
+    
+    // Track screen size to check if it's a PC/desktop screen (e.g., width > 1024px)
+    const [isPC, setIsPC] = useState(window.innerWidth > 1024);
 
-        return (
-            <div className="landing-page">
-                <header className="topbar">
-                    <div className="brand-row">
+    useEffect(() => {
+        const handleResize = () => {
+            setIsPC(window.innerWidth > 1024);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
+        <div className="landing-page">
+            <header className="topbar">
+                <div className="brand-row">
+                    <a
+                        className="brand"
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setActiveView("dashboard");
+                        }}
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            fontWeight: "700",
+                            fontSize: "1.2rem",
+                            color: "var(--primary)",
+                            textDecoration: "none",
+                        }}
+                    >
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            style={{ height: "30px", width: "auto" }}
+                        />
+                        <span>{t.appName}</span>
+                    </a>
+                    <button
+                        className="hamburger-btn"
+                        onClick={() =>
+                            setIsLandingMenuOpen(!isLandingMenuOpen)
+                        }
+                    >
+                        {isLandingMenuOpen ? "✕" : "☰"}
+                    </button>
+                </div>
+
+                <div
+                    className={`nav-links-container ${isLandingMenuOpen ? "mobile-open" : ""}`}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "1.2rem",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                        }}
+                    >
                         <a
-                            className="brand"
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setActiveView("dashboard");
+                            href="#about"
+                            onClick={() => setIsLandingMenuOpen(false)}
+                            style={{
+                                textDecoration: "none",
+                                color: "var(--text-main)",
+                                fontSize: "0.9rem",
+                                fontWeight: "500",
+                            }}
+                        >
+                            {t.navAbout}
+                        </a>
+                        <a
+                            href="#why-us"
+                            onClick={() => setIsLandingMenuOpen(false)}
+                            style={{
+                                textDecoration: "none",
+                                color: "var(--text-main)",
+                                fontSize: "0.9rem",
+                                fontWeight: "500",
+                            }}
+                        >
+                            Features
+                        </a>
+                        <a
+                            href="#contact"
+                            onClick={() => setIsLandingMenuOpen(false)}
+                            style={{
+                                textDecoration: "none",
+                                color: "var(--text-main)",
+                                fontSize: "0.9rem",
+                                fontWeight: "500",
+                            }}
+                        >
+                            {t.navContact}
+                        </a>
+                    </div>
+
+                    <div className="account-area">
+                        <button
+                            className="lang-switch"
+                            onClick={toggleLang}
+                            style={{
+                                padding: "6px 12px",
+                                borderRadius: "6px",
+                                border: "1px solid #cbd5e1",
+                                background: "#fff",
+                                cursor: "pointer",
+                                fontWeight: "600",
+                                fontSize: "0.85rem",
+                            }}
+                        >
+                            {lang === "en" ? "FR" : "EN"}
+                        </button>
+                        <button
+                            onClick={() => {
+                                setShowDonateModal(true);
+                                setIsLandingMenuOpen(false);
                             }}
                             style={{
+                                padding: "6px 12px",
+                                borderRadius: "6px",
+                                border: "1px solid var(--primary)",
+                                background: "transparent",
+                                color: "var(--primary)",
+                                fontWeight: "600",
+                                cursor: "pointer",
+                                fontSize: "0.85rem",
+                            }}
+                        >
+                            {t.donateBtn}
+                        </button>
+                        {isLoggedIn ? (
+                            <button
+                                className="cta-button"
+                                onClick={() => {
+                                    setActiveView("dashboard");
+                                    setIsLandingMenuOpen(false);
+                                }}
+                                style={{
+                                    padding: "6px 14px",
+                                    fontSize: "0.85rem",
+                                }}
+                            >
+                                {t.navDashboard}
+                            </button>
+                        ) : (
+                            <button
+                                className="cta-button"
+                                onClick={() => {
+                                    setShowAuthScreen(true);
+                                    setIsLandingMenuOpen(false);
+                                }}
+                                style={{
+                                    padding: "6px 14px",
+                                    fontSize: "0.85rem",
+                                }}
+                            >
+                                {t.signInReg}
+                            </button>
+                        )}
+                    </div>
+                </div>
+            </header>
+
+            <section className="landing-hero">
+                <div
+                    className="hero-content"
+                    style={{ maxWidth: "750px", margin: "0 auto" }}
+                >
+                    <p
+                        className="eyebrow"
+                        style={{
+                            color: "var(--primary)",
+                            fontWeight: "700",
+                            textTransform: "uppercase",
+                            fontSize: "0.8rem",
+                            letterSpacing: "1px",
+                        }}
+                    >
+                        {t.tagline}
+                    </p>
+                    <h1>{t.heroTitle}</h1>
+                    <p
+                        className="hero-subtitle"
+                        style={{
+                            color: "#475569",
+                            fontSize: "1.05rem",
+                            lineHeight: "1.7",
+                            marginBottom: "2rem",
+                        }}
+                    >
+                        {t.heroSub}
+                    </p>
+                    <div
+                        className="hero-actions"
+                        style={{
+                            display: "flex",
+                            gap: "12px",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                        }}
+                    >
+                        <button
+                            className="cta-button"
+                            onClick={() =>
+                                isLoggedIn
+                                    ? setActiveView("dashboard")
+                                    : setShowAuthScreen(true)
+                            }
+                        >
+                            {isLoggedIn ? t.navDashboard : t.getStarted}
+                        </button>
+                        <a
+                            href="#about"
+                            style={{
+                                padding: "0.75rem 1.5rem",
+                                borderRadius: "8px",
+                                border: "1px solid #cbd5e1",
+                                background: "#fff",
+                                color: "var(--text-main)",
+                                textDecoration: "none",
+                                fontWeight: "600",
+                            }}
+                        >
+                            {t.learnMore}
+                        </a>
+
+                        {/* Prototype Download Button: Hidden on PC, shown only when logged in on mobile/tablet */}
+                        {isLoggedIn && !isPC && (
+                            <a
+                                href={
+                                    userRole === "doctor"
+                                        ? "https://itzsm1ley.github.io/doctors"
+                                        : "https://itzsm1ley.github.io/"
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    padding: "0.75rem 1.5rem",
+                                    borderRadius: "8px",
+                                    border: "1px solid var(--primary)",
+                                    background: "transparent",
+                                    color: "var(--primary)",
+                                    textDecoration: "none",
+                                    fontWeight: "600",
+                                    display: "inline-block",
+                                    textAlign: "center",
+                                }}
+                            >
+                                {t.downloadProto}
+                            </a>
+                        )}
+                    </div>
+                </div>
+            </section>
+
+            <section className="landing-section" id="dangers">
+                <div
+                    className="section-header"
+                    style={{ textAlign: "center", marginBottom: "2.5rem" }}
+                >
+                    <p
+                        className="eyebrow"
+                        style={{
+                            color: "var(--primary)",
+                            fontWeight: "700",
+                            fontSize: "0.8rem",
+                            letterSpacing: "1px",
+                        }}
+                    >
+                        {t.awarenessEyebrow}
+                    </p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
+                        {t.awarenessTitle}
+                    </h2>
+                </div>
+                <div className="cards-grid">
+                    <article className="info-card">
+                        <img
+                            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80"
+                            alt="Clinical screening"
+                        />
+                        <h3
+                            style={{
+                                fontSize: "1.1rem",
+                                marginBottom: "0.5rem",
+                            }}
+                        >
+                            {t.card1Title}
+                        </h3>
+                        <p
+                            style={{
+                                color: "#475569",
+                                fontSize: "0.9rem",
+                                lineHeight: "1.6",
+                            }}
+                        >
+                            {t.card1Body}
+                        </p>
+                    </article>
+                    <article className="info-card">
+                        <img
+                            src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80"
+                            alt="Medication management"
+                        />
+                        <h3
+                            style={{
+                                fontSize: "1.1rem",
+                                marginBottom: "0.5rem",
+                            }}
+                        >
+                            {t.card2Title}
+                        </h3>
+                        <p
+                            style={{
+                                color: "#475569",
+                                fontSize: "0.9rem",
+                                lineHeight: "1.6",
+                            }}
+                        >
+                            {t.card2Body}
+                        </p>
+                    </article>
+                    <article className="info-card">
+                        <img
+                            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80"
+                            alt="Doctor patient collaboration"
+                        />
+                        <h3
+                            style={{
+                                fontSize: "1.1rem",
+                                marginBottom: "0.5rem",
+                            }}
+                        >
+                            {t.card3Title}
+                        </h3>
+                        <p
+                            style={{
+                                color: "#475569",
+                                fontSize: "0.9rem",
+                                lineHeight: "1.6",
+                            }}
+                        >
+                            {t.card3Body}
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section className="landing-section highlight-bg" id="why-us">
+                <div
+                    className="section-header"
+                    style={{ textAlign: "center", marginBottom: "2.5rem" }}
+                >
+                    <p
+                        className="eyebrow"
+                        style={{
+                            color: "var(--primary)",
+                            fontWeight: "700",
+                            fontSize: "0.8rem",
+                            letterSpacing: "1px",
+                        }}
+                    >
+                        {t.whyEyebrow}
+                    </p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
+                        {t.whyTitle}
+                    </h2>
+                </div>
+                <div className="cards-grid">
+                    <article
+                        className="info-card"
+                        style={{ background: "#fff" }}
+                    >
+                        <h3
+                            style={{
+                                fontSize: "1.1rem",
+                                marginBottom: "0.5rem",
+                                color: "var(--primary)",
+                            }}
+                        >
+                            {t.feat1Title}
+                        </h3>
+                        <p
+                            style={{
+                                color: "#475569",
+                                fontSize: "0.9rem",
+                                lineHeight: "1.6",
+                            }}
+                        >
+                            {t.feat1Body}
+                        </p>
+                    </article>
+                    <article
+                        className="info-card"
+                        style={{ background: "#fff" }}
+                    >
+                        <h3
+                            style={{
+                                fontSize: "1.1rem",
+                                marginBottom: "0.5rem",
+                                color: "var(--primary)",
+                            }}
+                        >
+                            {t.feat2Title}
+                        </h3>
+                        <p
+                            style={{
+                                color: "#475569",
+                                fontSize: "0.9rem",
+                                lineHeight: "1.6",
+                            }}
+                        >
+                            {t.feat2Body}
+                        </p>
+                    </article>
+                    <article
+                        className="info-card"
+                        style={{ background: "#fff" }}
+                    >
+                        <h3
+                            style={{
+                                fontSize: "1.1rem",
+                                marginBottom: "0.5rem",
+                                color: "var(--primary)",
+                            }}
+                        >
+                            {t.feat3Title}
+                        </h3>
+                        <p
+                            style={{
+                                color: "#475569",
+                                fontSize: "0.9rem",
+                                lineHeight: "1.6",
+                            }}
+                        >
+                            {t.feat3Body}
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section className="landing-section" id="about">
+                <div
+                    className="section-header"
+                    style={{ textAlign: "center", marginBottom: "2rem" }}
+                >
+                    <p
+                        className="eyebrow"
+                        style={{
+                            color: "var(--primary)",
+                            fontWeight: "700",
+                            fontSize: "0.8rem",
+                            letterSpacing: "1px",
+                        }}
+                    >
+                        {t.aboutEyebrow}
+                    </p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
+                        {t.aboutTitle}
+                    </h2>
+                </div>
+                <div
+                    style={{
+                        maxWidth: "750px",
+                        margin: "0 auto",
+                        color: "#475569",
+                        lineHeight: "1.8",
+                        fontSize: "1rem",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "1.2rem",
+                        textAlign: "left",
+                    }}
+                >
+                    <p>{t.aboutP1}</p>
+                    <p>{t.aboutP2}</p>
+                </div>
+            </section>
+
+            <section className="landing-section highlight-bg" id="contact">
+                <div
+                    className="section-header"
+                    style={{ textAlign: "center", marginBottom: "2rem" }}
+                >
+                    <p
+                        className="eyebrow"
+                        style={{
+                            color: "var(--primary)",
+                            fontWeight: "700",
+                            fontSize: "0.8rem",
+                            letterSpacing: "1px",
+                        }}
+                    >
+                        {t.contactEyebrow}
+                    </p>
+                    <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
+                        {t.contactTitle}
+                    </h2>
+                    <p
+                        style={{
+                            color: "#64748b",
+                            fontSize: "0.9rem",
+                            marginTop: "0.4rem",
+                            maxWidth: "500px",
+                            marginInline: "auto",
+                        }}
+                    >
+                        {t.contactSub}
+                    </p>
+                </div>
+                <div
+                    style={{
+                        maxWidth: "500px",
+                        margin: "0 auto",
+                        background: "#fff",
+                        padding: "2rem",
+                        borderRadius: "12px",
+                        border: "1px solid var(--border-color)",
+                        boxShadow: "0 4px 6px -1px rgba(0,0,0,0.02)",
+                    }}
+                >
+                    {contactSubmitted ? (
+                        <div
+                            style={{
+                                padding: "1.5rem",
+                                background: "#f0fdf4",
+                                color: "#166534",
+                                borderRadius: "8px",
+                                textAlign: "center",
+                                fontSize: "0.95rem",
+                                fontWeight: "600",
+                            }}
+                        >
+                            {t.contactSuccess}
+                        </div>
+                    ) : (
+                        <form
+                            onSubmit={handleContactSubmit}
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "14px",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "6px",
+                                }}
+                            >
+                                <label
+                                    style={{
+                                        fontSize: "0.85rem",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    {t.contactName}
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Jane Doe"
+                                    required
+                                    style={{
+                                        padding: "10px",
+                                        borderRadius: "6px",
+                                        border: "1px solid #cbd5e1",
+                                        fontSize: "0.9rem",
+                                    }}
+                                />
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "6px",
+                                }}
+                            >
+                                <label
+                                    style={{
+                                        fontSize: "0.85rem",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    {t.contactEmail}
+                                </label>
+                                <input
+                                    type="email"
+                                    placeholder="jane@example.com"
+                                    required
+                                    style={{
+                                        padding: "10px",
+                                        borderRadius: "6px",
+                                        border: "1px solid #cbd5e1",
+                                        fontSize: "0.9rem",
+                                    }}
+                                />
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "6px",
+                                }}
+                            >
+                                <label
+                                    style={{
+                                        fontSize: "0.85rem",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    {t.contactMsg}
+                                </label>
+                                <textarea
+                                    placeholder="How can we help you?"
+                                    rows="4"
+                                    required
+                                    style={{
+                                        padding: "10px",
+                                        borderRadius: "6px",
+                                        border: "1px solid #cbd5e1",
+                                        fontSize: "0.9rem",
+                                    }}
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                className="cta-button"
+                                style={{
+                                    marginTop: "6px",
+                                    width: "100%",
+                                    padding: "10px",
+                                }}
+                            >
+                                {t.contactSend}
+                            </button>
+                        </form>
+                    )}
+                </div>
+            </section>
+
+            <footer
+                style={{
+                    background: "#fff",
+                    borderTop: "1px solid var(--border-color)",
+                    padding: "3rem 1.5rem",
+                }}
+            >
+                <div
+                    style={{
+                        maxWidth: "900px",
+                        margin: "0 auto",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        flexWrap: "wrap",
+                        gap: "2rem",
+                        textAlign: "left",
+                    }}
+                >
+                    <div>
+                        <strong
+                            style={{
+                                fontSize: "1.2rem",
+                                color: "var(--primary)",
                                 display: "flex",
                                 alignItems: "center",
                                 gap: "8px",
-                                fontWeight: "700",
-                                fontSize: "1.2rem",
-                                color: "var(--primary)",
-                                textDecoration: "none",
                             }}
                         >
-                            <img src={logo} alt="Logo" style={{ height: "30px", width: "auto" }} />
-                            <span>{t.appName}</span>
-                        </a>
-                        <button
-                            className="hamburger-btn"
-                            onClick={() => setIsLandingMenuOpen(!isLandingMenuOpen)}
+                            <img
+                                src={logo}
+                                alt="Logo"
+                                style={{ height: "24px", width: "auto" }}
+                            />
+                            {t.appName}
+                        </strong>
+                        <p
+                            style={{
+                                color: "#64748b",
+                                fontSize: "0.85rem",
+                                marginTop: "0.5rem",
+                                maxWidth: "280px",
+                                lineHeight: "1.6",
+                            }}
                         >
-                            {isLandingMenuOpen ? "✕" : "☰"}
-                        </button>
+                            {t.footerDesc}
+                        </p>
                     </div>
-
-                    <div className={`nav-links-container ${isLandingMenuOpen ? "mobile-open" : ""}`}>
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "3rem",
+                            fontSize: "0.85rem",
+                            flexWrap: "wrap",
+                        }}
+                    >
                         <div
                             style={{
                                 display: "flex",
-                                gap: "1.2rem",
-                                alignItems: "center",
-                                flexWrap: "wrap",
-                                justifyContent: "center",
+                                flexDirection: "column",
+                                gap: "0.5rem",
                             }}
                         >
+                            <strong style={{ color: "var(--text-main)" }}>
+                                Navigation
+                            </strong>
                             <a
                                 href="#about"
-                                onClick={() => setIsLandingMenuOpen(false)}
                                 style={{
                                     textDecoration: "none",
-                                    color: "var(--text-main)",
-                                    fontSize: "0.9rem",
-                                    fontWeight: "500",
+                                    color: "#64748b",
                                 }}
                             >
                                 {t.navAbout}
                             </a>
                             <a
                                 href="#why-us"
-                                onClick={() => setIsLandingMenuOpen(false)}
                                 style={{
                                     textDecoration: "none",
-                                    color: "var(--text-main)",
-                                    fontSize: "0.9rem",
-                                    fontWeight: "500",
+                                    color: "#64748b",
                                 }}
                             >
                                 Features
                             </a>
                             <a
                                 href="#contact"
-                                onClick={() => setIsLandingMenuOpen(false)}
                                 style={{
                                     textDecoration: "none",
-                                    color: "var(--text-main)",
-                                    fontSize: "0.9rem",
-                                    fontWeight: "500",
+                                    color: "#64748b",
                                 }}
                             >
                                 {t.navContact}
                             </a>
                         </div>
-
-                        <div className="account-area">
-                            <button
-                                className="lang-switch"
-                                onClick={toggleLang}
-                                style={{
-                                    padding: "6px 12px",
-                                    borderRadius: "6px",
-                                    border: "1px solid #cbd5e1",
-                                    background: "#fff",
-                                    cursor: "pointer",
-                                    fontWeight: "600",
-                                    fontSize: "0.85rem",
-                                }}
-                            >
-                                {lang === "en" ? "FR" : "EN"}
-                            </button>
-                            <button
-                                onClick={() => { setShowDonateModal(true); setIsLandingMenuOpen(false); }}
-                                style={{
-                                    padding: "6px 12px",
-                                    borderRadius: "6px",
-                                    border: "1px solid var(--primary)",
-                                    background: "transparent",
-                                    color: "var(--primary)",
-                                    fontWeight: "600",
-                                    cursor: "pointer",
-                                    fontSize: "0.85rem",
-                                }}
-                            >
-                                {t.donateBtn}
-                            </button>
-                            {isLoggedIn ? (
-                                <button
-                                    className="cta-button"
-                                    onClick={() => { setActiveView("dashboard"); setIsLandingMenuOpen(false); }}
-                                    style={{ padding: "6px 14px", fontSize: "0.85rem" }}
-                                >
-                                    {t.navDashboard}
-                                </button>
-                            ) : (
-                                <button
-                                    className="cta-button"
-                                    onClick={() => { setShowAuthScreen(true); setIsLandingMenuOpen(false); }}
-                                    style={{ padding: "6px 14px", fontSize: "0.85rem" }}
-                                >
-                                    {t.signInReg}
-                                </button>
-                            )}
-                        </div>
                     </div>
-                </header>
-
-                <section className="landing-hero">
-                    <div
-                        className="hero-content"
-                        style={{ maxWidth: "750px", margin: "0 auto" }}
-                    >
-                        <p
-                            className="eyebrow"
-                            style={{
-                                color: "var(--primary)",
-                                fontWeight: "700",
-                                textTransform: "uppercase",
-                                fontSize: "0.8rem",
-                                letterSpacing: "1px",
-                            }}
-                        >
-                            {t.tagline}
-                        </p>
-                        <h1>{t.heroTitle}</h1>
-                        <p
-                            className="hero-subtitle"
-                            style={{
-                                color: "#475569",
-                                fontSize: "1.05rem",
-                                lineHeight: "1.7",
-                                marginBottom: "2rem",
-                            }}
-                        >
-                            {t.heroSub}
-                        </p>
-                        <div
-                            className="hero-actions"
-                            style={{
-                                display: "flex",
-                                gap: "12px",
-                                justifyContent: "center",
-                                flexWrap: "wrap",
-                            }}
-                        >
-                            <button
-                                className="cta-button"
-                                onClick={() =>
-                                    isLoggedIn
-                                        ? setActiveView("dashboard")
-                                        : setShowAuthScreen(true)
-                                }
-                            >
-                                {isLoggedIn ? t.navDashboard : t.getStarted}
-                            </button>
-                            <a
-                                href="#about"
-                                style={{
-                                    padding: "0.75rem 1.5rem",
-                                    borderRadius: "8px",
-                                    border: "1px solid #cbd5e1",
-                                    background: "#fff",
-                                    color: "var(--text-main)",
-                                    textDecoration: "none",
-                                    fontWeight: "600",
-                                }}
-                            >
-                                {t.learnMore}
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="landing-section" id="dangers">
-                    <div
-                        className="section-header"
-                        style={{ textAlign: "center", marginBottom: "2.5rem" }}
-                    >
-                        <p
-                            className="eyebrow"
-                            style={{
-                                color: "var(--primary)",
-                                fontWeight: "700",
-                                fontSize: "0.8rem",
-                                letterSpacing: "1px",
-                            }}
-                        >
-                            {t.awarenessEyebrow}
-                        </p>
-                        <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
-                            {t.awarenessTitle}
-                        </h2>
-                    </div>
-                    <div className="cards-grid">
-                        <article className="info-card">
-                            <img
-                                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80"
-                                alt="Clinical screening"
-                            />
-                            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
-                                {t.card1Title}
-                            </h3>
-                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                                {t.card1Body}
-                            </p>
-                        </article>
-                        <article className="info-card">
-                            <img
-                                src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80"
-                                alt="Medication management"
-                            />
-                            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
-                                {t.card2Title}
-                            </h3>
-                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                                {t.card2Body}
-                            </p>
-                        </article>
-                        <article className="info-card">
-                            <img
-                                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80"
-                                alt="Doctor patient collaboration"
-                            />
-                            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
-                                {t.card3Title}
-                            </h3>
-                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                                {t.card3Body}
-                            </p>
-                        </article>
-                    </div>
-                </section>
-
-                <section className="landing-section highlight-bg" id="why-us">
-                    <div
-                        className="section-header"
-                        style={{ textAlign: "center", marginBottom: "2.5rem" }}
-                    >
-                        <p
-                            className="eyebrow"
-                            style={{
-                                color: "var(--primary)",
-                                fontWeight: "700",
-                                fontSize: "0.8rem",
-                                letterSpacing: "1px",
-                            }}
-                        >
-                            {t.whyEyebrow}
-                        </p>
-                        <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
-                            {t.whyTitle}
-                        </h2>
-                    </div>
-                    <div className="cards-grid">
-                        <article className="info-card" style={{ background: "#fff" }}>
-                            <h3
-                                style={{
-                                    fontSize: "1.1rem",
-                                    marginBottom: "0.5rem",
-                                    color: "var(--primary)",
-                                }}
-                            >
-                                {t.feat1Title}
-                            </h3>
-                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                                {t.feat1Body}
-                            </p>
-                        </article>
-                        <article className="info-card" style={{ background: "#fff" }}>
-                            <h3
-                                style={{
-                                    fontSize: "1.1rem",
-                                    marginBottom: "0.5rem",
-                                    color: "var(--primary)",
-                                }}
-                            >
-                                {t.feat2Title}
-                            </h3>
-                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                                {t.feat2Body}
-                            </p>
-                        </article>
-                        <article className="info-card" style={{ background: "#fff" }}>
-                            <h3
-                                style={{
-                                    fontSize: "1.1rem",
-                                    marginBottom: "0.5rem",
-                                    color: "var(--primary)",
-                                }}
-                            >
-                                {t.feat3Title}
-                            </h3>
-                            <p style={{ color: "#475569", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                                {t.feat3Body}
-                            </p>
-                        </article>
-                    </div>
-                </section>
-
-                <section className="landing-section" id="about">
-                    <div
-                        className="section-header"
-                        style={{ textAlign: "center", marginBottom: "2rem" }}
-                    >
-                        <p
-                            className="eyebrow"
-                            style={{
-                                color: "var(--primary)",
-                                fontWeight: "700",
-                                fontSize: "0.8rem",
-                                letterSpacing: "1px",
-                            }}
-                        >
-                            {t.aboutEyebrow}
-                        </p>
-                        <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
-                            {t.aboutTitle}
-                        </h2>
-                    </div>
-                    <div
-                        style={{
-                            maxWidth: "750px",
-                            margin: "0 auto",
-                            color: "#475569",
-                            lineHeight: "1.8",
-                            fontSize: "1rem",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "1.2rem",
-                            textAlign: "left",
-                        }}
-                    >
-                        <p>{t.aboutP1}</p>
-                        <p>{t.aboutP2}</p>
-                    </div>
-                </section>
-
-                <section className="landing-section highlight-bg" id="contact">
-                    <div
-                        className="section-header"
-                        style={{ textAlign: "center", marginBottom: "2rem" }}
-                    >
-                        <p
-                            className="eyebrow"
-                            style={{
-                                color: "var(--primary)",
-                                fontWeight: "700",
-                                fontSize: "0.8rem",
-                                letterSpacing: "1px",
-                            }}
-                        >
-                            {t.contactEyebrow}
-                        </p>
-                        <h2 style={{ fontSize: "1.8rem", marginTop: "0.4rem" }}>
-                            {t.contactTitle}
-                        </h2>
-                        <p
-                            style={{
-                                color: "#64748b",
-                                fontSize: "0.9rem",
-                                marginTop: "0.4rem",
-                                maxWidth: "500px",
-                                marginInline: "auto",
-                            }}
-                        >
-                            {t.contactSub}
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            maxWidth: "500px",
-                            margin: "0 auto",
-                            background: "#fff",
-                            padding: "2rem",
-                            borderRadius: "12px",
-                            border: "1px solid var(--border-color)",
-                            boxShadow: "0 4px 6px -1px rgba(0,0,0,0.02)",
-                        }}
-                    >
-                        {contactSubmitted ? (
-                            <div
-                                style={{
-                                    padding: "1.5rem",
-                                    background: "#f0fdf4",
-                                    color: "#166534",
-                                    borderRadius: "8px",
-                                    textAlign: "center",
-                                    fontSize: "0.95rem",
-                                    fontWeight: "600",
-                                }}
-                            >
-                                {t.contactSuccess}
-                            </div>
-                        ) : (
-                            <form
-                                onSubmit={handleContactSubmit}
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: "14px",
-                                }}
-                            >
-                                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                                    <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>
-                                        {t.contactName}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="Jane Doe"
-                                        required
-                                        style={{
-                                            padding: "10px",
-                                            borderRadius: "6px",
-                                            border: "1px solid #cbd5e1",
-                                            fontSize: "0.9rem",
-                                        }}
-                                    />
-                                </div>
-                                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                                    <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>
-                                        {t.contactEmail}
-                                    </label>
-                                    <input
-                                        type="email"
-                                        placeholder="jane@example.com"
-                                        required
-                                        style={{
-                                            padding: "10px",
-                                            borderRadius: "6px",
-                                            border: "1px solid #cbd5e1",
-                                            fontSize: "0.9rem",
-                                        }}
-                                    />
-                                </div>
-                                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                                    <label style={{ fontSize: "0.85rem", fontWeight: "600" }}>
-                                        {t.contactMsg}
-                                    </label>
-                                    <textarea
-                                        placeholder="How can we help you?"
-                                        rows="4"
-                                        required
-                                        style={{
-                                            padding: "10px",
-                                            borderRadius: "6px",
-                                            border: "1px solid #cbd5e1",
-                                            fontSize: "0.9rem",
-                                        }}
-                                    ></textarea>
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="cta-button"
-                                    style={{
-                                        marginTop: "6px",
-                                        width: "100%",
-                                        padding: "10px",
-                                    }}
-                                >
-                                    {t.contactSend}
-                                </button>
-                            </form>
-                        )}
-                    </div>
-                </section>
-
-                <footer
-                    style={{
-                        background: "#fff",
-                        borderTop: "1px solid var(--border-color)",
-                        padding: "3rem 1.5rem",
-                    }}
-                >
-                    <div
-                        style={{
-                            maxWidth: "900px",
-                            margin: "0 auto",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexWrap: "wrap",
-                            gap: "2rem",
-                            textAlign: "left",
-                        }}
-                    >
-                        <div>
-                            <strong
-                                style={{
-                                    fontSize: "1.2rem",
-                                    color: "var(--primary)",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                }}
-                            >
-                                <img src={logo} alt="Logo" style={{ height: "24px", width: "auto" }} />
-                                {t.appName}
-                            </strong>
-                            <p
-                                style={{
-                                    color: "#64748b",
-                                    fontSize: "0.85rem",
-                                    marginTop: "0.5rem",
-                                    maxWidth: "280px",
-                                    lineHeight: "1.6",
-                                }}
-                            >
-                                {t.footerDesc}
-                            </p>
-                        </div>
-                        <div
-                            style={{
-                                display: "flex",
-                                gap: "3rem",
-                                fontSize: "0.85rem",
-                                flexWrap: "wrap",
-                            }}
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: "0.5rem",
-                                }}
-                            >
-                                <strong style={{ color: "var(--text-main)" }}>
-                                    Navigation
-                                </strong>
-                                <a href="#about" style={{ textDecoration: "none", color: "#64748b" }}>
-                                    {t.navAbout}
-                                </a>
-                                <a href="#why-us" style={{ textDecoration: "none", color: "#64748b" }}>
-                                    Features
-                                </a>
-                                <a href="#contact" style={{ textDecoration: "none", color: "#64748b" }}>
-                                    {t.navContact}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        style={{
-                            borderTop: "1px solid #e2e8f0",
-                            marginTop: "2.5rem",
-                            paddingTop: "1.5rem",
-                            textAlign: "center",
-                            fontSize: "0.8rem",
-                            color: "#94a3b8",
-                        }}
-                    >
-                        © {new Date().getFullYear()} Rosetta Healthcare. All rights reserved.
-                    </div>
-                </footer>
-
-                {showDonateModal && <DonationModal />}
-            </div>
-        );
-    };
+                </div>
+            </footer>
+        </div>
+    );
+};
 
     if (!session) {
         if (showAuthScreen) {
@@ -1267,7 +1437,11 @@ export default function App() {
                             textDecoration: "none",
                         }}
                     >
-                        <img src={logo} alt="Logo" style={{ height: "30px", width: "auto" }} />
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            style={{ height: "30px", width: "auto" }}
+                        />
                         <span>{t.appName}</span>
                     </a>
                     <button
@@ -1278,7 +1452,9 @@ export default function App() {
                     </button>
                 </div>
 
-                <div className={`nav-links-container ${dashboardMenuOpen ? "mobile-open" : ""}`}>
+                <div
+                    className={`nav-links-container ${dashboardMenuOpen ? "mobile-open" : ""}`}
+                >
                     <div
                         className="account-area"
                         style={{
@@ -1323,20 +1499,50 @@ export default function App() {
                         </button>
                         <button
                             className="cta-button"
-                            onClick={() => { setActiveView("home"); setDashboardMenuOpen(false); }}
-                            style={{ background: "#e2e8f0", color: "#1e293b", padding: "6px 12px", fontSize: "0.85rem" }}
+                            onClick={() => {
+                                setActiveView("home");
+                                setDashboardMenuOpen(false);
+                            }}
+                            style={{
+                                background: "#e2e8f0",
+                                color: "#1e293b",
+                                padding: "6px 12px",
+                                fontSize: "0.85rem",
+                            }}
                         >
                             {lang === "en" ? "Home" : "Accueil"}
                         </button>
 
-                        <div className="account-info" style={{ display: "flex", flexDirection: "column", textAlign: "right", fontSize: "0.85rem" }}>
+                        <div
+                            className="account-info"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                textAlign: "right",
+                                fontSize: "0.85rem",
+                            }}
+                        >
                             <strong>{profile.full_name}</strong>
                             <span style={{ color: "#64748b" }}>
-                                {isDoctor ? (lang === "en" ? "Doctor" : "Médecin") : (lang === "en" ? "Patient" : "Patient")}
+                                {isDoctor
+                                    ? lang === "en"
+                                        ? "Doctor"
+                                        : "Médecin"
+                                    : lang === "en"
+                                      ? "Patient"
+                                      : "Patient"}
                             </span>
                         </div>
 
-                        <button className="cta-button" onClick={handleLogout} style={{ background: "#ef4444", padding: "6px 12px", fontSize: "0.85rem" }}>
+                        <button
+                            className="cta-button"
+                            onClick={handleLogout}
+                            style={{
+                                background: "#ef4444",
+                                padding: "6px 12px",
+                                fontSize: "0.85rem",
+                            }}
+                        >
                             {t.logout}
                         </button>
                     </div>
@@ -1399,7 +1605,10 @@ export default function App() {
                             border: "1px solid var(--border-color)",
                         }}
                     >
-                        <div className="panel-heading" style={{ marginBottom: "1.5rem" }}>
+                        <div
+                            className="panel-heading"
+                            style={{ marginBottom: "1.5rem" }}
+                        >
                             <p
                                 className="eyebrow"
                                 style={{
@@ -1435,7 +1644,9 @@ export default function App() {
                                     </label>
                                     <select
                                         value={recipientId}
-                                        onChange={(e) => setRecipientId(e.target.value)}
+                                        onChange={(e) =>
+                                            setRecipientId(e.target.value)
+                                        }
                                         style={{
                                             width: "100%",
                                             padding: "10px",
@@ -1479,21 +1690,34 @@ export default function App() {
                                         </p>
                                     ) : (
                                         messages.map((msg) => {
-                                            const isMe = msg.sender_id === profile.id;
+                                            const isMe =
+                                                msg.sender_id === profile.id;
                                             return (
                                                 <div
                                                     key={msg.id}
                                                     style={{
-                                                        alignSelf: isMe ? "flex-end" : "flex-start",
-                                                        background: isMe ? "var(--primary)" : "#e2e8f0",
-                                                        color: isMe ? "white" : "#1e293b",
+                                                        alignSelf: isMe
+                                                            ? "flex-end"
+                                                            : "flex-start",
+                                                        background: isMe
+                                                            ? "var(--primary)"
+                                                            : "#e2e8f0",
+                                                        color: isMe
+                                                            ? "white"
+                                                            : "#1e293b",
                                                         padding: "8px 12px",
                                                         borderRadius: "8px",
                                                         maxWidth: "75%",
                                                         fontSize: "0.9rem",
                                                     }}
                                                 >
-                                                    <p style={{ margin: 0, wordBreak: "break-word" }}>
+                                                    <p
+                                                        style={{
+                                                            margin: 0,
+                                                            wordBreak:
+                                                                "break-word",
+                                                        }}
+                                                    >
                                                         {msg.content}
                                                     </p>
                                                 </div>
@@ -1502,12 +1726,17 @@ export default function App() {
                                     )}
                                 </div>
 
-                                <form onSubmit={handleSendMessage} style={{ display: "flex", gap: "8px" }}>
+                                <form
+                                    onSubmit={handleSendMessage}
+                                    style={{ display: "flex", gap: "8px" }}
+                                >
                                     <input
                                         type="text"
                                         placeholder={t.typeMsg}
                                         value={newMessage}
-                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        onChange={(e) =>
+                                            setNewMessage(e.target.value)
+                                        }
                                         style={{
                                             flex: 1,
                                             padding: "10px",
@@ -1532,7 +1761,8 @@ export default function App() {
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                                gridTemplateColumns:
+                                    "repeat(auto-fit, minmax(240px, 1fr))",
                                 gap: "1rem",
                             }}
                         >
@@ -1544,7 +1774,13 @@ export default function App() {
                                     border: "1px solid var(--border-color)",
                                 }}
                             >
-                                <p style={{ color: "#64748b", fontSize: "0.85rem", fontWeight: "600" }}>
+                                <p
+                                    style={{
+                                        color: "#64748b",
+                                        fontSize: "0.85rem",
+                                        fontWeight: "600",
+                                    }}
+                                >
                                     {t.todayMed}
                                 </p>
                                 <strong
@@ -1556,7 +1792,12 @@ export default function App() {
                                 >
                                     {medications.length} {t.scheduled}
                                 </strong>
-                                <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>
+                                <span
+                                    style={{
+                                        color: "#94a3b8",
+                                        fontSize: "0.8rem",
+                                    }}
+                                >
                                     {t.dailyPlan}
                                 </span>
                             </article>
@@ -1569,7 +1810,13 @@ export default function App() {
                                     border: "1px solid var(--border-color)",
                                 }}
                             >
-                                <p style={{ color: "#64748b", fontSize: "0.85rem", fontWeight: "600" }}>
+                                <p
+                                    style={{
+                                        color: "#64748b",
+                                        fontSize: "0.85rem",
+                                        fontWeight: "600",
+                                    }}
+                                >
                                     {t.dosesDone}
                                 </p>
                                 <strong
@@ -1579,9 +1826,15 @@ export default function App() {
                                         margin: "0.2rem 0",
                                     }}
                                 >
-                                    {completedCount} {t.completedOf} {medications.length}
+                                    {completedCount} {t.completedOf}{" "}
+                                    {medications.length}
                                 </strong>
-                                <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>
+                                <span
+                                    style={{
+                                        color: "#94a3b8",
+                                        fontSize: "0.8rem",
+                                    }}
+                                >
                                     {t.progressToday}
                                 </span>
                             </article>
@@ -1658,7 +1911,9 @@ export default function App() {
                                     type="text"
                                     placeholder={t.medNamePlace}
                                     value={newMedName}
-                                    onChange={(e) => setNewMedName(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewMedName(e.target.value)
+                                    }
                                     required
                                     style={{
                                         flex: 2,
@@ -1673,7 +1928,9 @@ export default function App() {
                                     type="text"
                                     placeholder={t.dosagePlace}
                                     value={newDosage}
-                                    onChange={(e) => setNewDosage(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewDosage(e.target.value)
+                                    }
                                     style={{
                                         flex: 1,
                                         minWidth: "110px",
@@ -1727,22 +1984,38 @@ export default function App() {
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
                                                 padding: "12px 15px",
-                                                background: med.is_taken ? "#f8fafc" : "#fff",
+                                                background: med.is_taken
+                                                    ? "#f8fafc"
+                                                    : "#fff",
                                                 border: "1px solid #e2e8f0",
                                                 borderRadius: "8px",
-                                                textDecoration: med.is_taken ? "line-through" : "none",
-                                                color: med.is_taken ? "#94a3b8" : "#1e293b",
+                                                textDecoration: med.is_taken
+                                                    ? "line-through"
+                                                    : "none",
+                                                color: med.is_taken
+                                                    ? "#94a3b8"
+                                                    : "#1e293b",
                                                 fontSize: "0.9rem",
                                             }}
                                         >
                                             <div>
-                                                <strong>{med.medication_name}</strong> ({med.dosage})
+                                                <strong>
+                                                    {med.medication_name}
+                                                </strong>{" "}
+                                                ({med.dosage})
                                             </div>
                                             <button
-                                                onClick={() => toggleMedication(med.id, med.is_taken)}
+                                                onClick={() =>
+                                                    toggleMedication(
+                                                        med.id,
+                                                        med.is_taken,
+                                                    )
+                                                }
                                                 style={{
                                                     padding: "6px 12px",
-                                                    background: med.is_taken ? "#64748b" : "#16a34a",
+                                                    background: med.is_taken
+                                                        ? "#64748b"
+                                                        : "#16a34a",
                                                     color: "white",
                                                     border: "none",
                                                     borderRadius: "6px",
@@ -1751,7 +2024,9 @@ export default function App() {
                                                     fontWeight: "600",
                                                 }}
                                             >
-                                                {med.is_taken ? t.undo : t.markTaken}
+                                                {med.is_taken
+                                                    ? t.undo
+                                                    : t.markTaken}
                                             </button>
                                         </div>
                                     ))}
@@ -1768,7 +2043,10 @@ export default function App() {
                                 border: "1px solid var(--border-color)",
                             }}
                         >
-                            <div className="panel-heading" style={{ marginBottom: "1.5rem" }}>
+                            <div
+                                className="panel-heading"
+                                style={{ marginBottom: "1.5rem" }}
+                            >
                                 <p
                                     className="eyebrow"
                                     style={{
@@ -1786,7 +2064,12 @@ export default function App() {
                             </div>
 
                             {availableUsers.length === 0 ? (
-                                <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
+                                <p
+                                    style={{
+                                        color: "#64748b",
+                                        fontSize: "0.9rem",
+                                    }}
+                                >
                                     {t.noDoctors}
                                 </p>
                             ) : (
@@ -1804,7 +2087,9 @@ export default function App() {
                                         </label>
                                         <select
                                             value={recipientId}
-                                            onChange={(e) => setRecipientId(e.target.value)}
+                                            onChange={(e) =>
+                                                setRecipientId(e.target.value)
+                                            }
                                             style={{
                                                 width: "100%",
                                                 padding: "10px",
@@ -1814,7 +2099,10 @@ export default function App() {
                                             }}
                                         >
                                             {availableUsers.map((doc) => (
-                                                <option key={doc.id} value={doc.id}>
+                                                <option
+                                                    key={doc.id}
+                                                    value={doc.id}
+                                                >
                                                     Dr. {doc.full_name}
                                                 </option>
                                             ))}
@@ -1848,21 +2136,35 @@ export default function App() {
                                             </p>
                                         ) : (
                                             messages.map((msg) => {
-                                                const isMe = msg.sender_id === profile.id;
+                                                const isMe =
+                                                    msg.sender_id ===
+                                                    profile.id;
                                                 return (
                                                     <div
                                                         key={msg.id}
                                                         style={{
-                                                            alignSelf: isMe ? "flex-end" : "flex-start",
-                                                            background: isMe ? "var(--primary)" : "#e2e8f0",
-                                                            color: isMe ? "white" : "#1e293b",
+                                                            alignSelf: isMe
+                                                                ? "flex-end"
+                                                                : "flex-start",
+                                                            background: isMe
+                                                                ? "var(--primary)"
+                                                                : "#e2e8f0",
+                                                            color: isMe
+                                                                ? "white"
+                                                                : "#1e293b",
                                                             padding: "8px 12px",
                                                             borderRadius: "8px",
                                                             maxWidth: "75%",
                                                             fontSize: "0.9rem",
                                                         }}
                                                     >
-                                                        <p style={{ margin: 0, wordBreak: "break-word" }}>
+                                                        <p
+                                                            style={{
+                                                                margin: 0,
+                                                                wordBreak:
+                                                                    "break-word",
+                                                            }}
+                                                        >
                                                             {msg.content}
                                                         </p>
                                                     </div>
@@ -1871,12 +2173,17 @@ export default function App() {
                                         )}
                                     </div>
 
-                                    <form onSubmit={handleSendMessage} style={{ display: "flex", gap: "8px" }}>
+                                    <form
+                                        onSubmit={handleSendMessage}
+                                        style={{ display: "flex", gap: "8px" }}
+                                    >
                                         <input
                                             type="text"
                                             placeholder={t.typeMsg}
                                             value={newMessage}
-                                            onChange={(e) => setNewMessage(e.target.value)}
+                                            onChange={(e) =>
+                                                setNewMessage(e.target.value)
+                                            }
                                             style={{
                                                 flex: 1,
                                                 padding: "10px",
